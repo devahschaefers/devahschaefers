@@ -1,0 +1,87 @@
+---
+
+---
+
+<section class="relative min-h-screen flex items-center" id="hero">
+  <div class="max-w-[900px] mx-auto px-8 relative py-32">
+    <!-- Subtle decorative line -->
+    <div
+      class="w-16 h-[2px] bg-accent mb-8
+             opacity-0 animate-[fadeSlideUp_0.8s_var(--ease-out-soft)_0.2s_forwards]"
+    ></div>
+
+    <!-- Name -->
+    <h1
+      class="font-serif font-bold tracking-[-0.02em] leading-[1.05] mb-6
+             text-[clamp(3rem,8vw,5.5rem)] text-text-primary
+             opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-soft)_0.3s_forwards]"
+    >
+      Devah<br />Schaefers<span class="text-accent">.</span>
+    </h1>
+
+    <!-- Description -->
+    <p
+      class="font-sans text-[clamp(1rem,1.5vw,1.2rem)] font-light leading-relaxed
+             text-text-secondary max-w-[560px] mb-10
+             opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-soft)_0.5s_forwards]"
+    >
+      UC Berkeley Computer Science &amp; Data Science student building software,
+      AI systems, and data infrastructure. From neural decoders to full-stack
+      platforms — I ship things that work.
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex gap-4 flex-wrap opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-soft)_0.7s_forwards]">
+      <a
+        href="https://www.linkedin.com/in/devahschaefers/"
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2.5 px-7 py-3.5 font-sans text-sm font-semibold
+               tracking-wide rounded-md cursor-pointer
+               bg-accent text-white border border-accent
+               transition-all duration-400 ease-[var(--ease-editorial)]
+               hover:bg-accent-dim hover:border-accent-dim hover:shadow-lg"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+          <rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" />
+        </svg>
+        LinkedIn
+      </a>
+      <a
+        href="mailto:devah.schaefers@gmail.com"
+        class="inline-flex items-center gap-2.5 px-7 py-3.5 font-sans text-sm font-semibold
+               tracking-wide rounded-md cursor-pointer
+               bg-transparent text-text-secondary border border-border
+               transition-all duration-400 ease-[var(--ease-editorial)]
+               hover:border-accent hover:text-accent hover:shadow-md"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+        Get in Touch
+      </a>
+    </div>
+  </div>
+
+  <!-- Side text -->
+  <div
+    class="absolute right-8 top-1/2 -translate-y-1/2 rotate-90 origin-center
+           text-[0.7rem] tracking-[0.2em] uppercase text-text-muted font-sans
+           opacity-0 animate-[fadeIn_1s_ease_1s_forwards]
+           hidden md:block"
+  >
+    Berkeley, CA — CS &amp; Data Science
+  </div>
+
+  <!-- Scroll indicator -->
+  <div
+    class="absolute bottom-10 left-1/2 -translate-x-1/2
+           flex flex-col items-center gap-2
+           opacity-0 animate-[fadeIn_1s_ease_1.2s_forwards]"
+  >
+    <span class="text-[0.65rem] tracking-[0.2em] uppercase text-text-muted font-sans">Scroll</span>
+    <div class="w-px h-10 bg-gradient-to-b from-accent to-transparent"></div>
+  </div>
+</section>

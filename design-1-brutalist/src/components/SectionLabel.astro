@@ -1,0 +1,23 @@
+---
+interface Props {
+  label: string;
+  number?: string;
+  class?: string;
+  centered?: boolean;
+}
+
+const { label, number, class: className = '', centered = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    'font-body text-[0.7rem] font-bold tracking-[0.25em] uppercase text-accent',
+    'mb-4 flex items-center gap-3',
+    centered && 'justify-center',
+    className,
+  ]}
+>
+  {number && <span class="text-fg">{number}</span>}
+  <span class="w-8 h-[2px] bg-accent"></span>
+  {label}
+</div>

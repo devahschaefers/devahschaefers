@@ -1,0 +1,138 @@
+---
+
+---
+
+<section class="relative z-1 min-h-screen flex items-center overflow-hidden" id="hero">
+  <!-- HUD decorative frame -->
+  <div class="absolute inset-8 md:inset-16 border border-neon-cyan/10 pointer-events-none
+              opacity-0 animate-[fadeIn_1.5s_ease_1.5s_forwards]">
+    <!-- Top-left corner -->
+    <div class="absolute -top-px -left-px w-6 h-6 border-t-2 border-l-2 border-neon-cyan"></div>
+    <!-- Top-right corner -->
+    <div class="absolute -top-px -right-px w-6 h-6 border-t-2 border-r-2 border-neon-pink"></div>
+    <!-- Bottom-left corner -->
+    <div class="absolute -bottom-px -left-px w-6 h-6 border-b-2 border-l-2 border-neon-pink"></div>
+    <!-- Bottom-right corner -->
+    <div class="absolute -bottom-px -right-px w-6 h-6 border-b-2 border-r-2 border-neon-cyan"></div>
+  </div>
+
+  <div class="max-w-[1200px] mx-auto px-8 relative z-2 py-24">
+    <!-- Tag -->
+    <div
+      class="font-mono text-xs font-medium tracking-[0.15em] uppercase text-neon-green
+             mb-6 inline-flex items-center gap-2.5
+             opacity-0 animate-[fadeSlideUp_0.8s_var(--ease-out-expo)_0.2s_forwards]"
+    >
+      <span class="inline-block w-2 h-2 bg-neon-green rounded-full animate-[pulse-dot_2s_ease-in-out_infinite]
+                   shadow-[0_0_8px_rgba(57,255,20,0.6)]"></span>
+      <span class="neon-text-cyan" style="text-shadow: 0 0 7px rgba(57,255,20,0.6), 0 0 20px rgba(57,255,20,0.3);">
+        Available for opportunities
+      </span>
+    </div>
+
+    <!-- Name — MASSIVE with neon multi-glow -->
+    <h1
+      class="font-display font-extrabold tracking-[-0.02em] leading-[0.95] mb-6
+             text-[clamp(3.2rem,9vw,7.5rem)]
+             opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-expo)_0.4s_forwards]"
+    >
+      <span
+        class="glitch-hover block text-text-primary neon-text-multi"
+        data-text="Devah"
+      >Devah</span>
+      <span
+        class="glitch-hover block text-transparent neon-text-multi"
+        data-text="Schaefers."
+        style="-webkit-text-stroke: 1.5px var(--color-neon-pink);"
+      >
+        Schaefers<span class="text-neon-cyan" style="-webkit-text-stroke: 0;">.</span>
+      </span>
+    </h1>
+
+    <!-- Typing terminal subtitle -->
+    <div
+      class="font-mono text-[clamp(0.82rem,1.2vw,0.95rem)] font-light leading-relaxed
+             text-text-secondary max-w-[600px] mb-10
+             opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-expo)_0.6s_forwards]"
+    >
+      <span class="text-neon-cyan mr-2">&gt;</span>
+      <span id="typed-text" class="border-r-2 border-neon-pink pr-1 animate-[blink_1s_step-end_infinite]"></span>
+    </div>
+
+    <!-- CTAs -->
+    <div class="flex gap-4 flex-wrap opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-expo)_0.8s_forwards]">
+      <a
+        href="https://www.linkedin.com/in/devahschaefers/"
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-2 px-7 py-3.5 font-mono text-xs font-semibold
+               tracking-[0.08em] uppercase rounded-sm cursor-pointer
+               bg-neon-pink text-bg-primary border border-neon-pink
+               transition-all duration-400 ease-[var(--ease-out-expo)]
+               hover:bg-transparent hover:text-neon-pink
+               hover:shadow-[0_0_30px_rgba(255,45,149,0.4),0_0_60px_rgba(255,45,149,0.15)]
+               animate-[neonPulse_3s_ease-in-out_infinite]"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+          <rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" />
+        </svg>
+        LinkedIn
+      </a>
+      <a
+        href="mailto:devah.schaefers@gmail.com"
+        class="inline-flex items-center gap-2 px-7 py-3.5 font-mono text-xs font-semibold
+               tracking-[0.08em] uppercase rounded-sm cursor-pointer
+               bg-transparent text-neon-cyan border border-border
+               transition-all duration-400 ease-[var(--ease-out-expo)]
+               hover:border-neon-cyan hover:text-neon-cyan
+               hover:shadow-[0_0_30px_rgba(0,240,255,0.3),0_0_60px_rgba(0,240,255,0.1)]"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+        Get in Touch
+      </a>
+    </div>
+  </div>
+
+  <!-- Side text -->
+  <div
+    class="absolute right-8 top-1/2 -translate-y-1/2 rotate-90 origin-center
+           text-[0.6rem] tracking-[0.25em] uppercase text-text-muted font-mono
+           opacity-0 animate-[fadeIn_1s_ease_1.2s_forwards]
+           hidden md:block"
+  >
+    <span class="text-neon-pink">//</span> Berkeley, CA &mdash; CS &amp; Data Science
+  </div>
+
+  <!-- Scroll indicator -->
+  <div
+    class="absolute bottom-10 left-1/2 -translate-x-1/2
+           flex flex-col items-center gap-2
+           opacity-0 animate-[fadeIn_1s_ease_1.5s_forwards]"
+  >
+    <span class="text-[0.6rem] tracking-[0.2em] uppercase text-text-muted font-mono">Scroll</span>
+    <div class="w-px h-10 bg-gradient-to-b from-neon-pink via-neon-cyan to-transparent animate-[scrollPulse_2s_ease-in-out_infinite]"></div>
+  </div>
+</section>
+
+<script>
+  // Typing effect
+  (function () {
+    const text = "UC Berkeley Computer Science & Data Science student building software, AI systems, and data infrastructure. From neural decoders to full-stack platforms \u2014 I ship things that work.";
+    const el = document.getElementById('typed-text');
+    if (!el) return;
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, 18 + Math.random() * 25);
+      }
+    }
+    // Delay start until slide-up animation completes
+    setTimeout(type, 1200);
+  })();
+</script>

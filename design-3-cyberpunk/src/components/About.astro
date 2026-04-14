@@ -1,0 +1,68 @@
+---
+import SectionLabel from './SectionLabel.astro';
+
+const stats = [
+  { value: '3.97', label: 'GPA at UC Berkeley' },
+  { value: '15+', label: 'Developers Led' },
+  { value: '10K+', label: 'Extension Users' },
+  { value: '2M+', label: 'Positions Evaluated' },
+];
+---
+
+<section
+  class="relative z-1 py-32 bg-gradient-to-b from-bg-primary to-bg-secondary"
+  id="about"
+>
+  <div class="max-w-[1200px] mx-auto px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <!-- Text — Glass Panel -->
+      <div class="reveal">
+        <SectionLabel label="About" />
+        <h2 class="font-display text-[clamp(1.8rem,4vw,2.8rem)] font-bold tracking-tight leading-[1.15] mb-12 text-text-primary">
+          Building across the<br />full stack <span class="text-neon-cyan">&amp;</span> beyond
+        </h2>
+        <div class="glass-panel rounded-sm p-6 space-y-5 corner-accents">
+          <p class="text-sm text-text-secondary leading-relaxed">
+            <span class="text-neon-pink font-semibold">&gt;</span> I'm a UC Berkeley student studying Computer Science and Data Science,
+            with a focus on building systems that bridge software engineering,
+            machine learning, and data infrastructure.
+          </p>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            <span class="text-neon-pink font-semibold">&gt;</span> My work spans LLM-powered agents, applied ML research on EEG data for
+            brain-computer interfaces, high-volume data pipelines, and full-stack
+            internal platforms serving hundreds of users. I care about craft &mdash;
+            clean architecture, thoughtful abstractions, and shipping things that
+            actually work at scale.
+          </p>
+          <p class="text-sm text-text-secondary leading-relaxed">
+            <span class="text-neon-pink font-semibold">&gt;</span> I work across Python, TypeScript, Rust, SQL, React/Next.js, PyTorch,
+            PostgreSQL, and modern AI/LLM tooling.
+          </p>
+        </div>
+      </div>
+
+      <!-- Stats — Neon Glass Cards -->
+      <div class="grid grid-cols-2 gap-5 reveal reveal-delay-2">
+        {stats.map(({ value, label }) => (
+          <div
+            class="group relative overflow-hidden glass-panel rounded-sm p-7
+                   transition-all duration-400 ease-[var(--ease-out-expo)]
+                   hover:-translate-y-1 neon-border-card corner-accents"
+          >
+            {/* Inner glow on hover */}
+            <div class="absolute inset-0 bg-gradient-to-br from-neon-pink/5 to-neon-cyan/5 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+            <div class="relative z-1">
+              <div class="font-display text-3xl font-extrabold leading-none mb-1.5
+                          bg-gradient-to-r from-neon-pink to-neon-cyan bg-clip-text text-transparent">
+                {value}
+              </div>
+              <div class="text-[0.7rem] tracking-[0.1em] uppercase text-text-muted">
+                {label}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

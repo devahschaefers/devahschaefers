@@ -1,0 +1,57 @@
+---
+import SectionLabel from './SectionLabel.astro';
+---
+
+<section
+  class="relative z-1 pt-32 pb-16"
+  id="contact"
+>
+  <div class="max-w-[1400px] mx-auto px-8">
+    <!-- Content -->
+    <div class="max-w-2xl reveal">
+      <SectionLabel label="Contact" number="05" />
+      <h2 class="font-display text-[clamp(2.5rem,6vw,5rem)] font-bold tracking-tight leading-[1] mb-8 uppercase">
+        Let's build<br />something<span class="text-accent">.</span>
+      </h2>
+      <p class="text-sm text-muted mb-12 leading-relaxed max-w-lg">
+        I'm always open to interesting conversations about software, AI, data,
+        or new opportunities. Drop me a line.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 mb-20">
+        <a
+          href="mailto:devah.schaefers@gmail.com"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4
+                 text-xs font-bold tracking-[0.1em] uppercase
+                 border-2 border-fg text-fg bg-transparent
+                 transition-all duration-200
+                 hover:bg-fg hover:text-bg"
+        >
+          devah.schaefers@gmail.com
+        </a>
+        <a
+          href="https://www.linkedin.com/in/devahschaefers/"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-2 px-8 py-4
+                 text-xs font-bold tracking-[0.1em] uppercase
+                 border-2 border-fg text-fg bg-transparent
+                 transition-all duration-200
+                 hover:bg-fg hover:text-bg"
+        >
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t-2 border-fg pt-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <span class="text-[0.65rem] tracking-[0.15em] uppercase text-muted">
+        &copy; 2026 Devah Schaefers
+      </span>
+      <span class="text-[0.65rem] tracking-[0.15em] uppercase text-muted">
+        Raw <span class="text-accent">&</span> built to last
+      </span>
+    </footer>
+  </div>
+</section>

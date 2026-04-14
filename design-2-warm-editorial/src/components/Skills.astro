@@ -1,0 +1,70 @@
+---
+import SectionLabel from './SectionLabel.astro';
+
+interface SkillGroup {
+  title: string;
+  items: string[];
+}
+
+const groups: SkillGroup[] = [
+  {
+    title: 'Languages',
+    items: ['Python', 'TypeScript', 'Rust', 'SQL / PostgreSQL', 'C / C++', 'Java', 'CSS'],
+  },
+  {
+    title: 'Frameworks & ML',
+    items: [
+      'React / Next.js',
+      'React Native',
+      'Flask',
+      'PyTorch',
+      'TorchGeometric',
+      'scikit-learn',
+      'Pandas / NumPy',
+      'Drizzle ORM',
+    ],
+  },
+  {
+    title: 'Data & Systems',
+    items: [
+      'Data Modeling',
+      'ETL / ELT',
+      'Web Scraping',
+      'Batch Processing',
+      'Async Processing',
+      'Schema Design',
+      'Query Profiling',
+    ],
+  },
+  {
+    title: 'Tools & Platforms',
+    items: ['Git / GitHub', 'GitLab', 'Supabase', 'PostgreSQL', 'SQLite', 'CI/CD'],
+  },
+];
+---
+
+<section class="relative py-28 section-divider" id="skills">
+  <div class="max-w-[900px] mx-auto px-8">
+    <SectionLabel label="Skills" class="reveal" />
+    <h2 class="reveal reveal-delay-1 font-serif text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold tracking-tight leading-[1.2] mb-14 text-text-primary">
+      Technical toolkit
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      {groups.map((group, gi) => (
+        <div class:list={['reveal', gi > 0 && `reveal-delay-${gi}`]}>
+          <h3 class="font-serif text-base font-bold text-text-primary mb-5 pb-3 border-b border-border">
+            {group.title}
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            {group.items.map((item) => (
+              <span class="inline-block text-[0.8rem] font-sans font-medium text-text-secondary px-3.5 py-1.5 bg-bg-secondary border border-border rounded-full transition-all duration-300 hover:border-accent hover:text-accent hover:bg-accent/5 cursor-default">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

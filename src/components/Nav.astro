@@ -1,0 +1,92 @@
+---
+const links = [
+  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<nav
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-8 py-5
+         backdrop-blur-xl backdrop-saturate-150 bg-bg-primary/70
+         border-b border-transparent transition-all duration-400"
+>
+  <a href="#hero" class="font-display font-extrabold text-lg tracking-tight text-text-primary">
+    devah<span class="text-accent">.</span>
+  </a>
+
+  <ul class="nav-links hidden md:flex gap-8 list-none" id="nav-links">
+    {links.map(({ href, label }) => (
+      <li>
+        <a
+          href={href}
+          class="relative text-[0.72rem] font-medium tracking-[0.12em] uppercase text-text-secondary
+                 pb-0.5 hover:text-accent group"
+        >
+          {label}
+          <span class="absolute bottom-[-2px] left-0 h-px w-0 bg-accent transition-all duration-400 ease-[var(--ease-out-expo)] group-hover:w-full" />
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <button
+    class="flex flex-col gap-[5px] md:hidden cursor-pointer p-1 bg-transparent border-none"
+    id="nav-toggle"
+    aria-label="Toggle navigation"
+  >
+    <span class="block w-[22px] h-[1.5px] bg-text-secondary transition-all duration-300"></span>
+    <span class="block w-[22px] h-[1.5px] bg-text-secondary transition-all duration-300"></span>
+    <span class="block w-[22px] h-[1.5px] bg-text-secondary transition-all duration-300"></span>
+  </button>
+</nav>
+
+<!-- Mobile menu (hidden by default) -->
+<div
+  id="mobile-menu"
+  class="fixed top-[60px] left-0 right-0 z-[999] flex-col gap-4 px-8 py-6
+         bg-bg-primary/95 backdrop-blur-xl border-b border-border
+         hidden"
+>
+  {links.map(({ href, label }) => (
+    <a
+      href={href}
+      class="mobile-link block text-[0.72rem] font-medium tracking-[0.12em] uppercase text-text-secondary hover:text-accent"
+    >
+      {label}
+    </a>
+  ))}
+</div>
+
+<script>
+  // Navbar scroll effect
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (nav) {
+      if (window.scrollY > 50) {
+        nav.classList.add('border-b-border', 'py-3');
+        nav.classList.remove('py-5', 'border-transparent');
+      } else {
+        nav.classList.remove('border-b-border', 'py-3');
+        nav.classList.add('py-5', 'border-transparent');
+      }
+    }
+  }, { passive: true });
+
+  // Mobile toggle
+  const toggle = document.getElementById('nav-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+    mobileMenu?.classList.toggle('flex');
+  });
+  mobileMenu?.querySelectorAll('.mobile-link').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      mobileMenu?.classList.remove('flex');
+    });
+  });
+</script>

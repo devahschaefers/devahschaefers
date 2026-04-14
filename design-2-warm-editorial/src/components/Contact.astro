@@ -1,0 +1,65 @@
+---
+import SectionLabel from './SectionLabel.astro';
+---
+
+<section
+  class="relative pt-28 pb-16 bg-bg-primary section-divider"
+  id="contact"
+>
+  <div class="max-w-[900px] mx-auto px-8">
+    <!-- Decorative frame -->
+    <div class="reveal max-w-xl mx-auto text-center border border-border rounded-lg p-10 md:p-14 bg-bg-card shadow-sm">
+      <SectionLabel label="Contact" centered />
+      <h2 class="font-serif text-[clamp(2.2rem,4.5vw,3.5rem)] italic font-medium tracking-tight leading-[1.15] mb-6 text-text-primary">
+        Let's connect.
+      </h2>
+      <p class="text-base text-text-secondary mb-10 leading-relaxed font-sans">
+        I'm always open to interesting conversations about software, AI, data,
+        or new opportunities. Drop me a line.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a
+          href="mailto:devah.schaefers@gmail.com"
+          class="inline-flex items-center justify-center gap-2.5 px-6 py-3
+                 text-sm font-sans font-medium tracking-wide
+                 bg-accent text-white border border-accent rounded-md
+                 transition-all duration-400 ease-[var(--ease-editorial)]
+                 hover:bg-accent-dim hover:border-accent-dim hover:shadow-lg"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          devah.schaefers@gmail.com
+        </a>
+        <a
+          href="https://www.linkedin.com/in/devahschaefers/"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center justify-center gap-2.5 px-6 py-3
+                 text-sm font-sans font-medium tracking-wide
+                 border border-border rounded-md text-text-secondary
+                 transition-all duration-400 ease-[var(--ease-editorial)]
+                 hover:border-accent hover:text-accent hover:shadow-md"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+            <rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" />
+          </svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 border-t border-border pt-8 flex flex-col sm:flex-row justify-between items-center gap-3">
+      <span class="text-[0.72rem] tracking-wide text-text-muted font-sans">
+        &copy; 2026 Devah Schaefers
+      </span>
+      <span class="text-[0.72rem] tracking-wide text-text-muted font-sans">
+        Designed & built with <span class="text-accent">warmth</span>
+      </span>
+    </footer>
+  </div>
+</section>

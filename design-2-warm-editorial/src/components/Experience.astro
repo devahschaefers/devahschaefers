@@ -1,0 +1,170 @@
+---
+import SectionLabel from './SectionLabel.astro';
+
+interface SubRole {
+  role: string;
+  dates: string;
+  bullets: string[];
+  tech: string[];
+}
+
+interface TimelineEntry {
+  role: string;
+  company: string;
+  dates: string;
+  location: string;
+  bullets: string[];
+  tech: string[];
+  subRoles?: SubRole[];
+}
+
+const timeline: TimelineEntry[] = [
+  {
+    role: 'Machine Learning Engineer',
+    company: 'NeuroTech @ Berkeley',
+    dates: 'Jan 2026 — Present',
+    location: 'Berkeley, CA',
+    bullets: [
+      'Achieved 5\u00b0 RMSE on supervised regression predicting gait angle from 16-channel EEG data for BCI-driven exoskeleton control',
+      'Designed a CNN-LSTM architecture — CNN extracts spatial-spectral features, LSTM performs gait angle regression',
+      'Preprocessed raw EEG with artifact removal, bandpass filtering, per-channel normalization, and overlapping sliding windows',
+    ],
+    tech: ['Python', 'PyTorch', 'CNN-LSTM', 'EEG/BCI'],
+  },
+  {
+    role: 'Data Scientist',
+    company: 'Synopsys (Contract)',
+    dates: 'Aug 2025 — Dec 2025',
+    location: 'Berkeley, CA',
+    bullets: [
+      'Trained and benchmarked regression, random forest, gradient boosting, and GNN models to predict chip power consumption',
+      'Built a GNN with PyTorch Geometric and graph attention layers on netlist graphs across ~50\u2013100 designs',
+      'Used SHAP analysis to identify dominant features and benchmarked model accuracy and inference speed',
+    ],
+    tech: ['Python', 'PyTorch', 'TorchGeometric', 'SHAP'],
+  },
+  {
+    role: 'Vice President of Projects',
+    company: 'Open Project @ Berkeley',
+    dates: 'Jan 2025 — Dec 2025',
+    location: 'Berkeley, CA',
+    bullets: [
+      "Led 15+ developers across 10+ teams in UC Berkeley's largest CS club (150+ members)",
+      'Built internal management software and a CAS-authenticated system handling 200+ applications per semester',
+      'Designed PostgreSQL schemas with Drizzle ORM and introduced org-wide CI/CD workflows and documentation',
+    ],
+    tech: ['Next.js', 'PostgreSQL', 'Supabase', 'Drizzle'],
+    subRoles: [
+      {
+        role: 'Lead Developer',
+        dates: 'Jan 2025 — May 2025',
+        bullets: [
+          'Led 2 cross-functional teams of 15+ developers across frontend, backend, and data workstreams',
+          'Built an LLM-powered RAG system for chess coaching — improved agent performance by 20%',
+          'Cleaned and normalized 500K+ ingredient entries, increasing recognition from <20% to >95%',
+        ],
+        tech: ['Python', 'React Native', 'Flask', 'SQLite'],
+      },
+      {
+        role: 'Data Engineer',
+        dates: 'Aug 2024 — Jan 2025',
+        bullets: [
+          'Built an async web scraper with 10,000+ automated HTTP requests per run, collecting 100K+ data points',
+          'Reduced end-to-end collection time by ~100x and structured 600+ classroom schedules into JSON availability models',
+        ],
+        tech: ['Python', 'Playwright', 'Pandas'],
+      },
+    ],
+  },
+  {
+    role: 'Software Engineer',
+    company: 'CubeSat',
+    dates: 'Aug 2021 — Sep 2024',
+    location: 'Irvine, CA',
+    bullets: [
+      "Engineered the satellite's end-to-end image data stream with error detection and correction",
+      'Implemented encoding/decoding pipelines with compression, error correction, and encryption — increasing throughput by ~40%',
+      'Integrated low-level USB/UART drivers on Linux using FTD2XX and Xilinx tooling',
+    ],
+    tech: ['Python', 'C', 'Linux', 'Satellite'],
+  },
+];
+---
+
+<section class="relative py-28 section-divider" id="experience">
+  <div class="max-w-[900px] mx-auto px-8">
+    <SectionLabel label="Experience" class="reveal" />
+    <h2 class="reveal reveal-delay-1 font-serif text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold tracking-tight leading-[1.2] mb-14 text-text-primary">
+      Where I've built things
+    </h2>
+
+    <!-- Timeline -->
+    <div class="relative pl-10 before:content-[''] before:absolute before:left-[7px] before:top-2 before:bottom-0 before:w-px before:bg-border">
+      {timeline.map((item) => (
+        <div class="group relative mb-14 last:mb-0 reveal">
+          {/* Dot */}
+          <div class="absolute -left-[3px] top-[7px] w-[10px] h-[10px] rounded-full bg-accent border-2 border-bg-primary shadow-sm transition-all duration-300 group-hover:scale-125" />
+
+          {/* Header */}
+          <div class="mb-2">
+            <h3 class="font-serif text-xl font-bold tracking-tight text-text-primary leading-snug">
+              {item.role}
+            </h3>
+            <div class="text-base text-accent font-medium font-sans">{item.company}</div>
+          </div>
+
+          {/* Meta */}
+          <div class="text-[0.75rem] tracking-wide text-text-muted font-sans flex gap-4 mb-4">
+            <span>{item.dates}</span>
+            <span class="text-border">|</span>
+            <span>{item.location}</span>
+          </div>
+
+          {/* Bullets */}
+          <ul class="flex flex-col gap-2.5 list-none">
+            {item.bullets.map((bullet) => (
+              <li class="text-[0.9rem] text-text-secondary pl-5 relative leading-relaxed before:content-['\2022'] before:absolute before:left-0 before:text-accent before:font-bold">
+                {bullet}
+              </li>
+            ))}
+          </ul>
+
+          {/* Tech tags */}
+          <div class="flex flex-wrap gap-2 mt-4">
+            {item.tech.map((t) => (
+              <span class="text-[0.7rem] font-medium tracking-wide px-3 py-1 bg-bg-secondary border border-border rounded-full text-text-muted font-sans transition-all duration-300 group-hover:border-border-hover group-hover:text-text-secondary">
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {/* Sub-roles */}
+          {item.subRoles?.map((sub) => (
+            <div class="mt-8 pt-6 border-t border-border/60">
+              <h4 class="font-serif text-lg font-bold tracking-tight text-text-primary mb-1">
+                {sub.role}
+              </h4>
+              <div class="text-[0.75rem] tracking-wide text-text-muted font-sans mb-4">
+                {sub.dates}
+              </div>
+              <ul class="flex flex-col gap-2.5 list-none">
+                {sub.bullets.map((bullet) => (
+                  <li class="text-[0.9rem] text-text-secondary pl-5 relative leading-relaxed before:content-['\2022'] before:absolute before:left-0 before:text-accent before:font-bold">
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
+              <div class="flex flex-wrap gap-2 mt-4">
+                {sub.tech.map((t) => (
+                  <span class="text-[0.7rem] font-medium tracking-wide px-3 py-1 bg-bg-secondary border border-border rounded-full text-text-muted font-sans transition-all duration-300 group-hover:border-border-hover group-hover:text-text-secondary">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
