@@ -1,0 +1,127 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+
+const experiences = [
+  {
+    title: "ML Engineer",
+    org: "NeuroTech @ Berkeley",
+    period: "Jan 2026 — Present",
+    tech: "Python / PyTorch",
+    highlights: [
+      "5° RMSE on EEG gait prediction",
+      "CNN-LSTM architecture",
+    ],
+  },
+  {
+    title: "Data Scientist",
+    org: "Synopsys",
+    period: "Aug — Dec 2025",
+    tech: "Python / PyTorch / TorchGeometric",
+    highlights: [
+      "GNN for chip power prediction",
+      "SHAP analysis",
+    ],
+  },
+  {
+    title: "VP",
+    org: "Open Project @ Berkeley",
+    period: "Jan — Dec 2025",
+    tech: "Next.js / PostgreSQL / Supabase",
+    highlights: [
+      "Led 15+ developers",
+      "Built CAS-auth system for 200+ apps",
+    ],
+    subroles: [
+      {
+        title: "Lead Developer",
+        period: "Jan — May 2025",
+        tech: "Python / React Native / Flask",
+        highlights: [
+          "RAG chess coaching — 20% improvement",
+          "Normalized 500K+ ingredients",
+        ],
+      },
+      {
+        title: "Data Engineer",
+        period: "Aug 2024 — Jan 2025",
+        tech: "Python / Playwright / Pandas",
+        highlights: [
+          "10K+ HTTP requests",
+          "100K+ data points",
+          "100× speed improvement",
+        ],
+      },
+    ],
+  },
+  {
+    title: "SWE",
+    org: "CubeSat",
+    period: "Aug 2021 — Sep 2024",
+    tech: "Python / C",
+    highlights: [
+      "Satellite image data stream",
+      "40% throughput increase",
+    ],
+  },
+];
+---
+
+<section id="experience" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <SectionLabel number="02" label="Experience" />
+
+    <div class="reveal">
+      {experiences.map((exp, i) => (
+        <div>
+          <div class="section-grid py-8 border-t border-border-muted">
+            <div class="col-span-12 md:col-span-3">
+              <p class="text-xs tracking-[0.15em] uppercase text-muted">{exp.period}</p>
+            </div>
+            <div class="col-span-12 md:col-span-5 mt-2 md:mt-0">
+              <h3 class="text-lg font-bold tracking-tight">{exp.title}</h3>
+              <p class="text-sm text-muted mt-0.5">{exp.org}</p>
+            </div>
+            <div class="col-span-12 md:col-span-4 mt-2 md:mt-0">
+              <p class="text-xs tracking-[0.1em] uppercase text-muted mb-3">{exp.tech}</p>
+              <ul class="space-y-1">
+                {exp.highlights.map((h) => (
+                  <li class="text-sm text-fg/80">{h}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {exp.subroles && (
+            <div class="section-grid pb-6">
+              <div class="col-span-12 md:col-span-3"></div>
+              <div class="col-span-12 md:col-span-9">
+                {exp.subroles.map((sub) => (
+                  <div class="section-grid py-6 border-t border-border-muted/50">
+                    <div class="col-span-12 md:col-span-4">
+                      <p class="text-xs tracking-[0.15em] uppercase text-muted">{sub.period}</p>
+                    </div>
+                    <div class="col-span-12 md:col-span-3 mt-2 md:mt-0">
+                      <h4 class="text-sm font-bold tracking-tight">{sub.title}</h4>
+                    </div>
+                    <div class="col-span-12 md:col-span-5 mt-2 md:mt-0">
+                      <p class="text-xs tracking-[0.1em] uppercase text-muted mb-2">{sub.tech}</p>
+                      <ul class="space-y-0.5">
+                        {sub.highlights.map((h) => (
+                          <li class="text-sm text-fg/70">{h}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {i === experiences.length - 1 && (
+            <div class="border-t border-border-muted"></div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+---
+
+<section id="about" class="py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <SectionLabel number="01" label="About" />
+
+    <div class="section-grid">
+      <div class="col-span-12 md:col-span-6 reveal">
+        <p class="text-base leading-relaxed text-fg/80">
+          I'm a CS & Data Science student at UC Berkeley with a focus on machine learning, data systems, and building software that solves real problems. My work spans from training neural networks on EEG signals to architecting full-stack platforms serving thousands of users.
+        </p>
+        <p class="text-base leading-relaxed text-fg/80 mt-4">
+          I approach engineering with precision: every system is designed, every decision is justified, and every result is measured. Whether it's optimizing a data pipeline for 100x throughput or shipping a product used by 10K+ people, I care about the details that make the difference.
+        </p>
+      </div>
+
+      <div class="col-span-12 md:col-span-1"></div>
+
+      <div class="col-span-12 md:col-span-5 mt-8 md:mt-0 reveal" style="animation-delay: 0.15s;">
+        <div class="grid grid-cols-2 gap-px bg-border-muted">
+          <div class="bg-bg p-6">
+            <span class="text-4xl font-bold tracking-tighter text-fg">3.97</span>
+            <p class="text-xs tracking-[0.15em] uppercase text-muted mt-2">GPA</p>
+          </div>
+          <div class="bg-bg p-6">
+            <span class="text-4xl font-bold tracking-tighter text-fg">10K+</span>
+            <p class="text-xs tracking-[0.15em] uppercase text-muted mt-2">Users Reached</p>
+          </div>
+          <div class="bg-bg p-6">
+            <span class="text-4xl font-bold tracking-tighter text-fg">100×</span>
+            <p class="text-xs tracking-[0.15em] uppercase text-muted mt-2">Speed Improvement</p>
+          </div>
+          <div class="bg-bg p-6">
+            <span class="text-4xl font-bold tracking-tighter text-fg">15+</span>
+            <p class="text-xs tracking-[0.15em] uppercase text-muted mt-2">Engineers Led</p>
+          </div>
+        </div>
+
+        <div class="mt-8 border-t border-border-muted pt-6">
+          <p class="text-xs tracking-[0.15em] uppercase text-muted">Education</p>
+          <p class="text-base font-medium mt-2">UC Berkeley</p>
+          <p class="text-sm text-muted">CS & Data Science</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

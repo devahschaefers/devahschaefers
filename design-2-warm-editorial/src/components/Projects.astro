@@ -1,121 +1,79 @@
 ---
-import SectionLabel from './SectionLabel.astro';
-
 interface Project {
-  icon: string;
   title: string;
   description: string;
   tags: string[];
   stat?: string;
-  accentColor: string;
 }
 
 const projects: Project[] = [
   {
-    icon: '\u26A1',
     title: 'Structured Document Editing Agent',
     description:
-      'LLM-powered agent for structured document editing via tool calls. Uses an intermediate representation for safe, consistent multi-step edits — reducing manual editing time by 60%.',
+      'LLM-powered agent for structured document editing via tool calls. Uses an intermediate representation for safe, consistent multi-step edits \u2014 reducing manual editing time by 60%.',
     tags: ['TypeScript', 'AI SDK', 'LLM Agents'],
-    accentColor: '#c4841d',
   },
   {
-    icon: '\uD83E\uDD80',
     title: 'AI File Organizer',
     description:
-      'Rust-built AI tool to organize large, inconsistent directory trees. Two-stage Explorer/Organizer pipeline with semantic indexing, 18x faster cleanup, and a virtual staging layer for safe review before execution.',
+      'Rust-built AI tool to organize large, inconsistent directory trees. Two-stage Explorer/Organizer pipeline with semantic indexing, 18x faster cleanup, and a virtual staging layer for safe review.',
     tags: ['Rust', 'Async', 'TUI'],
-    accentColor: '#b5838d',
   },
   {
-    icon: '\uD83E\uDDE0',
     title: 'NeuroTech EEG Gait Decoder',
     description:
       'PyTorch pipeline predicting gait angle from 16-channel EEG for BCI-driven exoskeleton control. CNN-LSTM architecture reaching 5\u00b0 RMSE on supervised regression.',
     tags: ['Python', 'PyTorch', 'BCI'],
-    accentColor: '#8fac91',
   },
   {
-    icon: '\uD83C\uDF0D',
     title: 'Disaster Response NLP',
     description:
       'Sentiment analysis on ~45K disaster tweets across 14 events using RoBERTa and VADER. Geospatial and textual models identify locations of highest need during wildfire crises.',
     tags: ['Python', 'RoBERTa', 'NLP'],
-    accentColor: '#c4841d',
   },
   {
-    icon: '\uD83D\uDEE1',
     title: 'Disinformation Detection System',
     description:
       'Detection system using Logistic Regression with GloVe embeddings and Bag-of-Words features. 91% accuracy and 87% F1-score on 1,000+ web-scraped samples.',
     tags: ['Python', 'scikit-learn', 'GloVe'],
-    accentColor: '#b5838d',
   },
   {
-    icon: '\uD83D\uDCC5',
     title: 'Raycast Calendar Extension',
     description:
       'Productivity extension for calendar management integrated with macOS calendar software via AppleScript. Serving over 10,000 users.',
     tags: ['TypeScript', 'React', 'AppleScript'],
-    stat: '10K+ Users',
-    accentColor: '#8fac91',
+    stat: '10K+ users',
   },
 ];
 ---
 
-<section class="relative py-28 bg-bg-secondary section-divider" id="projects">
-  <div class="max-w-[900px] mx-auto px-8">
-    <SectionLabel label="Projects" class="reveal" />
-    <h2 class="reveal reveal-delay-1 font-serif text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold tracking-tight leading-[1.2] mb-14 text-text-primary">
-      Selected work
-    </h2>
+<section class="py-10" id="projects">
+  <h2 class="section-heading">projects</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
-      {projects.map((project, i) => (
-        <div
-          class:list={[
-            'group relative overflow-hidden bg-bg-card border border-border rounded-lg p-7',
-            'transition-all duration-400 ease-[var(--ease-editorial)] cursor-default',
-            'hover:shadow-lg hover:-translate-y-1',
-            'reveal',
-            i > 0 && `reveal-delay-${Math.min(i, 5)}`,
-          ]}
-        >
-          {/* Accent top stripe */}
-          <div class="absolute top-0 left-0 right-0 h-[3px]" style={`background: ${project.accentColor};`} />
-
-          {/* Header */}
-          <div class="flex justify-between items-start mb-4 pt-1">
-            <div class="text-2xl">
-              {project.icon}
-            </div>
-            {project.stat && (
-              <span class="text-[0.7rem] tracking-wide font-semibold text-accent font-sans px-3 py-1 bg-accent/10 rounded-full">
-                {project.stat}
-              </span>
-            )}
-          </div>
-
-          {/* Title */}
-          <h3 class="font-serif text-lg font-bold tracking-tight mb-3 text-text-primary">
+  <div class="space-y-4">
+    {projects.map((project) => (
+      <div class="experience-item">
+        <div class="flex items-start justify-between gap-3 mb-1">
+          <h3 class="font-semibold text-text text-[15px] leading-snug">
             {project.title}
           </h3>
-
-          {/* Description */}
-          <p class="text-[0.88rem] text-text-secondary leading-relaxed mb-5 font-sans">
-            {project.description}
-          </p>
-
-          {/* Tags */}
-          <div class="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span class="text-[0.68rem] font-medium tracking-wide px-3 py-1 bg-bg-secondary border border-border rounded-full text-text-muted font-sans">
-                {tag}
-              </span>
-            ))}
-          </div>
+          {project.stat && (
+            <span class="text-xs text-text-muted shrink-0 border border-border rounded-full px-2.5 py-0.5">
+              {project.stat}
+            </span>
+          )}
         </div>
-      ))}
-    </div>
+
+        <p class="text-sm text-text-secondary leading-relaxed mb-3">
+          {project.description}
+        </p>
+
+        <div class="flex flex-wrap gap-1.5">
+          {project.tags.map((tag) => (
+            <span class="tech-tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+    ))}
   </div>
 </section>

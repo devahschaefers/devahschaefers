@@ -1,0 +1,67 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title = "devah@terminal:~" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Devah Schaefers — Terminal Portfolio" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌨</text></svg>" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Fira+Code:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="animate-crt-flicker">
+    <div class="matrix-bg" id="matrix-bg"></div>
+    <div class="crt-overlay"></div>
+
+    <slot />
+
+    <script>
+      const matrixBg = document.getElementById("matrix-bg");
+      if (matrixBg) {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*+=<>{}[]|/\\~";
+        const columnCount = Math.floor(window.innerWidth / 18);
+
+        for (let i = 0; i < columnCount; i++) {
+          const col = document.createElement("div");
+          col.classList.add("matrix-column");
+          col.style.left = `${i * 18}px`;
+          col.style.animationDuration = `${8 + Math.random() * 12}s`;
+          col.style.animationDelay = `${Math.random() * 10}s`;
+
+          let text = "";
+          const len = 20 + Math.floor(Math.random() * 30);
+          for (let j = 0; j < len; j++) {
+            text += chars[Math.floor(Math.random() * chars.length)] + "\n";
+          }
+          col.textContent = text;
+          matrixBg.appendChild(col);
+        }
+      }
+
+      const revealElements = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+      );
+      revealElements.forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>

@@ -1,6 +1,4 @@
 ---
-import SectionLabel from './SectionLabel.astro';
-
 interface SkillGroup {
   title: string;
   items: string[];
@@ -8,11 +6,11 @@ interface SkillGroup {
 
 const groups: SkillGroup[] = [
   {
-    title: 'Languages',
+    title: 'languages',
     items: ['Python', 'TypeScript', 'Rust', 'SQL / PostgreSQL', 'C / C++', 'Java', 'CSS'],
   },
   {
-    title: 'Frameworks & ML',
+    title: 'frameworks & ml',
     items: [
       'React / Next.js',
       'React Native',
@@ -25,7 +23,7 @@ const groups: SkillGroup[] = [
     ],
   },
   {
-    title: 'Data & Systems',
+    title: 'data & systems',
     items: [
       'Data Modeling',
       'ETL / ELT',
@@ -37,34 +35,31 @@ const groups: SkillGroup[] = [
     ],
   },
   {
-    title: 'Tools & Platforms',
+    title: 'tools & platforms',
     items: ['Git / GitHub', 'GitLab', 'Supabase', 'PostgreSQL', 'SQLite', 'CI/CD'],
   },
 ];
 ---
 
-<section class="relative py-28 section-divider" id="skills">
-  <div class="max-w-[900px] mx-auto px-8">
-    <SectionLabel label="Skills" class="reveal" />
-    <h2 class="reveal reveal-delay-1 font-serif text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold tracking-tight leading-[1.2] mb-14 text-text-primary">
-      Technical toolkit
-    </h2>
+<section class="py-10" id="skills">
+  <h2 class="section-heading">skills</h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-      {groups.map((group, gi) => (
-        <div class:list={['reveal', gi > 0 && `reveal-delay-${gi}`]}>
-          <h3 class="font-serif text-base font-bold text-text-primary mb-5 pb-3 border-b border-border">
-            {group.title}
-          </h3>
-          <div class="flex flex-wrap gap-2">
-            {group.items.map((item) => (
-              <span class="inline-block text-[0.8rem] font-sans font-medium text-text-secondary px-3.5 py-1.5 bg-bg-secondary border border-border rounded-full transition-all duration-300 hover:border-accent hover:text-accent hover:bg-accent/5 cursor-default">
-                {item}
-              </span>
-            ))}
-          </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    {groups.map((group) => (
+      <div>
+        <h3 class="text-sm font-medium text-text-muted mb-3 pb-2 border-b border-border">
+          {group.title}
+        </h3>
+        <div class="flex flex-wrap gap-1.5">
+          {group.items.map((item) => (
+            <span
+              class="tech-tag cursor-default hover:border-text-muted transition-colors duration-200"
+            >
+              {item}
+            </span>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </div>
 </section>

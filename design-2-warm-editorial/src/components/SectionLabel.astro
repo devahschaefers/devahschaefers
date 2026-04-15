@@ -1,21 +1,12 @@
 ---
+/* SectionLabel is no longer used in the minimal design. Kept for compatibility. */
 interface Props {
   label: string;
   class?: string;
   centered?: boolean;
 }
 
-const { label, class: className = '', centered = false } = Astro.props;
+const { label } = Astro.props;
 ---
 
-<div
-  class:list={[
-    'font-sans text-[0.75rem] font-semibold tracking-[0.18em] uppercase text-accent',
-    'mb-3 flex items-center gap-3',
-    centered && 'justify-center',
-    className,
-  ]}
->
-  <span class="text-accent text-[0.55rem]">&#9670;</span>
-  {label}
-</div>
+<span class="text-xs text-text-muted tracking-wide uppercase">{label}</span>

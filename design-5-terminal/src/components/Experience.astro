@@ -1,0 +1,135 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+
+interface RoleEntry {
+  title: string;
+  org: string;
+  period: string;
+  description: string;
+  tech: string[];
+  subRoles?: { title: string; period: string; description: string; tech: string[] }[];
+}
+
+const roles: RoleEntry[] = [
+  {
+    title: "NeuroTech ML Engineer",
+    org: "UC Berkeley NeuroTech",
+    period: "Jan 2026 — Present",
+    description:
+      "Built CNN-LSTM architecture for EEG-based gait prediction, achieving 5° RMSE on real neural signal data.",
+    tech: ["Python", "PyTorch"],
+  },
+  {
+    title: "Data Scientist",
+    org: "Synopsys",
+    period: "Aug 2025 — Dec 2025",
+    description:
+      "Developed GNN models for chip power prediction using TorchGeometric. Performed SHAP analysis for model interpretability.",
+    tech: ["Python", "PyTorch", "TorchGeometric"],
+  },
+  {
+    title: "VP of Engineering",
+    org: "Open Project at UC Berkeley",
+    period: "Jan 2025 — Dec 2025",
+    description:
+      "Led 15+ developers building CAS-auth system deployed across 200+ apps. Directed engineering strategy and architecture decisions.",
+    tech: ["Next.js", "PostgreSQL", "Supabase"],
+    subRoles: [
+      {
+        title: "Lead Developer",
+        period: "Jan 2025 — May 2025",
+        description:
+          "Built RAG-powered chess coaching app achieving 20% skill improvement. Normalized 500K+ ingredient records.",
+        tech: ["Python", "React Native", "Flask"],
+      },
+      {
+        title: "Data Engineer",
+        period: "Aug 2024 — Jan 2025",
+        description:
+          "Automated 10K+ HTTP requests, collected 100K+ data points. Achieved 100x speed improvement in data pipeline.",
+        tech: ["Python", "Playwright", "Pandas"],
+      },
+    ],
+  },
+  {
+    title: "Software Engineer",
+    org: "CubeSat @ UC Berkeley",
+    period: "Aug 2021 — Sep 2024",
+    description:
+      "Engineered satellite image data streaming pipeline, achieving 40% throughput increase for orbital imaging system.",
+    tech: ["Python", "C"],
+  },
+];
+---
+
+<section id="experience" class="py-20 px-4">
+  <div class="max-w-4xl mx-auto reveal">
+    <SectionLabel label="Experience" />
+
+    <p class="font-body text-sm text-muted mb-8">
+      <span class="text-accent">$</span> tail -n 20 experience.log
+    </p>
+
+    <div class="space-y-0">
+      {roles.map((role, i) => (
+        <div class="relative pl-6 border-l-2 border-border-muted hover:border-fg/60 transition-colors group">
+          <div class="absolute left-[-5px] top-2 w-2 h-2 bg-fg rounded-full group-hover:bg-accent transition-colors"></div>
+
+          <div class="pb-10">
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+              <h3 class="font-display text-fg text-sm font-semibold terminal-glow-sm">
+                {role.title}
+              </h3>
+              <span class="font-body text-xs text-muted">{role.period}</span>
+            </div>
+
+            <p class="font-body text-xs text-accent mb-2">
+              [{role.org}] <span class="text-muted">PID:{(1000 + i).toString()}</span>
+            </p>
+
+            <p class="font-body text-sm text-fg/75 mb-3">
+              {role.description}
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 mb-2">
+              {role.tech.map((t) => (
+                <span class="font-body text-xs px-2 py-0.5 border border-border-muted bg-dim-green/30 text-fg/80 rounded">
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            {role.subRoles && (
+              <div class="ml-4 mt-4 space-y-4 border-l border-border-muted pl-4">
+                {role.subRoles.map((sub) => (
+                  <div class="group/sub relative">
+                    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+                      <h4 class="font-display text-xs text-fg/90 font-medium">
+                        <span class="text-muted">├─</span> {sub.title}
+                      </h4>
+                      <span class="font-body text-xs text-muted">{sub.period}</span>
+                    </div>
+                    <p class="font-body text-xs text-fg/70 mb-2">
+                      {sub.description}
+                    </p>
+                    <div class="flex flex-wrap gap-1.5">
+                      {sub.tech.map((t) => (
+                        <span class="font-body text-xs px-2 py-0.5 border border-border-muted bg-dim-green/20 text-fg/70 rounded">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+
+      <div class="pl-6 border-l-2 border-transparent">
+        <span class="font-body text-xs text-muted">[end of log]</span>
+      </div>
+    </div>
+  </div>
+</section>

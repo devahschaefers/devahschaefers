@@ -1,0 +1,73 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+
+const currentYear = new Date().getFullYear();
+const uptime = `${currentYear - 2021}y`;
+---
+
+<section id="contact" class="py-20 px-4">
+  <div class="max-w-4xl mx-auto reveal">
+    <SectionLabel label="Contact" />
+
+    <div class="terminal-titlebar rounded-t">
+      <span class="dot bg-red-500/80"></span>
+      <span class="dot bg-yellow-500/80"></span>
+      <span class="dot bg-green-500/80"></span>
+      <span class="ml-2 text-fg/60">compose mail</span>
+    </div>
+
+    <div class="terminal-block rounded-b border-t-0 p-6 sm:p-8 space-y-6">
+      <p class="font-body text-sm text-muted">
+        <span class="text-accent">$</span> mail devah.schaefers@gmail.com
+      </p>
+
+      <div class="space-y-3 font-body text-sm">
+        <p class="text-muted">To: <span class="text-fg">devah.schaefers@gmail.com</span></p>
+        <p class="text-muted">Subject: <span class="text-fg">Let's Connect</span></p>
+        <div class="border-t border-border-muted pt-4">
+          <p class="text-fg/80">
+            Interested in ML engineering, data science, or building something cool together?
+            Drop me a line — I'm always up for a conversation about tech, data, or interesting problems.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3 pt-2">
+        <a
+          href="mailto:devah.schaefers@gmail.com"
+          class="inline-flex items-center gap-2 font-display text-sm px-5 py-2.5 border border-fg/40 hover:border-fg bg-dim-green/30 hover:bg-dim-green/60 transition-all box-glow-hover rounded"
+        >
+          <span class="text-accent">$</span> sendmail
+        </a>
+        <a
+          href="https://www.linkedin.com/in/devahschaefers/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 font-display text-sm px-5 py-2.5 border border-accent/40 hover:border-accent bg-accent/5 hover:bg-accent/10 transition-all rounded"
+        >
+          <span class="text-accent">$</span> linkedin
+        </a>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-border-muted font-body text-xs text-muted space-y-1">
+        <p>
+          <span class="text-accent">system</span>: PersonalXite v6.0.0 | uptime: {uptime} |
+          load: <span class="text-fg/60">██████████░░ 83%</span>
+        </p>
+        <p>
+          <span class="text-accent">kernel</span>: DevahOS 6.x+ | arch: x86_64 |
+          shell: <span class="text-fg/60">/bin/zsh</span>
+        </p>
+        <p class="text-border-muted">
+          ═══════════════════════════════════════════════════════════════
+        </p>
+        <p class="text-fg/40">
+          © {currentYear} Devah Schaefers. All rights reserved.
+        </p>
+        <p class="text-fg/30">
+          Connection closed. Type <span class="text-accent">reboot</span> to start over.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

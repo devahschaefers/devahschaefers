@@ -1,0 +1,68 @@
+---
+const links = [
+  { number: "01", label: "About", href: "#about" },
+  { number: "02", label: "Experience", href: "#experience" },
+  { number: "03", label: "Projects", href: "#projects" },
+  { number: "04", label: "Skills", href: "#skills" },
+  { number: "05", label: "Contact", href: "#contact" },
+];
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-bg/95 backdrop-blur-sm border-b border-border-muted">
+  <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a href="#" class="text-sm font-bold tracking-tight text-fg">Devah Schaefers</a>
+
+    <div class="hidden md:flex items-center gap-8">
+      {links.map((link) => (
+        <a href={link.href} class="text-xs font-medium tracking-[0.1em] uppercase text-muted hover:text-fg transition-colors duration-200">
+          <span class="text-accent mr-1">{link.number}</span>
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <button id="nav-toggle" class="md:hidden text-fg" aria-label="Toggle menu">
+      <svg id="nav-open-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+      <svg id="nav-close-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="hidden">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="6" y1="18" x2="18" y2="6" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="nav-menu" class="hidden md:hidden border-t border-border-muted bg-bg">
+    <div class="px-6 py-4 flex flex-col gap-4">
+      {links.map((link) => (
+        <a href={link.href} class="text-sm font-medium tracking-[0.1em] uppercase text-muted hover:text-fg transition-colors">
+          <span class="text-accent mr-2">{link.number}</span>
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const menu = document.getElementById("nav-menu");
+  const openIcon = document.getElementById("nav-open-icon");
+  const closeIcon = document.getElementById("nav-close-icon");
+
+  toggle?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
+    openIcon?.classList.toggle("hidden");
+    closeIcon?.classList.toggle("hidden");
+  });
+
+  menu?.querySelectorAll("a").forEach((a) => {
+    a.addEventListener("click", () => {
+      menu?.classList.add("hidden");
+      openIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+    });
+  });
+</script>

@@ -1,0 +1,74 @@
+---
+import SectionLabel from "./SectionLabel.astro";
+---
+
+<section id="about" class="py-20 px-4">
+  <div class="max-w-4xl mx-auto reveal">
+    <SectionLabel label="About" />
+
+    <div class="terminal-titlebar rounded-t">
+      <span class="dot bg-red-500/80"></span>
+      <span class="dot bg-yellow-500/80"></span>
+      <span class="dot bg-green-500/80"></span>
+      <span class="ml-2 text-fg/60">about.txt</span>
+    </div>
+
+    <div class="terminal-block rounded-b border-t-0 p-6 sm:p-8 space-y-6">
+      <p class="font-body text-sm text-muted mb-2">
+        <span class="text-accent">$</span> cat about.txt
+      </p>
+
+      <div class="font-body text-fg/85 text-sm leading-relaxed space-y-4">
+        <p>
+          CS & Data Science student at <span class="text-accent">UC Berkeley</span> with a <span class="text-accent">3.97 GPA</span>,
+          building at the intersection of machine learning, data engineering, and full-stack development.
+          I thrive on turning complex data into actionable systems — from GNNs predicting chip power
+          to RAG-powered chess coaches.
+        </p>
+        <p>
+          Currently pushing the boundaries of <span class="text-fg terminal-glow-sm">neurotech ML</span> at Berkeley,
+          decoding EEG signals for gait prediction. Previously shipped production ML at Synopsys and
+          led engineering teams shipping real products used by thousands.
+        </p>
+        <p>
+          When I'm not in the terminal, I'm probably thinking about how to optimize something —
+          or building something new that probably shouldn't exist but does anyway.
+        </p>
+      </div>
+
+      <div class="mt-8">
+        <p class="font-display text-xs text-accent mb-3">// system_stats:</p>
+        <div class="font-body text-xs sm:text-sm border border-border-muted bg-bg/50 overflow-x-auto">
+          <table class="w-full">
+            <tbody>
+              <tr class="border-b border-border-muted">
+                <td class="px-3 py-2 text-muted whitespace-nowrap">┌─────────────────┐</td>
+                <td class="px-3 py-2 text-muted whitespace-nowrap">┌────────────────────┐</td>
+              </tr>
+              <tr class="border-b border-border-muted">
+                <td class="px-3 py-2 whitespace-nowrap"><span class="text-muted">│</span> <span class="text-fg/70">university</span></td>
+                <td class="px-3 py-2 whitespace-nowrap"><span class="text-muted">│</span> <span class="text-accent">UC Berkeley</span></td>
+              </tr>
+              <tr class="border-b border-border-muted">
+                <td class="px-3 py-2 whitespace-nowrap"><span class="text-muted">│</span> <span class="text-fg/70">major</span></td>
+                <td class="px-3 py-2 whitespace-nowrap"><span class="text-muted">│</span> <span class="text-accent">CS & Data Science</span></td>
+              </tr>
+              <tr class="border-b border-border-muted">
+                <td class="px-3 py-2 whitespace-nowrap"><span class="text-muted">│</span> <span class="text-fg/70">gpa</span></td>
+                <td class="px-3 py-2 whitespace-nowrap"><span class="text-muted">│</span> <span class="text-accent">3.97 / 4.00</span></td>
+              </tr>
+              <tr class="border-b border-border-muted">
+                <td class="px-3 py-2 whitespace-nowrap"><span class="text-muted">│</span> <span class="text-fg/70">focus</span></td>
+                <td class="px-3 py-2 whitespace-nowrap"><span class="text-muted">│</span> <span class="text-fg">ML · Data · Full-Stack</span></td>
+              </tr>
+              <tr>
+                <td class="px-3 py-2 text-muted whitespace-nowrap">└─────────────────┘</td>
+                <td class="px-3 py-2 text-muted whitespace-nowrap">└────────────────────┘</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
