@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
 import Contact from '../../components/Contact.astro';
 import { categories } from '../../data/experience';
 
@@ -13,7 +14,8 @@ export function getStaticPaths() {
 const { cat } = Astro.props;
 ---
 
-<Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience">
+<Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline}>
+  <Nav current="experience" />
 
   <section class="py-10">
     <a
