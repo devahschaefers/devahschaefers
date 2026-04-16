@@ -78,6 +78,7 @@ a:hover {
 }
 
 .hero-name {
+  font-family: "Instrument Serif", Georgia, serif;
   color: var(--color-accent);
 }
 
