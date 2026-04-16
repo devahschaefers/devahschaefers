@@ -1,0 +1,27 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import { categories } from '../data/experience';
+---
+
+<section class="relative z-1 py-32 section-divider" id="experience">
+  <div class="max-w-[1200px] mx-auto px-8">
+    <SectionLabel label="Experience" class="reveal" />
+    <h2 class="reveal reveal-delay-1 font-display text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight leading-[1.15] mb-16">
+      Where I've built things
+    </h2>
+
+    <div class="flex flex-col gap-4">
+      {categories.map((cat, i) => (
+        <a
+          href={`/experience/${cat.id}`}
+          class="reveal group flex items-center gap-4 text-[0.85rem] font-medium tracking-[0.05em] text-text-secondary hover:text-accent transition-colors duration-300"
+          style={`transition-delay: ${(i + 2) * 0.1}s`}
+        >
+          <span class="text-text-muted group-hover:text-accent transition-colors duration-300">→</span>
+          <span>{cat.label}</span>
+          <span class="text-text-muted font-normal">— {cat.tagline}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

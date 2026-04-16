@@ -1,8 +1,5 @@
 ---
-import SectionLabel from './SectionLabel.astro';
-
 interface Project {
-  icon: string;
   title: string;
   description: string;
   tags: string[];
@@ -11,121 +8,72 @@ interface Project {
 
 const projects: Project[] = [
   {
-    icon: '⚡',
     title: 'Structured Document Editing Agent',
     description:
-      'LLM-powered agent for structured document editing via tool calls. Uses an intermediate representation for safe, consistent multi-step edits — reducing manual editing time by 60%.',
+      'LLM-powered agent for structured document editing via tool calls. Uses an intermediate representation for safe, consistent multi-step edits \u2014 reducing manual editing time by 60%.',
     tags: ['TypeScript', 'AI SDK', 'LLM Agents'],
   },
   {
-    icon: '🦀',
     title: 'AI File Organizer',
     description:
-      'Rust-built AI tool to organize large, inconsistent directory trees. Two-stage Explorer/Organizer pipeline with semantic indexing, 18x faster cleanup, and a virtual staging layer for safe review before execution.',
+      'Rust-built AI tool to organize large, inconsistent directory trees. Two-stage Explorer/Organizer pipeline with semantic indexing, 18x faster cleanup, and a virtual staging layer for safe review.',
     tags: ['Rust', 'Async', 'TUI'],
   },
   {
-    icon: '🧠',
     title: 'NeuroTech EEG Gait Decoder',
     description:
-      'PyTorch pipeline predicting gait angle from 16-channel EEG for BCI-driven exoskeleton control. CNN-LSTM architecture reaching 5° RMSE on supervised regression.',
+      'PyTorch pipeline predicting gait angle from 16-channel EEG for BCI-driven exoskeleton control. CNN-LSTM architecture reaching 5\u00b0 RMSE on supervised regression.',
     tags: ['Python', 'PyTorch', 'BCI'],
   },
   {
-    icon: '🌍',
     title: 'Disaster Response NLP',
     description:
       'Sentiment analysis on ~45K disaster tweets across 14 events using RoBERTa and VADER. Geospatial and textual models identify locations of highest need during wildfire crises.',
     tags: ['Python', 'RoBERTa', 'NLP'],
   },
   {
-    icon: '🛡',
     title: 'Disinformation Detection System',
     description:
       'Detection system using Logistic Regression with GloVe embeddings and Bag-of-Words features. 91% accuracy and 87% F1-score on 1,000+ web-scraped samples.',
     tags: ['Python', 'scikit-learn', 'GloVe'],
   },
   {
-    icon: '📅',
     title: 'Raycast Calendar Extension',
     description:
       'Productivity extension for calendar management integrated with macOS calendar software via AppleScript. Serving over 10,000 users.',
     tags: ['TypeScript', 'React', 'AppleScript'],
-    stat: '10K+ Users',
+    stat: '10K+ users',
   },
 ];
 ---
 
-<section class="relative z-1 py-32 bg-bg-secondary" id="projects">
-  <div class="max-w-[1200px] mx-auto px-8">
-    <SectionLabel label="Projects" class="reveal" />
-    <h2 class="reveal reveal-delay-1 font-display text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight leading-[1.15] mb-12">
-      Selected work
-    </h2>
+<section class="py-10" id="projects">
+  <h2 class="section-heading">projects</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-      {projects.map((project, i) => (
-        <div
-          class:list={[
-            'project-card group relative overflow-hidden bg-bg-card border border-border rounded-sm p-8',
-            'transition-all duration-500 ease-[var(--ease-out-expo)] cursor-default',
-            'hover:border-border-hover hover:-translate-y-1',
-            'reveal',
-            i > 0 && `reveal-delay-${Math.min(i, 5)}`,
-          ]}
-        >
-          {/* Radial glow on hover */}
-          <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 project-glow" />
-
-          {/* Header */}
-          <div class="flex justify-between items-start mb-4">
-            <div class="w-10 h-10 border border-border rounded-sm flex items-center justify-center text-lg text-accent transition-all duration-300 group-hover:border-accent group-hover:shadow-[0_0_15px_var(--color-accent-glow)]">
-              {project.icon}
-            </div>
-            {project.stat && (
-              <span class="text-[0.65rem] tracking-[0.08em] uppercase text-accent font-semibold px-2.5 py-1 border border-accent-dim rounded-sm">
-                {project.stat}
-              </span>
-            )}
-          </div>
-
-          {/* Title */}
-          <h3 class="font-display text-lg font-bold tracking-tight mb-3 text-text-primary">
+  <div class="space-y-4">
+    {projects.map((project) => (
+      <div class="experience-item">
+        <div class="flex items-start justify-between gap-3 mb-1">
+          <h3 class="font-semibold text-text text-[15px] leading-snug">
             {project.title}
           </h3>
-
-          {/* Description */}
-          <p class="text-[0.8rem] text-text-secondary leading-relaxed mb-5">
-            {project.description}
-          </p>
-
-          {/* Tags */}
-          <div class="flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <span class="text-[0.6rem] font-semibold tracking-[0.1em] uppercase px-2.5 py-1 bg-accent/[0.06] border border-accent/15 rounded-sm text-accent">
-                {tag}
-              </span>
-            ))}
-          </div>
+          {project.stat && (
+            <span class="text-xs text-text-muted shrink-0 border border-border rounded-full px-2.5 py-0.5">
+              {project.stat}
+            </span>
+          )}
         </div>
-      ))}
-    </div>
+
+        <p class="text-sm text-text-secondary leading-relaxed mb-3">
+          {project.description}
+        </p>
+
+        <div class="flex flex-wrap gap-1.5">
+          {project.tags.map((tag) => (
+            <span class="tech-tag">{tag}</span>
+          ))}
+        </div>
+      </div>
+    ))}
   </div>
 </section>
-
-<script>
-  // Project card mouse-tracking glow
-  document.querySelectorAll('.project-card').forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const el = card as HTMLElement;
-      const rect = el.getBoundingClientRect();
-      const mouseEvent = e as MouseEvent;
-      const x = mouseEvent.clientX - rect.left;
-      const y = mouseEvent.clientY - rect.top;
-      const glow = el.querySelector('.project-glow') as HTMLElement;
-      if (glow) {
-        glow.style.background = `radial-gradient(600px circle at ${x}px ${y}px, var(--color-accent-glow), transparent 40%)`;
-      }
-    });
-  });
-</script>

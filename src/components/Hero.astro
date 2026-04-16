@@ -1,94 +1,36 @@
 ---
-
 ---
 
-<section class="relative z-1 min-h-screen flex items-center overflow-hidden" id="hero">
-  <div class="max-w-[1200px] mx-auto px-8 relative z-2 py-24">
-    <!-- Tag -->
-    <div
-      class="font-mono text-xs font-medium tracking-[0.15em] uppercase text-accent
-             mb-6 inline-flex items-center gap-2.5
-             opacity-0 animate-[fadeSlideUp_0.8s_var(--ease-out-expo)_0.2s_forwards]"
-    >
-      <span class="inline-block w-2 h-2 bg-accent rounded-full animate-[pulse-dot_2s_ease-in-out_infinite]"></span>
-      Available for opportunities
+<section class="mb-8 fade-in" id="hero">
+  <div class="flex flex-col md:items-start">
+    <div class="leading-relaxed text-text space-y-6 md:space-y-4 md:max-w-4xl">
+      <h1 class="text-4xl font-semibold leading-tight tracking-tight mb-4 text-text text-left max-[600px]:text-center min-[601px]:mb-0">
+        Hi! I'm Devah
+      </h1>
+
+      <p>
+        I'm an undergraduate @
+        <a href="https://www.berkeley.edu/" target="_blank" rel="noopener noreferrer" class="bio-link">UC Berkeley</a>
+        (go bears!) studying
+        <a href="/skills" class="bio-link">Computer Science</a>
+        and
+        <a href="/skills" class="bio-link">Data Science</a>.
+        I build software, AI systems, and data infrastructure.
+      </p>
+
+      <p>
+        My work spans LLM-powered agents, applied ML research on EEG data for
+        brain-computer interfaces, high-volume data pipelines, and full-stack
+        internal platforms serving hundreds of users. I work across Python,
+        TypeScript, Rust, SQL, React/Next.js, PyTorch, PostgreSQL, and modern AI/LLM tooling.
+      </p>
+
+      <p>
+        Currently, I'm conducting ML research at
+        <a href="/experience" class="bio-link">NeuroTech @ Berkeley</a>
+        and leading engineering at
+        <a href="/experience" class="bio-link">Open Project</a>.
+      </p>
     </div>
-
-    <!-- Name -->
-    <h1
-      class="font-display font-extrabold tracking-[-0.04em] leading-[0.95] mb-6
-             text-[clamp(3.2rem,9vw,7.5rem)]
-             opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-expo)_0.4s_forwards]"
-    >
-      <span class="block text-text-primary">Devah</span>
-      <span class="block text-transparent" style="-webkit-text-stroke: 1.5px var(--color-text-secondary);">
-        Schaefers<span class="text-accent" style="-webkit-text-stroke: 0;">.</span>
-      </span>
-    </h1>
-
-    <!-- Description -->
-    <p
-      class="font-mono text-[clamp(0.82rem,1.2vw,0.95rem)] font-light leading-relaxed
-             text-text-secondary max-w-[560px] mb-10
-             opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-expo)_0.6s_forwards]"
-    >
-      UC Berkeley Computer Science &amp; Data Science student building software,
-      AI systems, and data infrastructure. From neural decoders to full-stack
-      platforms — I ship things that work.
-    </p>
-
-    <!-- CTAs -->
-    <div class="flex gap-4 flex-wrap opacity-0 animate-[fadeSlideUp_1s_var(--ease-out-expo)_0.8s_forwards]">
-      <a
-        href="https://www.linkedin.com/in/devahschaefers/"
-        target="_blank"
-        rel="noopener"
-        class="inline-flex items-center gap-2 px-7 py-3.5 font-mono text-xs font-semibold
-               tracking-[0.08em] uppercase rounded-sm cursor-pointer
-               bg-accent text-bg-primary border border-accent
-               transition-all duration-400 ease-[var(--ease-out-expo)]
-               hover:bg-transparent hover:text-accent hover:shadow-[0_0_30px_var(--color-accent-glow)]"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-          <rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" />
-        </svg>
-        LinkedIn
-      </a>
-      <a
-        href="mailto:devah.schaefers@gmail.com"
-        class="inline-flex items-center gap-2 px-7 py-3.5 font-mono text-xs font-semibold
-               tracking-[0.08em] uppercase rounded-sm cursor-pointer
-               bg-transparent text-text-secondary border border-border
-               transition-all duration-400 ease-[var(--ease-out-expo)]
-               hover:border-accent hover:text-accent hover:shadow-[0_0_30px_var(--color-accent-glow)]"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="2" y="4" width="20" height="16" rx="2" />
-          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-        </svg>
-        Get in Touch
-      </a>
-    </div>
-  </div>
-
-  <!-- Side text -->
-  <div
-    class="absolute right-8 top-1/2 -translate-y-1/2 rotate-90 origin-center
-           text-[0.6rem] tracking-[0.25em] uppercase text-text-muted
-           opacity-0 animate-[fadeIn_1s_ease_1.2s_forwards]
-           hidden md:block"
-  >
-    Berkeley, CA — CS &amp; Data Science
-  </div>
-
-  <!-- Scroll indicator -->
-  <div
-    class="absolute bottom-10 left-1/2 -translate-x-1/2
-           flex flex-col items-center gap-2
-           opacity-0 animate-[fadeIn_1s_ease_1.5s_forwards]"
-  >
-    <span class="text-[0.6rem] tracking-[0.2em] uppercase text-text-muted">Scroll</span>
-    <div class="w-px h-10 bg-gradient-to-b from-accent to-transparent animate-[scrollPulse_2s_ease-in-out_infinite]"></div>
   </div>
 </section>
