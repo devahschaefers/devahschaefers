@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #faf6f1;
-  --color-border: #e5ddd3;
-  --color-text: #2c2016;
-  --color-text-secondary: #6e5d4d;
-  --color-text-muted: #a08e7a;
-  --color-accent-hover: #f0e0cc;
+  --color-bg: #0a1e28;
+  --color-border: #153545;
+  --color-text: #c8e8f0;
+  --color-text-secondary: #68a8b8;
+  --color-text-muted: #306878;
+  --color-accent-hover: #0f3040;
 
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light only;
+  color-scheme: dark only;
 }
 
 body {
@@ -34,7 +34,7 @@ body {
 a {
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: #a08e7a;
+  text-decoration-color: #306878;
   text-underline-offset: 2px;
   text-decoration-thickness: 0.1em;
   border-radius: 2px;
@@ -94,7 +94,7 @@ a:hover {
 .bio-link {
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: #a08e7a;
+  text-decoration-color: #306878;
   text-underline-offset: 2px;
   text-decoration-thickness: 0.1em;
   border-radius: 2px;
