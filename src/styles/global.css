@@ -235,7 +235,7 @@ a:hover {
 /* ── Bio / Inline Links ────────────────────────────── */
 
 .bio-link {
-  color: color-mix(in srgb, var(--color-accent) 75%, var(--color-text));
+  color: color-mix(in srgb, var(--color-accent) 65%, var(--color-text));
   text-decoration: none;
   border-radius: 3px;
   padding-bottom: 3px;
