@@ -1,0 +1,12 @@
+---
+/* SectionLabel is no longer used in the minimal design. Kept for compatibility. */
+interface Props {
+  label: string;
+  class?: string;
+  centered?: boolean;
+}
+
+const { label } = Astro.props;
+---
+
+<span class="text-xs text-text-muted tracking-wide uppercase">{label}</span>
