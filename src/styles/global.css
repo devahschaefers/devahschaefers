@@ -2,8 +2,8 @@
 
 @theme {
   /* ── Ash + Violet ──────────────────────────────────────
-     Dark charcoal base with a soft violet accent.
-     Playful type, bouncy interactions, warm text.       */
+    Dark charcoal base with a soft violet accent.
+    Playful type, bouncy interactions, warm text.       */
 
   --color-bg: #1e1e22;
   --color-surface: #28282f;
@@ -11,7 +11,7 @@
   --color-text: #eae8e4;
   --color-text-secondary: #aaa7a1;
   --color-text-muted: #908c86;
-  --color-accent: #a78bfa;
+  --color-accent: #4865e4;
   --color-accent-hover: #2a2a35;
 
   --font-heading: "Space Grotesk", system-ui, sans-serif;
