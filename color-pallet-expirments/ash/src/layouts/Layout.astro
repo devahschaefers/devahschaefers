@@ -1,14 +1,19 @@
 ---
 import '../styles/global.css';
+import Nav from '../components/Nav.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  current?: string;
+  centered?: boolean;
 }
 
 const {
   title = 'Devah Schaefers',
   description = 'UC Berkeley Computer Science & Data Science student building software, AI systems, and data infrastructure.',
+  current = 'home',
+  centered = false,
 } = Astro.props;
 ---
 
@@ -26,7 +31,8 @@ const {
     <title>{title}</title>
   </head>
   <body class="antialiased min-h-dvh flex flex-col max-w-[53rem] mx-6 lg:mx-auto">
-    <main class="flex-auto min-w-0 my-auto flex flex-col px-2 md:px-4 py-8">
+    <Nav current={current} />
+    <main class:list={["flex-1 min-w-0 flex flex-col px-2 md:px-4 py-8", centered && "justify-center"]}>
       <slot />
     </main>
   </body>
