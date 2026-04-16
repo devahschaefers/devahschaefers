@@ -1,23 +1,30 @@
 ---
+const name = 'Devah';
 ---
 
 <section class="mb-8 fade-in" id="hero">
   <div class="flex flex-col items-center">
     <div class="leading-relaxed text-text space-y-6 md:space-y-4 md:max-w-4xl text-left">
       <h1 class="hero-heading mb-4 text-text text-center">
-        Hi! I'm <span class="hero-name">Devah</span>
+        <span class="greeting" data-greeting>Hi!</span> I'm
+        <span class="hero-name" aria-label={name}>
+          {name.split('').map((ch) => (
+            <span class="wave-letter" aria-hidden="true">{ch}</span>
+          ))}
+        </span>
       </h1>
 
-      <p>
+      <div>
         I'm an undergraduate @
         <a href="https://www.berkeley.edu/" target="_blank" rel="noopener noreferrer" class="bio-link">UC Berkeley</a>
-        (go bears!) studying
+        (<span class="go-bears" data-go-bears role="button" tabindex="0" aria-label="Go bears">go bears!</span>) studying
         <a href="/experience" class="bio-link">Computer Science</a>
         and
         <a href="/experience" class="bio-link">Data Science</a>.
-        I build software, AI systems, and data infrastructure.
-      </p>
 
+        I build <span class="role-rotator" data-role-rotator><span class="role-word">software</span></span>.
+
+      </div>
       <p>
         My work spans LLM-powered agents, applied ML research on EEG data for
         brain-computer interfaces, high-volume data pipelines, and full-stack
@@ -34,3 +41,94 @@
     </div>
   </div>
 </section>
+
+<script>
+  // Respect reduced-motion for every decorative JS effect
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ──────────────────────────────────────────────────────
+  // Time-aware greeting
+  // ──────────────────────────────────────────────────────
+  (() => {
+    const el = document.querySelector<HTMLElement>('[data-greeting]');
+    if (!el) return;
+    const h = new Date().getHours();
+    let msg = 'Hi!';
+    if (h >= 5 && h < 12) msg = 'Good morning!';
+    else if (h >= 12 && h < 17) msg = 'Good afternoon!';
+    else if (h >= 17 && h < 22) msg = 'Good evening!';
+    else msg = 'Burning the midnight oil?';
+    el.textContent = msg;
+  })();
+
+  // ──────────────────────────────────────────────────────
+  // "go bears!" — pop a tiny bear on click
+  // ──────────────────────────────────────────────────────
+  (() => {
+    const el = document.querySelector<HTMLElement>('[data-go-bears]');
+    if (!el) return;
+
+    const pop = () => {
+      if (reduceMotion) return;
+      const bear = document.createElement('span');
+      bear.className = 'bear-pop';
+      bear.textContent = Math.random() < 0.15 ? '🐾' : '🐻';
+      el.appendChild(bear);
+      setTimeout(() => bear.remove(), 1200);
+    };
+
+    el.addEventListener('click', pop);
+    el.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        pop();
+      }
+    });
+  })();
+
+  // ──────────────────────────────────────────────────────
+  // Rotating role word — typewriter rhythm
+  // ──────────────────────────────────────────────────────
+  (() => {
+    const host = document.querySelector<HTMLElement>('[data-role-rotator] .role-word');
+    if (!host) return;
+
+    const words = ['LLM agents', 'EEG models', 'data tooling', 'AI systems', 'data infrastructure'];
+    
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    // If reduced motion, just cycle a simple swap every 4s with no typing
+    if (reduceMotion) {
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % words.length;
+        host.textContent = words[i];
+      }, 4000);
+      return;
+    }
+
+    let i = 0;
+    (async function cycle() {
+      // Initial pause so visitors read the first word
+      await sleep(2400);
+      while (true) {
+        const current = host.textContent ?? '';
+        const next = words[(i + 1) % words.length];
+
+        // Erase
+        for (let j = current.length; j >= 0; j--) {
+          host.textContent = current.slice(0, j);
+          await sleep(32);
+        }
+        await sleep(120);
+        // Type
+        for (let j = 0; j <= next.length; j++) {
+          host.textContent = next.slice(0, j);
+          await sleep(55);
+        }
+        i = (i + 1) % words.length;
+        await sleep(2400);
+      }
+    })();
+  })();
+</script>
