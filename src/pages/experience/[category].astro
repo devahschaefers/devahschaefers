@@ -16,10 +16,7 @@ const { cat } = Astro.props;
 <Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience">
 
   <section class="py-10">
-    <a
-      href="/experience"
-      class="text-sm text-text-muted no-underline hover:bg-accent-hover rounded px-1.5 py-0.5 -mx-1.5 inline-block mb-6"
-    >
+    <a href="/experience" class="link-subtle mb-6">
       ← Back to experience
     </a>
 
@@ -88,10 +85,7 @@ const { cat } = Astro.props;
 
     <div class="mt-8 pt-6 border-t border-border flex flex-wrap gap-3">
       {categories.filter((c) => c.id !== cat.id).map((c) => (
-        <a
-          href={`/experience/${c.id}`}
-          class="bio-link text-sm no-underline hover:bg-accent-hover rounded px-1.5 py-0.5"
-        >
+        <a href={`/experience/${c.id}`} class="link-subtle">
           {c.label} →
         </a>
       ))}
