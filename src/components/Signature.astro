@@ -1,0 +1,45 @@
+---
+// Home-page-only animated signature for the bottom of the page.
+// Uses the "Caveat" handwriting font with a left-to-right clip-path
+// reveal + a small accent-colored pen dot that rides the reveal edge.
+// The animation triggers when the signature scrolls into view via
+// IntersectionObserver, so it lands as a natural "sign-off" moment
+// rather than firing off-screen when the page first loads.
+---
+
+<div class="signature-wrap" aria-label="— Devah" data-signature>
+  <span class="signature" aria-hidden="true">
+    <span class="signature-ink">— Devah</span>
+    <span class="signature-pen" aria-hidden="true"></span>
+  </span>
+</div>
+
+<script>
+  (() => {
+    const wrap = document.querySelector<HTMLElement>('[data-signature]');
+    if (!wrap) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      wrap.classList.add('signature--drawn');
+      return;
+    }
+
+    // Trigger the draw-in the first time the signature enters the viewport.
+    // On short pages it's already visible on load, so the observer fires
+    // immediately and animates with its CSS delay.
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            wrap.classList.add('signature--playing');
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.4 }
+    );
+    io.observe(wrap);
+  })();
+</script>

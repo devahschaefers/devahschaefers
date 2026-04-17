@@ -8,6 +8,7 @@ const name = 'Devah';
       <h1 class="hero-heading mb-4 text-text text-center">
         <span class="greeting" data-greeting>Hi!</span> I'm
         <span class="hero-name" aria-label={name}>
+        <span class="hero-name" aria-label={name}>
           {name.split('').map((ch) => (
             <span class="wave-letter" aria-hidden="true">{ch}</span>
           ))}
@@ -18,25 +19,27 @@ const name = 'Devah';
         I'm an undergraduate @
         <a href="https://www.berkeley.edu/" target="_blank" rel="noopener noreferrer" class="bio-link">UC Berkeley</a>
         (<span class="go-bears" data-go-bears role="button" tabindex="0" aria-label="Go bears">go bears!</span>) studying
-        <a href="/experience" class="bio-link">Computer Science</a>
+        <a href="https://cdss.berkeley.edu/" class="bio-link">Computer Science</a>
         and
-        <a href="/experience" class="bio-link">Data Science</a>.
-
-        I build <span class="role-rotator" data-role-rotator><span class="role-word">software</span></span>.
+        <a href="https://data.berkeley.edu/" class="bio-link">Data Science</a>.
+        <br>
 
       </div>
       <p>
+          I like to build <span class="role-rotator" data-role-rotator><span class="role-word">software</span></span>.
+      </p>
+      <!-- <p>
         My work spans LLM-powered agents, applied ML research on EEG data for
         brain-computer interfaces, high-volume data pipelines, and full-stack
         internal platforms serving hundreds of users. I work across Python,
         TypeScript, Rust, SQL, React/Next.js, PyTorch, PostgreSQL, and modern AI/LLM tooling.
-      </p>
+      </p> -->
 
       <p>
         Currently, I'm conducting ML research at
-        <a href="/experience" class="bio-link">NeuroTech @ Berkeley</a>
+        <a href="https://neurotech.studentorg.berkeley.edu/" class="bio-link">NeuroTech @ Berkeley</a>
         and leading engineering at
-        <a href="/experience" class="bio-link">Open Project</a>.
+        <a href="https://openprojectberkeley.com/" class="bio-link">Open Project</a>.
       </p>
     </div>
   </div>
@@ -57,7 +60,7 @@ const name = 'Devah';
     if (h >= 5 && h < 12) msg = 'Good morning!';
     else if (h >= 12 && h < 17) msg = 'Good afternoon!';
     else if (h >= 17 && h < 22) msg = 'Good evening!';
-    else msg = 'Burning the midnight oil?';
+    else msg = 'Hi!'; // think of some creative late-night greeetings
     el.textContent = msg;
   })();
 

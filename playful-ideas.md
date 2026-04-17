@@ -53,7 +53,7 @@ _[work page — deferred]_ Hold until the experience-page overhaul lands; these 
 - [ ] **#24 /404 page.** "This page went to Berkeley and didn't come back." Put a little interactive element — maybe a bear ASCII maze or a broken-link drawing that you can drag around.
 - [ ] **#25 /uses or /stack page.** A playful inventory of the setup (editor, keyboard, favorite languages ranked with hot takes). Devs love these and they're naturally playful.
 - [ ] **#26 "Now" page (à la nownownow.com).** Short, frequently-updated "what I'm working on this week" — informal tone licenses playfulness the rest of the site can't afford.
-- [ ] **#27 Footer signature.** Handwritten-style "— Devah" SVG path that draws itself in on first load.
+- [x] **#27 Footer signature.** Handwritten-style "— Devah" at the bottom of the home page that draws itself in on view. _(Prototype: Caveat handwriting font + left-to-right clip-path reveal with a small accent-colored pen dot riding the edge. Lives in `Signature.astro`, home page only, below `Contact`. Triggered once via IntersectionObserver when scrolled into view — no `sessionStorage` gate. Hero "Devah" was reverted to the original Instrument Serif wave-letter. Swap for a real traced-handwriting SVG path + `stroke-dasharray` animation when a signature asset lands.)_
 
 ## Sound (use sparingly — muted by default)
 
