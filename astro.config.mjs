@@ -8,6 +8,5 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  site: "https://devahschaefers.github.io",
-  base: "personalwebsite",
+  site: "https://devahschaefers.fyi",
 });
