@@ -2,65 +2,29 @@
 import Layout from '../../layouts/Layout.astro';
 import Contact from '../../components/Contact.astro';
 import { semesters } from '../../data/classes';
-
-const totalUnits = semesters.reduce(
-  (sum, sem) => sum + sem.courses.reduce((s, c) => s + c.units, 0),
-  0,
-);
-
-const totalCourses = semesters.reduce((sum, sem) => sum + sem.courses.length, 0);
 ---
 
 <Layout title="Devah Schaefers — Classes" current="classes">
 
   <section class="py-10">
     <h2 class="section-heading">Classes</h2>
-    <p class="text-text-secondary text-sm mb-8">
-      {totalCourses} courses &middot; {totalUnits} units at UC Berkeley
-    </p>
 
-    <div class="flex flex-col gap-10">
-      {semesters.map((sem) => {
-        const semUnits = sem.courses.reduce((s, c) => s + c.units, 0);
-        return (
-          <div>
-            <div class="flex items-baseline justify-between mb-3">
-              <h3 class="semester-label">{sem.label}</h3>
-              <span class="text-xs text-text-muted">{semUnits} units</span>
-            </div>
+    <div class="timeline">
+      {semesters.map((sem, si) => (
+        <div class="tl-semester">
+          <div class="tl-dot" />
+          <h3 class="tl-label">{sem.label}</h3>
 
-            <div class="border border-border rounded-xl overflow-hidden">
-              {sem.courses.map((course, i) => (
-                <div
-                  class:list={[
-                    'course-row',
-                    i < sem.courses.length - 1 && 'border-b border-border',
-                  ]}
-                >
-                  <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0 flex-1 min-w-0">
-                    <span class="course-code shrink-0">{course.code}</span>
-                    <span class="text-text-secondary text-sm truncate">{course.title}</span>
-                  </div>
-
-                  <div class="flex items-center gap-4 shrink-0 mt-1 sm:mt-0">
-                    <span class="text-xs text-text-muted w-10 text-right">{course.units.toFixed(1)}</span>
-                    <span class:list={[
-                      'grade-badge',
-                      course.grade === 'A+' && 'grade-aplus',
-                      course.grade === 'A' && 'grade-a',
-                      course.grade === 'A-' && 'grade-aminus',
-                      (course.grade === 'GRD' || course.grade === 'PNP' || course.grade === 'EPN') && 'grade-pending',
-                      course.grade === 'P' && 'grade-pass',
-                    ]}>
-                      {course.grade}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div class="tl-courses">
+            {sem.courses.map((course) => (
+              <div class="tl-course">
+                <span class="tl-code">{course.code}</span>
+                <span class="tl-title">{course.title}</span>
+              </div>
+            ))}
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   </section>
 
