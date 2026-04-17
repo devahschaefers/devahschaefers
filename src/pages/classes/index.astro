@@ -2,29 +2,53 @@
 import Layout from '../../layouts/Layout.astro';
 import Contact from '../../components/Contact.astro';
 import { semesters } from '../../data/classes';
+
+function getSemesterOrder(id: string): number {
+  const [season, yearStr] = id.split('-');
+  const year = parseInt(yearStr);
+  const seasonOrder = season === 'spring' ? 0 : season === 'summer' ? 1 : 2;
+  return year * 3 + seasonOrder;
+}
+
+function getActiveSemesterId(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const mmdd = now.getMonth() * 100 + now.getDate();
+
+  if (mmdd < 419) return `spring-${year}`;       // Jan 1 – May 18
+  if (mmdd < 720) return `summer-${year}`;        // May 19 – Aug 19
+  return `fall-${year}`;                          // Aug 20 – Dec 31
+}
+
+const activeId = getActiveSemesterId();
+const activeOrder = getSemesterOrder(activeId);
 ---
 
 <Layout title="Devah Schaefers — Classes" current="classes">
-
-  <section class="py-10 relative">
+  <section class="py-10">
     <h2 class="section-heading">Classes</h2>
 
     <div class="timeline">
-      {semesters.map((sem, si) => (
-        <div class="tl-semester">
-          <div class:list={["tl-dot", { "tl-dot--active": si === 0 }]} />
-          <h3 class="tl-label">{sem.label}</h3>
+      {semesters.map((sem) => {
+        const order = getSemesterOrder(sem.id);
+        const isActive = sem.id === activeId;
+        const isFuture = order > activeOrder;
+        return (
+          <div class:list={["tl-semester", { "tl-semester--future": isFuture }]}>
+            <div class:list={["tl-dot", { "tl-dot--active": isActive, "tl-dot--future": isFuture }]} />
+            <h3 class="tl-label">{sem.label}</h3>
 
-          <div class="tl-courses">
-            {sem.courses.map((course) => (
-              <div class="tl-course">
-                <span class="tl-code">{course.code}</span>
-                <span class="tl-title">{course.title}</span>
-              </div>
-            ))}
+            <div class="tl-courses">
+              {sem.courses.map((course) => (
+                <div class="tl-course">
+                  <span class="tl-code">{course.code}</span>
+                  <span class="tl-title">{course.title}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </section>
 
@@ -32,104 +56,52 @@ import { semesters } from '../../data/classes';
 </Layout>
 
 <script>
-  // ── 5: Staggered entrance ──
+  // ── Staggered entrance (re-triggerable) ──
   const entranceObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+      const courses = entry.target.querySelectorAll('.tl-course');
       if (entry.isIntersecting) {
-        const courses = entry.target.querySelectorAll('.tl-course');
         courses.forEach((course, i) => {
           setTimeout(() => course.classList.add('visible'), i * 100);
         });
-        entranceObserver.unobserve(entry.target);
+      } else {
+        courses.forEach(course => course.classList.remove('visible'));
       }
     });
   }, { threshold: 0.15 });
 
   document.querySelectorAll('.tl-semester').forEach(sem => entranceObserver.observe(sem));
 
-  // ── 6: Typewriter effect on semester labels ──
+  // ── Typewriter effect (once on page load) ──
   const labels = document.querySelectorAll('.tl-label');
-  const labelTexts = new Map<Element, string>();
+  const steps: { label: Element; char: string }[] = [];
 
   labels.forEach(label => {
-    labelTexts.set(label, label.textContent || '');
+    const text = label.textContent || '';
     label.textContent = '';
+    for (const char of text) {
+      steps.push({ label, char });
+    }
   });
 
-  const typeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const label = entry.target;
-        const text = labelTexts.get(label) || '';
-        label.textContent = '';
-        let i = 0;
-        const type = () => {
-          if (i < text.length) {
-            label.textContent += text[i];
-            i++;
-            setTimeout(type, 40);
-          }
-        };
-        type();
-        typeObserver.unobserve(label);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  labels.forEach(label => typeObserver.observe(label));
-
-  // ── 8: Timeline line draw-in on scroll ──
-  const timeline = document.querySelector('.timeline') as HTMLElement;
-
-  function updateLine() {
-    if (!timeline) return;
-    const rect = timeline.getBoundingClientRect();
-    const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / rect.height));
-    timeline.style.setProperty('--line-progress', String(progress));
-    requestAnimationFrame(updateLine);
-  }
-  requestAnimationFrame(updateLine);
-
-  // ── 4: Cursor-following glow ──
-  const section = timeline?.closest('section');
-  if (section) {
-    const glow = document.createElement('div');
-    glow.className = 'cursor-glow';
-    section.appendChild(glow);
-
-    section.addEventListener('mousemove', (e) => {
-      const rect = section.getBoundingClientRect();
-      glow.style.left = (e.clientX - rect.left) + 'px';
-      glow.style.top = (e.clientY - rect.top) + 'px';
-      glow.style.opacity = '1';
-    });
-
-    section.addEventListener('mouseleave', () => {
-      glow.style.opacity = '0';
-    });
-  }
-
-  // ── 9: Floating particles ──
-  if (timeline) {
-    const particles = document.createElement('div');
-    particles.className = 'particles';
-    timeline.appendChild(particles);
-
-    for (let i = 0; i < 20; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.top = Math.random() * 100 + '%';
-      p.style.animationDelay = Math.random() * 8 + 's';
-      p.style.animationDuration = (6 + Math.random() * 6) + 's';
-      const size = 2 + Math.random() * 3;
-      p.style.width = size + 'px';
-      p.style.height = size + 'px';
-      const dx = (Math.random() - 0.5) * 40;
-      const dy = -(20 + Math.random() * 40);
-      p.style.setProperty('--dx', dx + 'px');
-      p.style.setProperty('--dy', dy + 'px');
-      particles.appendChild(p);
+  let step = 0;
+  const animationSpeed = 15; // ms per character
+  const initialDelay = 200; // ms before starting the animation
+  const tick = () => {
+    if (step < steps.length) {
+      steps[step].label.textContent += steps[step].char;
+      step++;
+      setTimeout(tick, animationSpeed);
     }
-  }
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(tick, initialDelay)));
+
+  // ── Line segment draw-in (re-triggerable) ──
+  const segObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('seg-visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.tl-semester').forEach(sem => segObserver.observe(sem));
 </script>

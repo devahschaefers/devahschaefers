@@ -455,19 +455,6 @@ body {
   padding-left: 1.75rem;
 }
 
-/* 2 + 8: gradient trail + scroll draw-in */
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 4px;
-  top: 8px;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, var(--color-accent), var(--color-border));
-  transform-origin: top;
-  transform: scaleY(var(--line-progress, 0));
-}
-
 .tl-semester {
   position: relative;
   padding-bottom: 2.25rem;
@@ -478,7 +465,36 @@ body {
   padding-bottom: 0;
 }
 
-/* 3: dot with hover ripple */
+/* Line segment per semester */
+.tl-semester:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: calc(-1.75rem + 4px);
+  top: 14px;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-accent);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tl-semester.seg-visible:not(:last-child)::before {
+  transform: scaleY(1);
+}
+
+/* Future: dashed line segment */
+.tl-semester--future:not(:last-child)::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--color-text-muted) 0,
+    var(--color-text-muted) 3px,
+    transparent 3px,
+    transparent 7px
+  );
+}
+
+/* Dot */
 .tl-dot {
   position: absolute;
   left: -1.75rem;
@@ -492,6 +508,7 @@ body {
   z-index: 1;
 }
 
+/* Dot hover ripple */
 .tl-dot::after {
   content: '';
   position: absolute;
@@ -507,9 +524,20 @@ body {
   animation: ripple 0.6s ease-out;
 }
 
-/* 10: active dot heartbeat */
+/* Active dot heartbeat */
 .tl-dot--active {
   animation: heartbeat 2s ease-in-out infinite;
+}
+
+/* Future dot: hollow */
+.tl-dot--future {
+  background: transparent;
+  border: 1.5px solid var(--color-text-muted);
+  box-shadow: 0 0 0 3px var(--color-bg);
+}
+
+.tl-dot--future::after {
+  border-color: var(--color-text-muted);
 }
 
 .tl-label {
@@ -522,39 +550,32 @@ body {
   min-height: 1.2em;
 }
 
+.tl-semester--future .tl-label {
+  color: var(--color-text-muted);
+}
+
 .tl-courses {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
 }
 
-/* 1 + 5 + 7: bouncy hover, staggered entrance, jiggle */
+/* Staggered entrance */
 .tl-course {
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-  padding: 0.2rem 0.5rem;
-  margin: 0 -0.5rem;
+  padding: 0.15rem 0;
   line-height: 1.5;
-  border-radius: 6px;
-  cursor: default;
   opacity: 0;
   translate: -12px 0;
   transition: opacity 0.4s ease,
-              translate 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-              scale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-              background-color 0.2s ease;
+              translate 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .tl-course.visible {
   opacity: 1;
   translate: 0 0;
-}
-
-.tl-course.visible:hover {
-  scale: 1.03;
-  background: var(--color-surface);
-  animation: jiggle 0.4s ease;
 }
 
 .tl-code {
@@ -570,41 +591,13 @@ body {
   color: var(--color-text-secondary);
 }
 
-/* 4: cursor-following glow */
-.cursor-glow {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 70%);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 0;
+/* Future semester muted courses */
+.tl-semester--future .tl-code {
+  color: color-mix(in srgb, var(--color-text-muted) 60%, transparent);
 }
 
-/* 9: floating particles */
-.particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  background: var(--color-accent);
-  opacity: 0;
-  animation: float-particle linear infinite;
-}
-
-@keyframes jiggle {
-  0%, 100% { rotate: 0deg; }
-  25% { rotate: -0.7deg; }
-  75% { rotate: 0.7deg; }
+.tl-semester--future .tl-title {
+  color: color-mix(in srgb, var(--color-text-secondary) 50%, transparent);
 }
 
 @keyframes ripple {
@@ -613,15 +606,8 @@ body {
 }
 
 @keyframes heartbeat {
-  0%, 100% { scale: 1; box-shadow: 0 0 0 3px var(--color-bg); }
-  50% { scale: 1.4; box-shadow: 0 0 0 3px var(--color-bg), 0 0 10px color-mix(in srgb, var(--color-accent) 40%, transparent); }
-}
-
-@keyframes float-particle {
-  0% { translate: 0 0; opacity: 0; }
-  10% { opacity: 0.15; }
-  90% { opacity: 0.15; }
-  100% { translate: var(--dx) var(--dy); opacity: 0; }
+  0%, 100% { scale: 1; box-shadow: 0 0 0 3px var(--color-bg), 0 0 0 transparent; }
+  50% { scale: 1.1; box-shadow: 0 0 0 4px var(--color-bg), 0 0 16px 4px color-mix(in srgb, var(--color-accent) 60%, transparent); }
 }
 
 
