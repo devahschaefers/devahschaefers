@@ -1,4 +1,6 @@
 ---
+import { statSync } from 'node:fs';
+import { resolve } from 'node:path';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 
@@ -15,6 +17,10 @@ const {
   current = 'home',
   centered = false,
 } = Astro.props;
+
+const faviconVersion = Math.trunc(
+  statSync(resolve(process.cwd(), 'public/favicon.svg')).mtimeMs,
+);
 ---
 
 <!DOCTYPE html>
@@ -24,7 +30,8 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="color-scheme" content="dark only" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#1e1e22" />
+    <link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${faviconVersion}`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
