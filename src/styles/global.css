@@ -19,6 +19,7 @@
 }
 
 html {
+  zoom: 1.7;
   scroll-behavior: smooth;
   color-scheme: dark only;
 }
