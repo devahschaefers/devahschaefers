@@ -38,97 +38,9 @@ const faviconVersion = Math.trunc(
     <title>{title}</title>
   </head>
   <body class="antialiased min-h-[calc(100dvh/1.7)] flex flex-col max-w-[53rem] mx-6 pt-4 lg:mx-auto">
-    <div class="bg-ambient" aria-hidden="true">
-      <span class="blob blob-1"><span class="blob-inner"></span></span>
-      <span class="blob blob-3"><span class="blob-inner"></span></span>
-      <span class="blob blob-4"><span class="blob-inner"></span></span>
-      <span class="blob blob-5"><span class="blob-inner"></span></span>
-      <span class="blob blob-6"><span class="blob-inner"></span></span>
-    </div>
-    <div class="bg-grain" aria-hidden="true"></div>
     <Nav current={current} />
     <main class:list={["flex-1 min-w-0 flex flex-col px-2 md:px-4 py-8", centered && "justify-center"]}>
       <slot />
     </main>
-
-    <script>
-      // Cursor-proximity highlight for the ambient blobs.
-      // On each pointer move we find the blob whose center is
-      // closest to the cursor and give only it `.blob--nearest`,
-      // which triggers the ::after glow in global.css. Throttled
-      // to rAF; bails on reduced-motion / coarse pointers.
-      (() => {
-        if (
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-          window.matchMedia("(pointer: coarse)").matches
-        ) {
-          return;
-        }
-
-        const blobs = Array.from(
-          document.querySelectorAll<HTMLElement>(".bg-ambient .blob"),
-        );
-        if (blobs.length === 0) return;
-
-        let currentNearest: HTMLElement | null = null;
-        let mouseX = -1;
-        let mouseY = -1;
-        let pending = false;
-
-        const update = () => {
-          pending = false;
-          // Per-blob threshold: cursor must be within ~0.6 of
-          // a blob's own radius from its center. Since blobs
-          // have soft gradient falloff well past their box,
-          // this roughly means "the cursor is over the bright
-          // core of the blob" rather than "somewhere on screen".
-          let minRatio = Infinity;
-          let winner: HTMLElement | null = null;
-          for (const blob of blobs) {
-            const r = blob.getBoundingClientRect();
-            const cx = r.left + r.width / 2;
-            const cy = r.top + r.height / 2;
-            const d = Math.hypot(cx - mouseX, cy - mouseY);
-            const radius = Math.max(r.width, r.height) / 2;
-            // Normalize: distance as a fraction of this blob's
-            // own radius, so small and large blobs compete on
-            // equal terms.
-            const ratio = d / radius;
-            if (ratio < minRatio) {
-              minRatio = ratio;
-              winner = blob;
-            }
-          }
-          // Only highlight if cursor is well inside the blob.
-          if (minRatio > 0.6) winner = null;
-
-          if (winner !== currentNearest) {
-            currentNearest?.classList.remove("blob--nearest");
-            winner?.classList.add("blob--nearest");
-            currentNearest = winner;
-          }
-        };
-
-        window.addEventListener(
-          "pointermove",
-          (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            if (!pending) {
-              pending = true;
-              requestAnimationFrame(update);
-            }
-          },
-          { passive: true },
-        );
-
-        // Clear on pointer leave so the glow fades when the
-        // cursor exits the window.
-        window.addEventListener("pointerleave", () => {
-          currentNearest?.classList.remove("blob--nearest");
-          currentNearest = null;
-        });
-      })();
-    </script>
   </body>
 </html>
