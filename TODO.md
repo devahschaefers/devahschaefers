@@ -1,0 +1,2 @@
+- go bears cannot be selected
+- when clicking into ML or SWE etc content starts way to far down
