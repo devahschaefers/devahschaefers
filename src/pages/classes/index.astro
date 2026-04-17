@@ -6,13 +6,13 @@ import { semesters } from '../../data/classes';
 
 <Layout title="Devah Schaefers — Classes" current="classes">
 
-  <section class="py-10">
+  <section class="py-10 relative">
     <h2 class="section-heading">Classes</h2>
 
     <div class="timeline">
       {semesters.map((sem, si) => (
         <div class="tl-semester">
-          <div class="tl-dot" />
+          <div class:list={["tl-dot", { "tl-dot--active": si === 0 }]} />
           <h3 class="tl-label">{sem.label}</h3>
 
           <div class="tl-courses">
@@ -30,3 +30,106 @@ import { semesters } from '../../data/classes';
 
   <Contact />
 </Layout>
+
+<script>
+  // ── 5: Staggered entrance ──
+  const entranceObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const courses = entry.target.querySelectorAll('.tl-course');
+        courses.forEach((course, i) => {
+          setTimeout(() => course.classList.add('visible'), i * 100);
+        });
+        entranceObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.tl-semester').forEach(sem => entranceObserver.observe(sem));
+
+  // ── 6: Typewriter effect on semester labels ──
+  const labels = document.querySelectorAll('.tl-label');
+  const labelTexts = new Map<Element, string>();
+
+  labels.forEach(label => {
+    labelTexts.set(label, label.textContent || '');
+    label.textContent = '';
+  });
+
+  const typeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const label = entry.target;
+        const text = labelTexts.get(label) || '';
+        label.textContent = '';
+        let i = 0;
+        const type = () => {
+          if (i < text.length) {
+            label.textContent += text[i];
+            i++;
+            setTimeout(type, 40);
+          }
+        };
+        type();
+        typeObserver.unobserve(label);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  labels.forEach(label => typeObserver.observe(label));
+
+  // ── 8: Timeline line draw-in on scroll ──
+  const timeline = document.querySelector('.timeline') as HTMLElement;
+
+  function updateLine() {
+    if (!timeline) return;
+    const rect = timeline.getBoundingClientRect();
+    const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / rect.height));
+    timeline.style.setProperty('--line-progress', String(progress));
+    requestAnimationFrame(updateLine);
+  }
+  requestAnimationFrame(updateLine);
+
+  // ── 4: Cursor-following glow ──
+  const section = timeline?.closest('section');
+  if (section) {
+    const glow = document.createElement('div');
+    glow.className = 'cursor-glow';
+    section.appendChild(glow);
+
+    section.addEventListener('mousemove', (e) => {
+      const rect = section.getBoundingClientRect();
+      glow.style.left = (e.clientX - rect.left) + 'px';
+      glow.style.top = (e.clientY - rect.top) + 'px';
+      glow.style.opacity = '1';
+    });
+
+    section.addEventListener('mouseleave', () => {
+      glow.style.opacity = '0';
+    });
+  }
+
+  // ── 9: Floating particles ──
+  if (timeline) {
+    const particles = document.createElement('div');
+    particles.className = 'particles';
+    timeline.appendChild(particles);
+
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.animationDelay = Math.random() * 8 + 's';
+      p.style.animationDuration = (6 + Math.random() * 6) + 's';
+      const size = 2 + Math.random() * 3;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      const dx = (Math.random() - 0.5) * 40;
+      const dy = -(20 + Math.random() * 40);
+      p.style.setProperty('--dx', dx + 'px');
+      p.style.setProperty('--dy', dy + 'px');
+      particles.appendChild(p);
+    }
+  }
+</script>
