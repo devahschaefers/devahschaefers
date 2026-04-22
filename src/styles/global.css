@@ -11,7 +11,7 @@
   --color-text: #eae8e4;
   --color-text-secondary: #aaa7a1;
   --color-text-muted: #908c86;
-  --color-accent: #3547e8;
+  --color-accent: #2a7faa;
   --color-accent-hover: #2a2a35;
 
   --font-heading: "Space Grotesk", system-ui, sans-serif;
@@ -601,25 +601,39 @@ body {
   color: color-mix(in srgb, var(--color-text-secondary) 50%, transparent);
 }
 
-/* High school: pre-Berkeley coursework, distinct amber accent + italic body font */
+/* High school: pre-Berkeley coursework, desaturated accent + italic body font */
 .tl-semester--highschool .tl-dot {
-  background: #9b8bc4;
+  background: hsl(from var(--color-accent) h 35% 62%);
 }
 
 .tl-semester--highschool .tl-dot::after {
-  border-color: #9b8bc4;
+  border-color: hsl(from var(--color-accent) h 35% 62%);
 }
 
 .tl-semester--highschool .tl-label {
   font-family: var(--font-body);
   font-style: italic;
   font-weight: 500;
-  color: #9b8bc4;
+  color: white;
 }
 
 .tl-semester--highschool .tl-code,
 .tl-semester--highschool .tl-title {
   font-style: italic;
+}
+
+/* @ tag linking to the institution where a course was taken */
+.tl-at {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.tl-at:hover {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  background-color: transparent;
 }
 
 @keyframes ripple {

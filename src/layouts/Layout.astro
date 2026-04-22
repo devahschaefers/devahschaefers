@@ -39,7 +39,7 @@ const faviconVersion = Math.trunc(
   </head>
   <body class="antialiased min-h-[calc(100dvh/1.7)] flex flex-col max-w-[53rem] mx-6 pt-4 lg:mx-auto">
     <Nav current={current} />
-    <main class:list={["flex-1 min-w-0 flex flex-col px-2 md:px-4 py-8", centered && "justify-center"]}>
+    <main class:list={["min-w-0 flex flex-col px-2 md:px-4 pb-8", centered ? "pt-8 flex-1 justify-center" : "pt-0"]}>
       <slot />
     </main>
   </body>

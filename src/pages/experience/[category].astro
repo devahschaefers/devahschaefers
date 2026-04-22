@@ -15,13 +15,15 @@ const { cat } = Astro.props;
 
 <Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience">
 
-  <section class="py-10">
+  <section class="pb-10">
     <a href="/experience" class="link-subtle mb-6">
       ← Back to experience
     </a>
 
-    <h2 class="section-heading">{cat.label}</h2>
-    <p class="text-text-secondary text-sm mb-8">{cat.tagline}</p>
+    <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-8">
+      <h2 class="section-heading mb-0!">{cat.label}</h2>
+      <p class="text-text-secondary text-sm">{cat.tagline}</p>
+    </div>
 
     <div>
       {cat.experiences.map((exp) => (

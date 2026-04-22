@@ -2,14 +2,14 @@
 import { categories } from '../data/experience';
 ---
 
-<section class="py-10" id="experience">
+<section class="pb-10" id="experience">
   <h2 class="section-heading">Work</h2>
 
   <div class="flex flex-col gap-2">
     {categories.map((cat) => (
       <a
         href={`/experience/${cat.id}`}
-        class="bio-link text-[15px] leading-relaxed rounded px-1.5 py-1 -mx-1.5 flex items-baseline gap-3"
+        class="bio-link text-[15px] leading-relaxed rounded px-1.5 py-1 -mx-1.5 inline-flex w-fit items-baseline gap-3"
       >
         <span class="font-medium text-text">{cat.label}</span>
         <span class="text-text-muted text-sm">— {cat.tagline}</span>

@@ -3,6 +3,7 @@ export interface Course {
   title: string;
   units: number;
   grade: string;
+  taughtAt?: { name: string; url: string };
 }
 
 export interface Semester {
@@ -65,9 +66,9 @@ export const semesters: Semester[] = [
     id: 'highschool',
     label: 'High School',
     courses: [
-      { code: 'MATH 54', title: 'Linear Algebra and Differential Equations', units: 4.0, grade: '' },
-      { code: 'MATH 53', title: 'Multivariable Calculus', units: 4.0, grade: '' },
-      { code: 'COMPSCI 61B', title: 'Data Structures', units: 4.0, grade: '' },
+      { code: 'MATH 53', title: 'Multivariable Calculus', units: 4.0, grade: '', taughtAt: { name: 'Saddleback', url: 'https://www.saddleback.edu/' } },
+      { code: 'MATH 54', title: 'Linear Algebra and Differential Equations', units: 4.0, grade: '', taughtAt: { name: 'IVC', url: 'https://www.ivc.edu/' } },
+      { code: 'COMPSCI 61B', title: 'Data Structures', units: 4.0, grade: '', taughtAt: { name: 'IVC', url: 'https://www.ivc.edu/' } },
     ],
   },
 ];

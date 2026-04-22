@@ -25,7 +25,7 @@ const activeOrder = getSemesterOrder(activeId);
 ---
 
 <Layout title="Devah Schaefers — Classes" current="classes">
-  <section class="-mt-8">
+  <section>
     <h2 class="section-heading">Classes</h2>
 
     <div class="timeline">
@@ -43,6 +43,14 @@ const activeOrder = getSemesterOrder(activeId);
                 <div class="tl-course">
                   <span class="tl-code">{course.code}</span>
                   <span class="tl-title">{course.title}</span>
+                  {course.taughtAt && (
+                    <a
+                      class="tl-at"
+                      href={course.taughtAt.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >@{course.taughtAt.name}</a>
+                  )}
                 </div>
               ))}
             </div>

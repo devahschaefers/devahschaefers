@@ -4,7 +4,9 @@ import Experience from '../../components/Experience.astro';
 import Contact from '../../components/Contact.astro';
 ---
 
-<Layout title="Devah Schaefers — Work" current="experience">
-  <Experience />
-  <Contact />
+<Layout title="Devah Schaefers — Work" current="experience" centered>
+  <div class="flex flex-col items-center w-full">
+    <Experience />
+    <Contact />
+  </div>
 </Layout>
