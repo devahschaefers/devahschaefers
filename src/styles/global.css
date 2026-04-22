@@ -601,6 +601,27 @@ body {
   color: color-mix(in srgb, var(--color-text-secondary) 50%, transparent);
 }
 
+/* High school: pre-Berkeley coursework, distinct amber accent + italic body font */
+.tl-semester--highschool .tl-dot {
+  background: #9b8bc4;
+}
+
+.tl-semester--highschool .tl-dot::after {
+  border-color: #9b8bc4;
+}
+
+.tl-semester--highschool .tl-label {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 500;
+  color: #9b8bc4;
+}
+
+.tl-semester--highschool .tl-code,
+.tl-semester--highschool .tl-title {
+  font-style: italic;
+}
+
 @keyframes ripple {
   0% { scale: 0.5; opacity: 1; }
   100% { scale: 3; opacity: 0; }

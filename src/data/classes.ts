@@ -61,4 +61,13 @@ export const semesters: Semester[] = [
       { code: 'DATA C8', title: 'Foundations of Data Science', units: 4.0, grade: 'A+' },
     ],
   },
+  {
+    id: 'highschool',
+    label: 'High School',
+    courses: [
+      { code: 'MATH 54', title: 'Linear Algebra and Differential Equations', units: 4.0, grade: '' },
+      { code: 'MATH 53', title: 'Multivariable Calculus', units: 4.0, grade: '' },
+      { code: 'COMPSCI 61B', title: 'Data Structures', units: 4.0, grade: '' },
+    ],
+  },
 ];

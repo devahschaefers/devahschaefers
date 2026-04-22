@@ -34,7 +34,7 @@ const activeOrder = getSemesterOrder(activeId);
         const isActive = sem.id === activeId;
         const isFuture = order > activeOrder;
         return (
-          <div class:list={["tl-semester", { "tl-semester--future": isFuture }]}>
+          <div class:list={["tl-semester", { "tl-semester--future": isFuture, "tl-semester--highschool": sem.id === 'highschool' }]}>
             <div class:list={["tl-dot", { "tl-dot--active": isActive, "tl-dot--future": isFuture }]} />
             <h3 class="tl-label">{sem.label}</h3>
 

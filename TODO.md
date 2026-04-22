@@ -1,2 +1,4 @@
 - go bears cannot be selected
 - when clicking into ML or SWE etc content starts way to far down
+- make animation on Devah actually respond to where the mouse is
+- make the signature actual strokes
