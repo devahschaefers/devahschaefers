@@ -13,6 +13,7 @@
   --color-text-muted: #908c86;
   --color-accent: #2a7faa;
   --color-accent-hover: #2a2a35;
+  --color-link: #89cbe1e0;
 
   --font-heading: "Space Grotesk", system-ui, sans-serif;
   --font-body: "DM Sans", system-ui, sans-serif;
@@ -254,7 +255,7 @@ body {
 }
 
 .link-internal-label {
-  color: #4da8b5;
+  color: var(--color-link);
   transition: color 0.15s ease;
 }
 
@@ -266,7 +267,7 @@ body {
 /* ── External Links ───────────────────────────────── */
 
 .link-external {
-  color: #4da8b5;
+  color: var(--color-link);
   text-decoration: none;
   border-radius: 3px;
   padding-bottom: 3px;
