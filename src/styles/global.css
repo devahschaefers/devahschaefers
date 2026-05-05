@@ -119,8 +119,9 @@ body {
 .role-rotator {
   display: inline-block;
   position: relative;
-  color: #c8d0dc;
-  font-weight: 500;
+  color: var(--color-text);
+  font-style: italic;
+  font-weight: inherit;
   white-space: nowrap;
 }
 
