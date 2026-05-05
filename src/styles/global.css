@@ -253,6 +253,11 @@ body {
   transform: scale(1.02);
 }
 
+.link-internal-label {
+  color: #4da8b5;
+  transition: color 0.15s ease;
+}
+
 .link-internal:hover span {
   color: var(--color-text);
   transition: color 0.15s ease;
