@@ -119,7 +119,7 @@ body {
 .role-rotator {
   display: inline-block;
   position: relative;
-  color: var(--color-accent);
+  color: #c8d0dc;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -249,14 +249,14 @@ body {
 }
 
 .link-subtle:hover {
-  color: var(--color-accent);
+  color: var(--color-text);
   transform: scale(1.05);
 }
 
 /* ── Bio / Inline Links ────────────────────────────── */
 
 .bio-link {
-  color: color-mix(in srgb, var(--color-accent) 65%, var(--color-text));
+  color: #4da8b5;
   text-decoration: none;
   border-radius: 3px;
   padding-bottom: 3px;
