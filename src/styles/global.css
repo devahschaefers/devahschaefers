@@ -5,15 +5,15 @@
     Dark charcoal base with a soft violet accent.
     Playful type, bouncy interactions, warm text.       */
 
-  --color-bg: #1e1e22;
-  --color-surface: #28282f;
-  --color-border: #363640;
-  --color-text: #eae8e4;
-  --color-text-secondary: #aaa7a1;
-  --color-text-muted: #908c86;
-  --color-accent: #2a7faa;
-  --color-accent-hover: #2a2a35;
-  --color-link: #72a4c9;
+  --color-bg: oklch(23.67% 0.0076 285.7);
+  --color-surface: oklch(27.97% 0.0128 285.5);
+  --color-border: oklch(33.69% 0.0175 285.4);
+  --color-text: oklch(93.14% 0.0057 84.6);
+  --color-text-secondary: oklch(72.91% 0.0091 84.6);
+  --color-text-muted: oklch(64.17% 0.0100 78.2);
+  --color-accent: oklch(56.58% 0.1032 235.2);
+  --color-accent-hover: oklch(28.97% 0.0200 285.1);
+  --color-link: oklch(69.73% 0.0764 241.3);
 
   --font-heading: "Space Grotesk", system-ui, sans-serif;
   --font-body: "DM Sans", system-ui, sans-serif;
@@ -36,7 +36,7 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  background: color-mix(in oklch, var(--color-accent) 30%, transparent);
   color: var(--color-text);
 }
 
@@ -328,7 +328,7 @@ body {
   font-size: 0.72rem;
   font-weight: 500;
   padding: 3px 11px;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 25%, var(--color-border));
+  border: 1px solid color-mix(in oklch, var(--color-accent) 25%, var(--color-border));
   border-radius: 9999px;
   color: var(--color-text-secondary);
   background: var(--color-surface);
@@ -344,7 +344,7 @@ body {
   border-color: var(--color-accent);
   color: var(--color-accent);
   transform: rotate(-2deg) scale(1.06);
-  background-color: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+  background-color: color-mix(in oklch, var(--color-accent) 8%, var(--color-surface));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -423,7 +423,7 @@ body {
   height: 5px;
   border-radius: 9999px;
   background: var(--color-accent);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--color-accent) 70%, transparent);
+  box-shadow: 0 0 10px color-mix(in oklch, var(--color-accent) 70%, transparent);
   transform: translate(-2px, -50%);
   opacity: 0;
   pointer-events: none;
@@ -604,20 +604,20 @@ body {
 
 /* Future semester muted courses */
 .tl-semester--future .tl-code {
-  color: color-mix(in srgb, var(--color-text-muted) 60%, transparent);
+  color: color-mix(in oklch, var(--color-text-muted) 60%, transparent);
 }
 
 .tl-semester--future .tl-title {
-  color: color-mix(in srgb, var(--color-text-secondary) 50%, transparent);
+  color: color-mix(in oklch, var(--color-text-secondary) 50%, transparent);
 }
 
 /* High school: pre-Berkeley coursework, desaturated accent + italic body font */
 .tl-semester--highschool .tl-dot {
-  background: hsl(from var(--color-accent) h 35% 62%);
+  background: oklch(from var(--color-accent) 0.7117 0.0587 h);
 }
 
 .tl-semester--highschool .tl-dot::after {
-  border-color: hsl(from var(--color-accent) h 35% 62%);
+  border-color: oklch(from var(--color-accent) 0.7117 0.0587 h);
 }
 
 .tl-semester--highschool .tl-label {
@@ -653,7 +653,7 @@ body {
 
 @keyframes heartbeat {
   0%, 100% { scale: 1; box-shadow: 0 0 0 3px var(--color-bg), 0 0 0 transparent; }
-  50% { scale: 1.1; box-shadow: 0 0 0 4px var(--color-bg), 0 0 16px 4px color-mix(in srgb, var(--color-accent) 60%, transparent); }
+  50% { scale: 1.1; box-shadow: 0 0 0 4px var(--color-bg), 0 0 16px 4px color-mix(in oklch, var(--color-accent) 60%, transparent); }
 }
 
 
