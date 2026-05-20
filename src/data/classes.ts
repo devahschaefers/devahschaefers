@@ -13,14 +13,14 @@ export interface Semester {
 }
 
 export const semesters: Semester[] = [
-  {
-    id: 'summer-2026',
-    label: 'Summer 2026',
-    courses: [
-      { code: 'ANTHRO 2AC', title: 'Introduction to Archaeology', units: 4.0, grade: 'EPN' },
-      { code: 'COMPSCI 61C', title: 'Great Ideas of Computer Architecture', units: 4.0, grade: 'GRD' },
-    ],
-  },
+  // {
+  //   id: 'summer-2026',
+  //   label: 'Summer 2026',
+  //   courses: [
+  //     { code: 'ANTHRO 2AC', title: 'Introduction to Archaeology', units: 4.0, grade: 'EPN' },
+  //     { code: 'COMPSCI 61C', title: 'Great Ideas of Computer Architecture', units: 4.0, grade: 'GRD' },
+  //   ],
+  // },
   {
     id: 'spring-2026',
     label: 'Spring 2026',
