@@ -1,0 +1,115 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Contact from '../../components/Contact.astro';
+import { semesters } from '../../data/classes';
+
+function getSemesterOrder(id: string): number {
+  const [season, yearStr] = id.split('-');
+  const year = parseInt(yearStr);
+  const seasonOrder = season === 'spring' ? 0 : season === 'summer' ? 1 : 2;
+  return year * 3 + seasonOrder;
+}
+
+function getActiveSemesterId(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const mmdd = now.getMonth() * 100 + now.getDate();
+
+  if (mmdd < 419) return `spring-${year}`;       // Jan 1 – May 18
+  if (mmdd < 720) return `summer-${year}`;        // May 19 – Aug 19
+  return `fall-${year}`;                          // Aug 20 – Dec 31
+}
+
+const activeId = getActiveSemesterId();
+const activeOrder = getSemesterOrder(activeId);
+---
+
+<Layout title="Devah Schaefers — Classes" current="classes">
+  <section>
+    <h2 class="section-heading">Classes</h2>
+
+    <div class="timeline">
+      {semesters.map((sem) => {
+        const order = getSemesterOrder(sem.id);
+        const isActive = sem.id === activeId;
+        const isFuture = order > activeOrder;
+        return (
+          <div class:list={["tl-semester", { "tl-semester--future": isFuture, "tl-semester--highschool": sem.id === 'highschool' }]}>
+            <div class:list={["tl-dot", { "tl-dot--active": isActive, "tl-dot--future": isFuture }]} />
+            <h3 class="tl-label">{sem.label}</h3>
+
+            <div class="tl-courses">
+              {sem.courses.map((course) => (
+                <div class="tl-course">
+                  <span class="tl-code">{course.code}</span>
+                  <span class="tl-title">{course.title}</span>
+                  {course.taughtAt && (
+                    <a
+                      class="tl-at"
+                      href={course.taughtAt.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >@ {course.taughtAt.name}</a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <Contact />
+</Layout>
+
+<script>
+  // ── Staggered entrance (re-triggerable) ──
+  const entranceObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const courses = entry.target.querySelectorAll('.tl-course');
+      if (entry.isIntersecting) {
+        courses.forEach((course, i) => {
+          setTimeout(() => course.classList.add('visible'), i * 100);
+        });
+      } else {
+        courses.forEach(course => course.classList.remove('visible'));
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.tl-semester').forEach(sem => entranceObserver.observe(sem));
+
+  // ── Typewriter effect (once on page load) ──
+  const labels = document.querySelectorAll('.tl-label');
+  const steps: { label: Element; char: string }[] = [];
+
+  labels.forEach(label => {
+    const text = label.textContent || '';
+    label.textContent = '';
+    for (const char of text) {
+      steps.push({ label, char });
+    }
+  });
+
+  let step = 0;
+  const animationSpeed = 15; // ms per character
+  const initialDelay = 200; // ms before starting the animation
+  const tick = () => {
+    if (step < steps.length) {
+      steps[step].label.textContent += steps[step].char;
+      step++;
+      setTimeout(tick, animationSpeed);
+    }
+  };
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(tick, initialDelay)));
+
+  // ── Line segment draw-in (re-triggerable) ──
+  const segObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle('seg-visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.tl-semester').forEach(sem => segObserver.observe(sem));
+</script>

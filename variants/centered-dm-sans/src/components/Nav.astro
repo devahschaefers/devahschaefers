@@ -1,0 +1,30 @@
+---
+interface Props {
+  current?: string;
+}
+
+const { current = 'home' } = Astro.props;
+
+const links = [
+  { href: '/', label: 'Home', key: 'home' },
+  { href: '/experience', label: 'Work', key: 'experience' },
+  { href: '/classes', label: 'Classes', key: 'classes' },
+];
+---
+
+<aside class="site-nav w-full max-w-[42rem]">
+  <div>
+    <nav aria-label="Primary">
+      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+        {links.map(({ href, label, key }) => (
+          <a
+            href={href}
+            class:list={['nav-link', current === key && 'active']}
+          >
+            {label}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</aside>
