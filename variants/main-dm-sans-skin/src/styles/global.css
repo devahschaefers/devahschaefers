@@ -11,13 +11,13 @@
   --color-text: oklch(93.14% 0.0057 84.6);
   --color-text-secondary: oklch(72.91% 0.0091 84.6);
   --color-text-muted: oklch(64.17% 0.0100 78.2);
-  --color-accent: oklch(56.58% 0.1032 235.2);
+  --color-accent: var(--color-text);
   --color-accent-hover: oklch(28.97% 0.0200 285.1);
-  --color-link: oklch(69.73% 0.0764 241.3);
+  --color-link: var(--color-text);
 
-  --font-heading: "JetBrains Mono", ui-monospace, monospace;
-  --font-body: "JetBrains Mono", ui-monospace, monospace;
-  --font-accent: "Space Mono", ui-monospace, monospace;
+  --font-heading: "DM Sans", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-accent: "DM Sans", system-ui, sans-serif;
 }
 
 html {
@@ -35,36 +35,6 @@ body {
   line-height: 1.7;
   font-size: 15px;
   text-rendering: optimizeLegibility;
-}
-
-.nano-copy {
-  color: var(--color-text-secondary);
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.82;
-  text-align: left;
-}
-
-.nano-copy h1,
-.nano-copy p {
-  margin: 0;
-  font: inherit;
-}
-
-.nano-copy h1 {
-  color: var(--color-text);
-  font-weight: 600;
-  margin-bottom: 2rem;
-}
-
-.nano-copy p + p {
-  margin-top: 1.6rem;
-}
-
-.nano-copy a {
-  color: inherit;
-  text-decoration-color: color-mix(in oklch, var(--color-text-secondary) 55%, transparent);
 }
 
 ::selection {
@@ -108,10 +78,10 @@ body {
 
 .hero-heading {
   font-family: var(--font-heading);
-  font-size: 2.25rem;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: 0;
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .hero-name {
@@ -124,12 +94,30 @@ body {
   cursor: default;
 }
 
+/* Per-letter wave — each letter is wrapped in a .wave-letter span */
+.wave-letter {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .hero-name:hover .wave-letter {
+    transform: translateY(-6px) rotate(-4deg);
+  }
+  .hero-name:hover .wave-letter:nth-child(1) { transition-delay: 0ms; }
+  .hero-name:hover .wave-letter:nth-child(2) { transition-delay: 55ms; }
+  .hero-name:hover .wave-letter:nth-child(3) { transition-delay: 110ms; }
+  .hero-name:hover .wave-letter:nth-child(4) { transition-delay: 165ms; }
+  .hero-name:hover .wave-letter:nth-child(5) { transition-delay: 220ms; }
+  .hero-name:hover .wave-letter:nth-child(6) { transition-delay: 275ms; }
+  .hero-name:hover .wave-letter:nth-child(7) { transition-delay: 330ms; }
+  .hero-name:hover .wave-letter:nth-child(8) { transition-delay: 385ms; }
+}
 
 /* Greeting wrapper — time-aware phrase */
 .greeting {
   display: inline-block;
-  color: inherit;
-  font-weight: inherit;
 }
 
 /* Rotating role word in hero body */
@@ -200,6 +188,7 @@ body {
 
 /* Reduced motion — kill the decorative animations */
 @media (prefers-reduced-motion: reduce) {
+  .wave-letter { transition: none !important; transform: none !important; }
   .role-rotator::after { animation: none; }
   .go-bears .bear-pop { animation: none; display: none; }
 }
@@ -395,7 +384,7 @@ body {
 }
 
 /* ── Signature (home page footer) ──────────────────────
-  Space Mono accent + a left-to-right clip-path reveal
+  Caveat handwriting font + a left-to-right clip-path reveal
   with a small accent-colored pen dot tracking the edge.
     The animation only runs when the wrap gets a `.signature--playing`
     class (applied by IntersectionObserver when the element scrolls
@@ -672,61 +661,41 @@ body {
   50% { scale: 1.1; box-shadow: 0 0 0 4px var(--color-bg), 0 0 16px 4px color-mix(in oklch, var(--color-accent) 60%, transparent); }
 }
 
-/* ── Minimal centered-column variant overrides ───────── */
+/* ── DM Sans skin: main-site behavior, variant presentation ── */
 
-.site-nav {
-  margin-bottom: 3rem;
-  position: relative;
-  width: 100%;
+#hero {
+  margin-bottom: 2rem;
 }
 
-.site-nav nav {
-  font: inherit;
-}
-
-.nav-link {
-  padding: 0;
-  border-radius: 0;
-  color: var(--color-text-muted);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 3px;
-  transition: color 0.15s ease, text-decoration-color 0.15s ease;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: var(--color-text);
-  text-decoration-color: var(--color-text-muted);
-  transform: none;
-}
-
-.nav-link::after {
-  display: none;
-}
-
-.nano-copy,
-.page-stack,
-main > section {
+#hero .leading-relaxed {
+  max-width: 42rem;
   color: var(--color-text-secondary);
-  font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.82;
+}
+
+.hero-heading {
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.82;
+  letter-spacing: 0;
   text-align: left;
 }
 
-.nano-copy {
-  margin-bottom: 3rem;
+.hero-name {
+  font-family: var(--font-body);
+  font-size: 1em;
 }
 
-.mini-section,
-#experience,
-main > section + section {
-  margin-top: 2.75rem;
+.greeting {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.role-rotator {
+  color: var(--color-text-secondary);
 }
 
 .section-heading {
@@ -734,175 +703,11 @@ main > section + section {
   font: inherit;
   font-weight: 600;
   letter-spacing: 0;
-  margin-bottom: 1rem;
   text-transform: none;
-}
-
-.section-copy {
-  margin: 0;
-}
-
-#experience {
-  padding-bottom: 0;
-}
-
-#experience > div {
-  gap: 0.35rem;
-}
-
-#experience .link-internal {
-  align-items: baseline;
-  color: var(--color-text-secondary);
-  display: flex;
-  font-size: inherit;
-  gap: 0.75rem;
-  line-height: inherit;
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  transition: color 0.15s ease,
-              transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  width: 100%;
-  will-change: transform;
-}
-
-#experience .link-internal:hover {
-  color: var(--color-text);
-  transform: scale(1.02);
-}
-
-#experience .link-internal:active {
-  transform: scale(1.04);
-}
-
-.link-internal-label {
-  color: var(--color-link);
-  transition: color 0.15s ease;
-}
-
-#experience .link-internal:hover .link-internal-label,
-#experience .link-internal:hover span {
-  color: var(--color-text);
-}
-
-.link-external,
-.nano-copy a,
-.section-copy a,
-.tl-at {
-  color: var(--color-link);
-  text-decoration: none;
-  border-radius: 3px;
-  padding-bottom: 3px;
-  transition: color 0.15s ease,
-              background-color 0.15s ease;
-}
-
-.link-external:hover,
-.nano-copy a:hover,
-.section-copy a:hover,
-.tl-at:hover {
-  color: var(--color-accent);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 6'><path d='M0 3 Q3.5 0 7 3 T14 3' stroke='%23667ad7' stroke-width='1.4' fill='none' stroke-linecap='round'/></svg>");
-  background-repeat: repeat-x;
-  background-size: 14px 6px;
-  background-position: 0 100%;
-  animation: squiggle-run 0.9s linear infinite;
-}
-
-.go-bears {
-  color: inherit;
-}
-
-.go-bears:hover {
-  color: var(--color-text);
-  transform: none;
-}
-
-.go-bears .bear-pop {
-  color: var(--color-accent);
-  font-size: 1em;
-}
-
-.role-rotator {
-  color: inherit;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #experience .link-internal,
-  #experience .link-internal:hover,
-  #experience .link-internal:active {
-    transform: none;
-  }
-}
-
-.experience-item {
-  border-bottom-color: color-mix(in oklch, var(--color-border) 60%, transparent);
-  padding: 1.4rem 0;
-}
-
-.tech-tag {
-  background: transparent;
-  border-radius: 0;
-  color: var(--color-text-muted);
-  font-family: var(--font-body);
-  padding: 0;
-}
-
-.tech-tag:hover {
-  background: transparent;
-  color: var(--color-text);
-  transform: none;
-}
-
-footer {
-  margin: 2.25rem auto 0;
-  width: 100%;
-}
-
-footer > div {
-  justify-content: center;
-}
-
-.social-link {
-  border-radius: 8px;
-  color: var(--color-text-secondary);
-  padding: 0.35rem;
-}
-
-.social-link:hover {
-  color: var(--color-accent);
-  --lift: -2px;
-}
-
-.signature-wrap {
-  justify-content: flex-start;
-  margin-top: 1.75rem;
-}
-
-.signature {
-  color: var(--color-text-muted);
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-style: normal;
-  transform: none;
-}
-
-.timeline {
-  margin-top: 1.5rem;
 }
 
 .tl-label {
   font-family: var(--font-body);
   font-size: 1rem;
   letter-spacing: 0;
-}
-
-.tl-course {
-  gap: 0.75rem;
-}
-
-.tl-code,
-.tl-title,
-.tl-at {
-  font-size: 0.95rem;
 }
