@@ -11,12 +11,21 @@
   --color-text: oklch(93.14% 0.0057 84.6);
   --color-text-secondary: oklch(72.91% 0.0091 84.6);
   --color-text-muted: oklch(64.17% 0.0100 78.2);
-  --color-accent: oklch(56.58% 0.1032 235.2);
+  --color-accent: var(--color-text);
   --color-accent-hover: oklch(28.97% 0.0200 285.1);
-  --color-link: oklch(69.73% 0.0764 241.3);
+  --color-link: var(--color-text);
 
-  --font-heading: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "DM Sans", system-ui, sans-serif;
+}
+
+:root {
+  --font-primary: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --font-heading: var(--font-primary);
+  --font-body: var(--font-primary);
+  --font-accent: var(--font-primary);
+  --font-sans: var(--font-primary);
+  --font-mono: var(--font-primary);
+  --default-font-family: var(--font-primary);
+  --default-mono-font-family: var(--font-primary);
 }
 
 html {
@@ -25,14 +34,26 @@ html {
   color-scheme: dark only;
 }
 
+html,
 body {
   font-family: var(--font-body);
+}
+
+body {
   background: var(--color-bg);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.7;
   font-size: 15px;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 ::selection {
@@ -83,8 +104,10 @@ body {
 }
 
 .hero-name {
-  font-family: "Instrument Serif", Georgia, serif;
-  font-size: 1.1em;
+  font-family: var(--font-heading);
+  font-style: normal;
+  font-size: 1em;
+  font-weight: 700;
   color: var(--color-accent);
   display: inline-block;
   cursor: default;
@@ -173,9 +196,9 @@ body {
   100% { opacity: 0; transform: translate(-50%, -60px) scale(0.9) rotate(-4deg); }
 }
 
-/* Serif-italic typographic accent — Devah-like moments mid-paragraph */
+/* Typographic accent — Devah-like moments mid-paragraph */
 .serif-italic {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: var(--font-accent);
   font-style: italic;
   font-size: 1.08em;
   color: var(--color-text);
@@ -380,7 +403,7 @@ body {
 }
 
 /* ── Signature (home page footer) ──────────────────────
-  Caveat handwriting font + a left-to-right clip-path reveal
+  Left-to-right clip-path reveal
   with a small accent-colored pen dot tracking the edge.
     The animation only runs when the wrap gets a `.signature--playing`
     class (applied by IntersectionObserver when the element scrolls
@@ -398,11 +421,12 @@ body {
 .signature {
   position: relative;
   display: inline-block;
-  font-family: "Caveat", "Homemade Apple", cursive;
+  font-family: var(--font-accent);
+  font-style: italic;
   font-weight: 500;
   font-size: 2rem;
   line-height: 1;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   transform: rotate(-3deg);
   transform-origin: left center;
 }
@@ -656,4 +680,53 @@ body {
   50% { scale: 1.1; box-shadow: 0 0 0 4px var(--color-bg), 0 0 16px 4px color-mix(in oklch, var(--color-accent) 60%, transparent); }
 }
 
+/* ── Site typography and layout ─────────────────────── */
 
+#hero {
+  margin-bottom: 2rem;
+}
+
+#hero .leading-relaxed {
+  max-width: 42rem;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.82;
+}
+
+.hero-heading {
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.82;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.hero-name {
+  font-family: var(--font-body);
+  font-size: 1em;
+}
+
+.greeting {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.role-rotator {
+  color: var(--color-text-secondary);
+}
+
+.section-heading {
+  color: var(--color-text);
+  font: inherit;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.tl-label {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  letter-spacing: 0;
+}

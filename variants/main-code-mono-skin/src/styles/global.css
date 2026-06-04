@@ -15,9 +15,17 @@
   --color-accent-hover: oklch(28.97% 0.0200 285.1);
   --color-link: var(--color-text);
 
-  --font-heading: "JetBrains Mono", ui-monospace, monospace;
-  --font-body: "JetBrains Mono", ui-monospace, monospace;
-  --font-accent: "Space Mono", ui-monospace, monospace;
+}
+
+:root {
+  --font-primary: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --font-heading: var(--font-primary);
+  --font-body: var(--font-primary);
+  --font-accent: var(--font-primary);
+  --font-sans: var(--font-primary);
+  --font-mono: var(--font-primary);
+  --default-font-family: var(--font-primary);
+  --default-mono-font-family: var(--font-primary);
 }
 
 html {
@@ -26,8 +34,12 @@ html {
   color-scheme: dark only;
 }
 
+html,
 body {
   font-family: var(--font-body);
+}
+
+body {
   background: var(--color-bg);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
@@ -35,6 +47,13 @@ body {
   line-height: 1.7;
   font-size: 15px;
   text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 ::selection {
@@ -177,7 +196,7 @@ body {
   100% { opacity: 0; transform: translate(-50%, -60px) scale(0.9) rotate(-4deg); }
 }
 
-/* Serif-italic typographic accent — Devah-like moments mid-paragraph */
+/* Typographic accent — Devah-like moments mid-paragraph */
 .serif-italic {
   font-family: var(--font-accent);
   font-style: italic;
@@ -384,7 +403,7 @@ body {
 }
 
 /* ── Signature (home page footer) ──────────────────────
-  Caveat handwriting font + a left-to-right clip-path reveal
+  Left-to-right clip-path reveal
   with a small accent-colored pen dot tracking the edge.
     The animation only runs when the wrap gets a `.signature--playing`
     class (applied by IntersectionObserver when the element scrolls
@@ -661,7 +680,7 @@ body {
   50% { scale: 1.1; box-shadow: 0 0 0 4px var(--color-bg), 0 0 16px 4px color-mix(in oklch, var(--color-accent) 60%, transparent); }
 }
 
-/* ── Code Mono skin: main-site behavior, variant presentation ── */
+/* ── Site typography and layout ─────────────────────── */
 
 #hero {
   margin-bottom: 2rem;
