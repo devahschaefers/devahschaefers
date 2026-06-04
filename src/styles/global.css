@@ -106,7 +106,7 @@ textarea {
 }
 
 .hero-name {
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-style: normal;
   font-size: 1em;
   font-weight: 700;
@@ -690,11 +690,6 @@ textarea {
   color: var(--color-text-secondary);
   font-size: 1rem;
   line-height: 1.82;
-}
-
-.hero-name {
-  font-family: var(--font-body);
-  font-size: 1em;
 }
 
 .greeting {
