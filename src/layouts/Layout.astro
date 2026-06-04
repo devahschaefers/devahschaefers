@@ -34,12 +34,12 @@ const faviconVersion = Math.trunc(
     <link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${faviconVersion}`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
     <title>{title}</title>
   </head>
   <body class="antialiased min-h-[calc(100dvh/1.7)] flex flex-col max-w-[53rem] mx-6 pt-4 lg:mx-auto">
     <Nav current={current} />
-    <main class:list={["min-w-0 flex flex-col px-2 md:px-4 pb-8", centered ? "pt-8 flex-1 justify-center" : "pt-0"]}>
+    <main class:list={["min-w-0 w-full max-w-[42rem] mx-auto flex flex-col px-2 md:px-4 pb-8", centered ? "pt-8 flex-1 justify-center" : "pt-0"]}>
       <slot />
     </main>
   </body>
