@@ -96,11 +96,13 @@ textarea {
 /* ── Hero Heading ──────────────────────────────────── */
 
 .hero-heading {
-  font-family: var(--font-heading);
-  font-size: 2.75rem;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.82;
+  letter-spacing: 0;
+  text-align: left;
 }
 
 .hero-name {
@@ -324,13 +326,11 @@ textarea {
 /* ── Section Headings ──────────────────────────────── */
 
 .section-heading {
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
+  color: var(--color-text);
+  font: inherit;
   font-weight: 600;
-  color: var(--color-accent);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 /* ── Experience Items ──────────────────────────────── */
@@ -576,11 +576,10 @@ textarea {
 }
 
 .tl-label {
-  font-family: var(--font-heading);
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 1rem;
   color: var(--color-text);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   margin-bottom: 0.6rem;
   min-height: 1.2em;
 }
@@ -693,16 +692,6 @@ textarea {
   line-height: 1.82;
 }
 
-.hero-heading {
-  color: var(--color-text);
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.82;
-  letter-spacing: 0;
-  text-align: left;
-}
-
 .hero-name {
   font-family: var(--font-body);
   font-size: 1em;
@@ -715,18 +704,4 @@ textarea {
 
 .role-rotator {
   color: var(--color-text-secondary);
-}
-
-.section-heading {
-  color: var(--color-text);
-  font: inherit;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
-}
-
-.tl-label {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  letter-spacing: 0;
 }
