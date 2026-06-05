@@ -332,6 +332,16 @@ textarea {
   .link-external:hover { animation: none; }
 }
 
+/* Firefox's View Transition support is newer and currently rough for text morphs. */
+@-moz-document url-prefix() {
+  ::view-transition-group(*),
+  ::view-transition-image-pair(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* ── Section Headings ──────────────────────────────── */
 
 .section-heading {

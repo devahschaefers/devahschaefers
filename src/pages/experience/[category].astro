@@ -31,7 +31,7 @@ const postBySlug = new Map(posts.map((post) => [post.id, post]));
 
     <div
       transition:name={`work-category-${cat.id}`}
-      class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-8"
+      class="inline-flex w-fit max-w-full flex-wrap items-baseline gap-x-3 gap-y-1 mb-8"
     >
       <h2 class="section-heading mb-0!">{cat.label}</h2>
       <p class="text-text-secondary text-sm">{cat.tagline}</p>
