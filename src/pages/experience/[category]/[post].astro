@@ -33,7 +33,7 @@ const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
       </a>
 
       <div class="flex flex-col items-start gap-1 mb-3">
-        <div class="inline-flex items-baseline text-xs text-text-muted">
+        <div class="inline-flex items-baseline text-sm text-text-muted">
           <span
             transition:name={`work-category-label-${cat.id}`}
             class="work-row-title--transition"
@@ -46,10 +46,9 @@ const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
         {experience ? (
           <div
             transition:name={`work-experience-line-${cat.id}-${post.id}`}
-            class="work-row-title work-row-title--transition"
+            class="work-row-title--transition text-sm text-text-muted"
           >
-            {experience.role}
-            <span class="work-row-context"> @ {experience.company} · {experience.dates}</span>
+            {experience.role} @ {experience.company} · {experience.dates}
           </div>
         ) : (
           <h1
