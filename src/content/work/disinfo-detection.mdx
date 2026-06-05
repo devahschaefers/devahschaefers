@@ -1,0 +1,34 @@
+---
+title: Disinformation Detection System
+blurb: A text classifier flagging disinformation at 91% accuracy / 87% F1.
+categories: [ml, data]
+stat: 91% acc · 87% F1
+context: Project
+order: 4
+---
+
+Disinformation is a classification problem with a twist: the labels are subtle, the
+data is messy, and getting it wrong in either direction has real cost. I built a
+system to flag it and spent as much time on the data and evaluation as on the model.
+
+## Getting the data
+
+There was no clean dataset waiting — I collected and cleaned over 1,000 text samples
+via web scraping, then put them through structured NLP pipelines for feature
+extraction. Standardizing that preprocessing cut the time per iteration by about 40%,
+which compounds when you're running experiment after experiment.
+
+## Features and model
+
+The model is deliberately interpretable: **Logistic Regression** over a combination of
+**GloVe embeddings** and **Bag-of-Words** features. That pairing captures both
+distributional meaning and raw lexical signal, and keeps the whole thing transparent
+enough to debug.
+
+## Tightening it up
+
+<Metric value="91% / 87%" label="accuracy / F1-score" />
+
+I iterated using confusion-matrix analysis and standard evaluation metrics, looking
+at *which* examples were misclassified rather than just the headline accuracy. That
+loop is what pushed it to 91% accuracy and an 87% F1-score.

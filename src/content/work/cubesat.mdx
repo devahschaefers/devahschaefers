@@ -1,0 +1,39 @@
+---
+title: CubeSat Image Data Stream
+blurb: End-to-end satellite image pipeline with compression, error correction, and encryption.
+categories: [swe]
+stat: ~40% throughput
+context: CubeSat · Software Engineer · Aug 2021 — Sep 2024
+order: 2
+---
+
+Getting an image down from a satellite is a deceptively hard systems problem. The link
+is intermittent, lossy, and shared, and you don't get to ask for a retransmit on your
+own schedule. I engineered the satellite's end-to-end image data stream — everything
+from the bits on the wire to the image that lands intact on the ground.
+
+## The problem
+
+Payload links — laser and RF — drop bits and break mid-transfer. Without protection, a
+single corrupted chunk can ruin an entire image, and bandwidth is far too precious to
+just resend everything. The stream needed to be reliable *and* efficient at the same
+time.
+
+## The pipeline
+
+I implemented encoding and decoding pipelines that combine compression, error
+correction, and encryption. Compression makes the most of scarce bandwidth, error
+correction lets the receiver repair damage without a round trip, and encryption keeps
+the payload secure end to end.
+
+<Metric value="~40%" label="effective throughput gain" />
+
+Together that pushed effective data throughput up by about 40% and added error
+detection and correction for reliable payload transmission over both link types.
+
+## Down to the metal
+
+The stream also had to talk to real hardware. I integrated low-level USB/UART drivers
+on Linux using FTD2XX and Xilinx tooling, supporting custom baud rates and robust
+streaming with retry handling for interrupted transfers — so the pipeline degraded
+gracefully instead of falling over when a link hiccupped.

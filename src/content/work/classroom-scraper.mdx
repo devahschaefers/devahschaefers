@@ -1,0 +1,34 @@
+---
+title: Open Study-Space Finder
+blurb: An async scraper turning 600+ classroom schedules into a live open-room finder.
+categories: [data]
+stat: ~100x faster
+context: Open Project @ Berkeley · Data Engineer · Aug 2024 — Jan 2025
+order: 1
+---
+
+Every student knows the ritual of wandering the halls looking for an empty classroom to
+study in. The information to end that exists — it's just locked inside hundreds of
+separate class schedules. I built the data pipeline that freed it.
+
+## The problem
+
+Berkeley has 600+ classrooms, each with its own schedule, and no single view of which
+rooms are actually open right now. The data is public but scattered, unstructured, and
+huge — exactly the kind of thing that's tedious by hand and trivial once it's modeled.
+
+## The scraper
+
+I built an asynchronous web scraper that fires 10,000+ automated HTTP requests per run
+and collects 100K+ classroom availability data points. Going async is what made it
+viable — it cut end-to-end collection time by roughly **100x** compared to a sequential
+approach.
+
+<Metric value="~100x" label="faster collection" />
+
+## Structuring it
+
+Raw schedules aren't a product. I turned the data for 600+ classrooms into a structured
+JSON availability model — a clean representation of when each room is free — which then
+powered a student-facing tool querying 100K+ records to find open study spaces on
+demand.

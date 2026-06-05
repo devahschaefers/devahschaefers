@@ -1,0 +1,27 @@
+---
+title: Disaster Response NLP
+blurb: Mining ~45K disaster tweets across 14 events to locate where help is needed most.
+categories: [ml, data]
+stat: ~45K tweets
+context: Project
+order: 3
+---
+
+During a crisis, social media is a firehose of real-time, on-the-ground information —
+and almost none of it is structured. This project asked whether you could mine that
+firehose to figure out *where* the need is highest, fast enough to matter.
+
+## The data
+
+The corpus was roughly 45,000 disaster-related tweets spanning 14 separate events.
+Raw, messy, and large enough that naive inference was a bottleneck — so I implemented
+batch processing that cut inference time roughly in half, which made iterating on the
+modeling actually tractable.
+
+## Reading sentiment and place
+
+I ran sentiment analysis using both **RoBERTa** and **VADER**, pairing a transformer's
+nuance with a lexicon-based model's speed and interpretability. On top of that I built
+geospatial and textual models to identify the locations of highest need, using word
+frequency analysis and sentiment scoring to pull actionable signals out of the noise —
+turning a stream of individual posts into a map of where attention should go.

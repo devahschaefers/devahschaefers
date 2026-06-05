@@ -1,0 +1,49 @@
+---
+title: NeuroTech EEG Gait Decoder
+blurb: Decoding 16-channel EEG into real-time gait angles for BCI-driven exoskeleton control.
+categories: [ml, agents]
+stat: 5° RMSE
+context: NeuroTech @ Berkeley · Jan 2026 — Present
+order: 1
+---
+
+The goal sounds like science fiction: read someone's brain activity and use it to
+drive an exoskeleton's joints in real time. The reality is a very concrete signal
+processing and regression problem — turn 16 channels of noisy EEG into a continuous
+prediction of gait angle, fast enough and accurate enough to close the loop on
+actual hardware.
+
+## The problem
+
+EEG is a hostile input. The signal is tiny, buried under muscle artifacts, eye
+blinks, and electrical noise, and it varies wildly between people and even between
+sessions on the same person. On top of that, exoskeleton control is a *streaming*
+problem — predictions have to come continuously as new samples arrive, not in a
+tidy batch after the fact.
+
+So the real task wasn't just "train a model," it was building a pipeline that takes
+raw electrode data and produces a trustworthy angle on every window.
+
+## Cleaning up the signal
+
+Most of the work lived before the model. I built a preprocessing stage that does
+artifact removal, bandpass filtering to keep the frequency bands that actually carry
+movement intent, and per-channel normalization so no single electrode dominates.
+The continuous stream gets cut into **overlapping sliding windows**, which both
+multiplies the number of training samples and matches how inference has to run on
+live data.
+
+## The model
+
+The architecture is a CNN-LSTM. The CNN front-end pulls spatial-spectral features
+out of each window — learning which combinations of channels and frequencies matter
+— and the LSTM consumes that sequence to regress the gait angle, using the temporal
+structure of a stride rather than treating each window in isolation.
+
+## Where it landed
+
+<Metric value="5°" label="gait-angle RMSE" />
+
+Five degrees of RMSE on supervised regression is tight enough to drive responsive,
+closed-loop control between the brain signal and the exoskeleton's actuation — the
+difference between a system that lurches and one that tracks intent.

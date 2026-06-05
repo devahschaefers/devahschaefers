@@ -1,0 +1,64 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Contact from '../../../components/Contact.astro';
+import Metric from '../../../components/Metric.astro';
+import { categories } from '../../../data/experience';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const workPosts = await getCollection('work');
+
+  return workPosts.flatMap((post) =>
+    post.data.categories.map((category) => {
+      const cat = categories.find((item) => item.id === category);
+
+      return {
+        params: { category, post: post.id },
+        props: { cat, post },
+      };
+    }),
+  );
+}
+
+const { cat, post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`Devah Schaefers — ${post.data.title}`} description={post.data.blurb} current="experience">
+  <article class="pb-10">
+    <div class="mb-8">
+      <a href={`/experience/${cat.id}`} class="link-internal mb-6">
+        ← Back to {cat.label}
+      </a>
+
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="text-xs text-text-muted uppercase tracking-wide">{cat.label}</span>
+        {post.data.context && <span class="text-xs text-text-muted">{post.data.context}</span>}
+        {post.data.draft && (
+          <span class="text-xs text-text-muted border border-border rounded-full px-2.5 py-0.5">Draft</span>
+        )}
+      </div>
+
+      <h1 class="section-heading mb-3!">{post.data.title}</h1>
+      <p class="text-text-secondary text-sm leading-relaxed">{post.data.blurb}</p>
+    </div>
+
+    <div class="work-post">
+      <Content components={{ Metric }} />
+    </div>
+
+    <div class="mt-10 pt-6 border-t border-border flex flex-wrap gap-3">
+      {post.data.categories
+        .filter((category) => category !== cat.id)
+        .map((category) => categories.find((item) => item.id === category))
+        .filter(Boolean)
+        .map((category) => (
+          <a href={`/experience/${category.id}/${post.id}`} class="link-internal">
+            Also in {category.label} →
+          </a>
+        ))}
+    </div>
+  </article>
+
+  <Contact />
+</Layout>

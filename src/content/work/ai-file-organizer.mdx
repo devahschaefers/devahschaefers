@@ -1,0 +1,40 @@
+---
+title: AI File Organizer
+blurb: A Rust tool that organizes messy directory trees with a two-stage LLM pipeline.
+categories: [swe, agents]
+stat: ~18x faster
+context: Project
+order: 3
+---
+
+Everyone has the folder. Years of downloads, half-named files, nested chaos nobody
+wants to sort by hand. I built a Rust tool that uses an LLM to actually understand
+what files *are* and reorganize large, inconsistent directory trees — without you
+losing trust in where things ended up.
+
+## The problem
+
+Two things make this hard. First, "organize this" requires semantic understanding —
+grouping by meaning, not just by extension or date. Second, file operations are
+dangerous: an automated tool moving thousands of files is one bug away from a
+disaster, so it has to be *safe* before it's clever.
+
+## A two-stage pipeline
+
+I architected it as a two-stage Explorer/Organizer pipeline. The **Explorer** handles
+recursive traversal and builds internal summaries of what's actually in the tree. The
+**Organizer** takes those summaries and does the semantic grouping and file-operation
+planning. Splitting the concern keeps each stage focused and the planning step working
+from a clean picture rather than raw filesystem noise.
+
+## Making it safe and fast
+
+Trust came from a **virtual staging layer** — every planned operation is reviewable
+before anything touches disk, surfaced through an interactive TUI workflow so you
+approve the plan rather than pray. Speed came from asynchronous model calls, which kept
+the pipeline from stalling on I/O while waiting on the model.
+
+<Metric value="~18x" label="faster than manual cleanup" />
+
+The result was roughly 18x faster cleanup than doing it by hand, on directory trees
+with thousands of files — with a safety net the whole way through.

@@ -1,0 +1,35 @@
+---
+title: Chip Power Prediction with GNNs
+blurb: Predicting chip power consumption from netlist graphs across ~50–100 designs.
+categories: [ml, data]
+context: Synopsys (Contract) · Aug 2025 — Dec 2025
+order: 2
+---
+
+Power is one of the numbers chip designers care about most, and one of the most
+expensive to find out the hard way — you don't want to discover a design draws too
+much only after it's fabricated. The question I worked on: can you predict a design's
+power consumption directly from its structure, early, with machine learning?
+
+## From netlists to graphs
+
+A chip netlist is naturally a graph — cells connected by nets. The first half of the
+project was a data problem: transforming raw netlist data into graph representations
+that a model could actually learn from, across roughly 50–100 designs. I built the
+pipeline with PyTorch Geometric to construct and featurize those netlist graphs,
+including graph attention layers so the model could weigh which connections mattered.
+
+## Modeling and benchmarking
+
+Rather than betting on one approach, I trained and benchmarked a spread of them —
+linear regression, random forest, gradient boosting, and a GNN — and compared them
+on **MAE, RMSE, and MAPE**. I also benchmarked inference speed and scalability as
+design complexity grew, since a model that's accurate but too slow to run across a
+design space isn't useful in practice.
+
+## What actually drives power
+
+Accuracy alone doesn't build trust with hardware engineers — they want to know *why*.
+I used SHAP analysis to surface the dominant features driving each power prediction,
+turning the model from a black box into something that pointed at the structural
+properties actually responsible for power draw.

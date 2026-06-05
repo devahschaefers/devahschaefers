@@ -1,0 +1,41 @@
+---
+title: Open Project Internal Platform
+blurb: Internal tooling and a CAS-authenticated application system for Berkeley's largest CS club.
+categories: [swe]
+stat: 200+ apps / sem
+context: Open Project @ Berkeley · VP of Projects · Jan 2025 — Dec 2025
+order: 1
+---
+
+Open Project is UC Berkeley's largest CS club — 150+ members, 10+ teams, and a
+recruiting cycle that put 200+ applications through the door every semester. As VP of
+Projects I led 15+ developers, but the part I want to break down here is the
+infrastructure that kept all of that from running on spreadsheets and goodwill.
+
+## The problem
+
+A club at that scale generates a surprising amount of operational software need:
+member data, project assignments, and an application pipeline that spikes hard twice
+a year. Doing it by hand doesn't scale, and ad-hoc tools rot. The club needed real
+internal systems with real auth.
+
+## What I built
+
+I built internal management software in Next.js, Supabase, and PostgreSQL, plus a
+**CAS-authenticated** system — tying into Berkeley's central login — that handled
+200+ project applications per semester. CAS integration matters here: it means only
+real Berkeley students get in, without us reinventing identity.
+
+## The data layer
+
+Underneath, I designed PostgreSQL schemas for member, project, and application data
+using **Drizzle ORM**, and helped teams structure their tables, relationships, and
+indexes for maintainability and simpler querying. Good schema design early is the
+difference between a system you can extend and one you fight.
+
+## Beyond the code
+
+Leading 15+ developers across 10+ teams is also an engineering-culture problem. I
+introduced org-wide CI/CD workflows, templates, documentation, and onboarding support,
+and guided early design reviews and API/data-schema decisions — so the standards
+outlived any single project.

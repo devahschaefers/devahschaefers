@@ -2,15 +2,24 @@
 import Layout from '../../layouts/Layout.astro';
 import Contact from '../../components/Contact.astro';
 import { categories } from '../../data/experience';
+import { getCollection } from 'astro:content';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const workPosts = await getCollection('work');
+
   return categories.map((cat) => ({
     params: { category: cat.id },
-    props: { cat },
+    props: {
+      cat,
+      posts: workPosts
+        .filter((post) => post.data.categories.includes(cat.id))
+        .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title)),
+    },
   }));
 }
 
-const { cat } = Astro.props;
+const { cat, posts } = Astro.props;
+const postBySlug = new Map(posts.map((post) => [post.id, post]));
 ---
 
 <Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience">
@@ -27,29 +36,16 @@ const { cat } = Astro.props;
 
     <div>
       {cat.experiences.map((exp) => (
-        <div class="experience-item">
-          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 mb-0.5">
-            <h4 class="font-semibold text-text text-[15px] leading-snug">
-              {exp.role}
-              <span class="text-text-secondary font-normal"> @ {exp.company}</span>
-            </h4>
-            <span class="text-sm text-text-muted shrink-0">
-              {exp.dates}
-            </span>
-          </div>
-
-          <ul class="space-y-1 text-sm text-text-secondary list-disc list-outside ml-4 mt-2">
-            {exp.bullets.map((bullet) => (
-              <li class="leading-relaxed">{bullet}</li>
-            ))}
-          </ul>
-
-          <div class="flex flex-wrap gap-1.5 mt-3">
-            {exp.tech.map((t) => (
-              <span class="tech-tag">{t}</span>
-            ))}
-          </div>
-        </div>
+        <a
+          href={exp.postSlug ? `/experience/${cat.id}/${exp.postSlug}` : undefined}
+          class:list={['work-row', exp.postSlug && 'work-row--linked']}
+        >
+          <span class="work-row-title">
+            {exp.role}
+            <span class="work-row-context"> @ {exp.company} · {exp.dates}</span>
+            <span class="work-row-description">{exp.summary}</span>
+          </span>
+        </a>
       ))}
     </div>
 
@@ -58,28 +54,15 @@ const { cat } = Astro.props;
         <h3 class="text-xs font-medium text-text-muted tracking-wide uppercase mb-4">Projects</h3>
         <div>
           {cat.projects.map((project) => (
-            <div class="experience-item">
-              <div class="flex items-start justify-between gap-3 mb-1">
-                <h4 class="font-semibold text-text text-[15px] leading-snug">
-                  {project.title}
-                </h4>
-                {project.stat && (
-                  <span class="text-xs text-text-muted shrink-0 border border-border rounded-full px-2.5 py-0.5">
-                    {project.stat}
-                  </span>
-                )}
-              </div>
-
-              <p class="text-sm text-text-secondary leading-relaxed mb-3">
-                {project.description}
-              </p>
-
-              <div class="flex flex-wrap gap-1.5">
-                {project.tags.map((tag) => (
-                  <span class="tech-tag">{tag}</span>
-                ))}
-              </div>
-            </div>
+            <a
+              href={project.postSlug ? `/experience/${cat.id}/${project.postSlug}` : undefined}
+              class:list={['work-row', project.postSlug && 'work-row--linked']}
+            >
+              <span class="work-row-title">
+                {project.title}
+                {postBySlug.get(project.postSlug)?.data.draft && <span class="work-row-context"> · Draft</span>}
+              </span>
+            </a>
           ))}
         </div>
       </div>

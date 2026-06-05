@@ -2,15 +2,16 @@ export interface ExperienceEntry {
   role: string;
   company: string;
   dates: string;
+  summary: string;
   bullets: string[];
-  tech: string[];
+  postSlug?: string;
 }
 
 export interface ProjectEntry {
   title: string;
   description: string;
-  tags: string[];
   stat?: string;
+  postSlug?: string;
 }
 
 export interface Category {
@@ -31,23 +32,25 @@ export const categories: Category[] = [
         role: 'Machine Learning Engineer',
         company: 'NeuroTech @ Berkeley',
         dates: 'Jan 2026 — Present',
+        summary: 'EEG gait decoder',
         bullets: [
           'Achieved 5° RMSE on supervised regression predicting gait angle from 16-channel EEG data for BCI-driven exoskeleton control',
           'Designed a CNN-LSTM architecture — CNN extracts spatial-spectral features, LSTM performs gait angle regression',
           'Preprocessed raw EEG with artifact removal, bandpass filtering, per-channel normalization, and overlapping sliding windows',
         ],
-        tech: ['Python', 'PyTorch', 'CNN-LSTM', 'EEG/BCI'],
+        postSlug: 'neurotech-eeg',
       },
       {
         role: 'Data Scientist',
         company: 'Synopsys (Contract)',
         dates: 'Aug 2025 — Dec 2025',
+        summary: 'Chip power models',
         bullets: [
           'Trained and benchmarked regression, random forest, gradient boosting, and GNN models to predict chip power consumption',
           'Evaluated models on MAE, RMSE, and MAPE metrics across ~50–100 chip designs',
           'Used SHAP analysis to identify dominant features driving power consumption predictions',
         ],
-        tech: ['Python', 'PyTorch', 'TorchGeometric', 'SHAP'],
+        postSlug: 'chip-power-gnn',
       },
     ],
     projects: [
@@ -55,19 +58,19 @@ export const categories: Category[] = [
         title: 'NeuroTech EEG Gait Decoder',
         description:
           'PyTorch pipeline predicting gait angle from 16-channel EEG for BCI-driven exoskeleton control. CNN-LSTM architecture reaching 5° RMSE on supervised regression.',
-        tags: ['Python', 'PyTorch', 'BCI'],
+        postSlug: 'neurotech-eeg',
       },
       {
         title: 'Disaster Response NLP',
         description:
           'Sentiment analysis on ~45K disaster tweets across 14 events using RoBERTa and VADER. Batch processing cut inference time roughly in half.',
-        tags: ['Python', 'RoBERTa', 'NLP'],
+        postSlug: 'disaster-nlp',
       },
       {
         title: 'Disinformation Detection System',
         description:
           'Classification system using Logistic Regression with GloVe embeddings and Bag-of-Words features. 91% accuracy and 87% F1-score, iterated via confusion-matrix analysis.',
-        tags: ['Python', 'scikit-learn', 'GloVe'],
+        postSlug: 'disinfo-detection',
       },
     ],
   },
@@ -80,23 +83,25 @@ export const categories: Category[] = [
         role: 'Vice President of Projects',
         company: 'Open Project @ Berkeley',
         dates: 'Jan 2025 — Dec 2025',
+        summary: 'Internal club tooling',
         bullets: [
           "Led 15+ developers across 10+ teams in UC Berkeley's largest CS club (150+ members)",
           'Built internal management software and a CAS-authenticated system handling 200+ applications per semester',
           'Designed PostgreSQL schemas with Drizzle ORM and introduced org-wide CI/CD workflows and documentation',
         ],
-        tech: ['Next.js', 'PostgreSQL', 'Supabase', 'Drizzle'],
+        postSlug: 'open-project-platform',
       },
       {
         role: 'Software Engineer',
         company: 'CubeSat',
         dates: 'Aug 2021 — Sep 2024',
+        summary: 'Satellite image pipeline',
         bullets: [
           "Engineered the satellite's end-to-end image data stream with error detection and correction",
           'Implemented encoding/decoding pipelines with compression, error correction, and encryption — increasing throughput by ~40%',
           'Integrated low-level USB/UART drivers on Linux using FTD2XX and Xilinx tooling',
         ],
-        tech: ['Python', 'C', 'Linux', 'Satellite'],
+        postSlug: 'cubesat',
       },
     ],
     projects: [
@@ -104,14 +109,14 @@ export const categories: Category[] = [
         title: 'AI File Organizer',
         description:
           'Rust-built tool to organize large, inconsistent directory trees. Asynchronous model calls, interactive TUI workflow, and a virtual staging layer for safe review before execution.',
-        tags: ['Rust', 'Async', 'TUI'],
+        postSlug: 'ai-file-organizer',
       },
       {
         title: 'Raycast Calendar Extension',
         description:
           'Productivity extension for calendar management integrated with macOS via AppleScript. Serving over 10,000 users.',
-        tags: ['TypeScript', 'React', 'AppleScript'],
         stat: '10K+ users',
+        postSlug: 'raycast-calendar',
       },
     ],
   },
@@ -124,23 +129,25 @@ export const categories: Category[] = [
         role: 'Lead Developer',
         company: 'Open Project @ Berkeley',
         dates: 'Jan 2025 — May 2025',
+        summary: 'Chess coaching RAG',
         bullets: [
           'Built an LLM-powered RAG system for chess coaching — improved agent performance by 20%',
           'Extracted tactical and strategic features from board positions and retrieved similar historical positions and concept templates',
           'Developed an offline evaluation pipeline over 2M+ positions to test multiple LLMs with and without generated hints',
         ],
-        tech: ['Python', 'React Native', 'Flask', 'SQLite'],
+        postSlug: 'chess-rag',
       },
       {
         role: 'Machine Learning Engineer',
         company: 'NeuroTech @ Berkeley',
         dates: 'Jan 2026 — Present',
+        summary: 'Realtime BCI pipeline',
         bullets: [
           'Built an end-to-end BCI pipeline translating 16-channel EEG signals into real-time gait angle predictions for exoskeleton control',
           'Designed the preprocessing pipeline with artifact removal, bandpass filtering, and sliding window alignment for streaming inference',
           'Achieved 5° RMSE enabling responsive, closed-loop control between brain signals and exoskeleton actuation',
         ],
-        tech: ['Python', 'PyTorch', 'EEG/BCI', 'Pipeline'],
+        postSlug: 'neurotech-eeg',
       },
     ],
     projects: [
@@ -148,13 +155,13 @@ export const categories: Category[] = [
         title: 'Structured Document Editing Agent',
         description:
           'LLM-powered agent for structured document editing via tool calls. Uses an intermediate representation for safe, consistent multi-step edits — reducing manual editing time by 60%.',
-        tags: ['TypeScript', 'AI SDK', 'LLM Agents'],
+        postSlug: 'structured-doc-agent',
       },
       {
         title: 'AI File Organizer',
         description:
           'AI-based tool using recursive traversal, semantic indexing, and model-guided planning to organize directory trees. Two-stage Explorer/Organizer pipeline achieving 18x faster cleanup.',
-        tags: ['Rust', 'Semantic AI', 'Pipeline'],
+        postSlug: 'ai-file-organizer',
       },
     ],
   },
@@ -167,23 +174,25 @@ export const categories: Category[] = [
         role: 'Data Engineer',
         company: 'Open Project @ Berkeley',
         dates: 'Aug 2024 — Jan 2025',
+        summary: 'Study-space scraper',
         bullets: [
           'Built an async web scraper with 10,000+ automated HTTP requests per run, collecting 100K+ data points',
           'Reduced end-to-end collection time by ~100x and structured 600+ classroom schedules into JSON availability models',
           'Cleaned and normalized 500K+ user-submitted ingredient entries, increasing recognized inputs from <20% to >95%',
         ],
-        tech: ['Python', 'Playwright', 'Pandas'],
+        postSlug: 'classroom-scraper',
       },
       {
         role: 'Data Scientist',
         company: 'Synopsys (Contract)',
         dates: 'Aug 2025 — Dec 2025',
+        summary: 'Netlist graph pipeline',
         bullets: [
           'Transformed raw chip netlist data into graph representations for GNN training across ~50–100 designs',
           'Built data pipelines with PyTorch Geometric to construct and featurize netlist graphs with attention layers',
           'Benchmarked inference speed and model scalability across varying design complexities',
         ],
-        tech: ['Python', 'PyTorch Geometric', 'Pandas', 'ETL'],
+        postSlug: 'chip-power-gnn',
       },
     ],
     projects: [
@@ -191,13 +200,13 @@ export const categories: Category[] = [
         title: 'Disaster Response NLP',
         description:
           'Processed ~45K disaster tweets across 14 events. Developed geospatial and textual models to identify locations of highest need, using word frequency analysis and sentiment scoring to extract actionable signals.',
-        tags: ['Python', 'Pandas', 'Geospatial'],
+        postSlug: 'disaster-nlp',
       },
       {
         title: 'Disinformation Detection System',
         description:
           'Collected and cleaned 1,000+ text samples via web scraping. Reduced preprocessing time by 40% with structured NLP pipelines for feature extraction.',
-        tags: ['Python', 'Web Scraping', 'NLP'],
+        postSlug: 'disinfo-detection',
       },
     ],
   },
