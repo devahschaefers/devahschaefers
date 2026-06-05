@@ -32,61 +32,44 @@ const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
         ← Back to {cat.label}
       </a>
 
-      {experience ? (
-        <div
-          class="inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-1 mb-3 text-xs text-text-muted"
-        >
+      <div class="flex flex-col items-start gap-1 mb-3">
+        <div class="inline-flex items-baseline text-xs text-text-muted">
           <span
             transition:name={`work-category-label-${cat.id}`}
             class="work-row-title--transition"
           >
             {cat.label}
           </span>
-          <span
-            transition:name={`work-experience-role-${cat.id}-${post.id}`}
-            class="work-row-title--transition"
+          <span>/</span>
+        </div>
+
+        {experience ? (
+          <div
+            transition:name={`work-experience-line-${cat.id}-${post.id}`}
+            class="work-row-title work-row-title--transition"
           >
             {experience.role}
-          </span>
-          <span>@</span>
-          <span
-            transition:name={`work-experience-company-${cat.id}-${post.id}`}
-            class="work-row-title--transition"
+            <span class="work-row-context"> @ {experience.company} · {experience.dates}</span>
+          </div>
+        ) : (
+          <h1
+            transition:name={`work-post-title-${cat.id}-${post.id}`}
+            class="section-heading inline-block max-w-full mb-0!"
           >
-            {experience.company}
-          </span>
-          <span>·</span>
-          <span
-            transition:name={`work-experience-dates-${cat.id}-${post.id}`}
-            class="work-row-title--transition"
-          >
-            {experience.dates}
-          </span>
-          {post.data.draft && (
-            <span class="border border-border rounded-full px-2.5 py-0.5">Draft</span>
-          )}
-        </div>
-      ) : (
-        <div class="flex flex-wrap items-center gap-2 mb-3">
-          <span
-            transition:name={`work-category-label-${cat.id}`}
-            class="text-xs text-text-muted work-row-title--transition"
-          >
-            {cat.label}
-          </span>
-          {post.data.context && <span class="text-xs text-text-muted">{post.data.context}</span>}
-          {post.data.draft && (
-            <span class="text-xs text-text-muted border border-border rounded-full px-2.5 py-0.5">Draft</span>
-          )}
-        </div>
-      )}
+            {post.data.title}
+          </h1>
+        )}
 
-      <h1
-        transition:name={`work-post-title-${cat.id}-${post.id}`}
-        class="section-heading inline-block max-w-full mb-3!"
-      >
-        {post.data.title}
-      </h1>
+        {post.data.draft && (
+          <span class="text-xs text-text-muted border border-border rounded-full px-2.5 py-0.5">Draft</span>
+        )}
+      </div>
+
+      {experience && (
+        <h1 class="section-heading inline-block max-w-full mb-3!">
+          {post.data.title}
+        </h1>
+      )}
       <p class="text-text-secondary text-sm leading-relaxed">{post.data.blurb}</p>
     </div>
 

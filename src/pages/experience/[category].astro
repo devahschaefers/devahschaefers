@@ -52,24 +52,11 @@ const postBySlug = new Map(posts.map((post) => [post.id, post]));
         >
           <span class="work-row-title">
             <span
-              transition:name={exp.postSlug ? `work-experience-role-${cat.id}-${exp.postSlug}` : undefined}
+              transition:name={exp.postSlug ? `work-experience-line-${cat.id}-${exp.postSlug}` : undefined}
               class="work-row-title--transition"
             >
               {exp.role}
-            </span>
-            <span class="work-row-context"> @ </span>
-            <span
-              transition:name={exp.postSlug ? `work-experience-company-${cat.id}-${exp.postSlug}` : undefined}
-              class="work-row-context work-row-title--transition"
-            >
-              {exp.company}
-            </span>
-            <span class="work-row-context"> · </span>
-            <span
-              transition:name={exp.postSlug ? `work-experience-dates-${cat.id}-${exp.postSlug}` : undefined}
-              class="work-row-context work-row-title--transition"
-            >
-              {exp.dates}
+              <span class="work-row-context"> @ {exp.company} · {exp.dates}</span>
             </span>
             <span class="work-row-description">{exp.summary}</span>
           </span>
