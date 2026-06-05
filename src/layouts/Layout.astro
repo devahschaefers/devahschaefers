@@ -1,6 +1,7 @@
 ---
 import { statSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 
@@ -36,6 +37,7 @@ const faviconVersion = Math.trunc(
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body class="antialiased min-h-[calc(100dvh/1.7)] flex flex-col max-w-[53rem] mx-6 pt-4 lg:mx-auto">
     <Nav current={current} />

@@ -9,6 +9,7 @@ import { categories } from '../data/experience';
     {categories.map((cat) => (
       <a
         href={`/experience/${cat.id}`}
+        transition:name={`work-category-${cat.id}`}
         class="link-internal text-[15px] leading-relaxed rounded px-1.5 py-1 -mx-1.5 inline-flex w-fit items-baseline gap-3"
       >
         <span class="font-medium link-internal-label">{cat.label}</span>
