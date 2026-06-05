@@ -64,52 +64,60 @@ const activeOrder = getSemesterOrder(activeId);
 </Layout>
 
 <script>
-  // ── Staggered entrance (re-triggerable) ──
-  const entranceObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const courses = entry.target.querySelectorAll('.tl-course');
-      if (entry.isIntersecting) {
-        courses.forEach((course, i) => {
-          setTimeout(() => course.classList.add('visible'), i * 100);
-        });
-      } else {
-        courses.forEach(course => course.classList.remove('visible'));
+  // Runs on first load AND after every view-transition swap. Module scripts
+  // don't re-execute on client-side navigations, so without astro:page-load
+  // the freshly-swapped .tl-course elements never get the IntersectionObserver
+  // attached and stay at opacity: 0 until a hard refresh.
+  function initClasses() {
+    // ── Staggered entrance (re-triggerable) ──
+    const entranceObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const courses = entry.target.querySelectorAll('.tl-course');
+        if (entry.isIntersecting) {
+          courses.forEach((course, i) => {
+            setTimeout(() => course.classList.add('visible'), i * 100);
+          });
+        } else {
+          courses.forEach(course => course.classList.remove('visible'));
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.tl-semester').forEach(sem => entranceObserver.observe(sem));
+
+    // ── Typewriter effect (once on page load) ──
+    const labels = document.querySelectorAll('.tl-label');
+    const steps: { label: Element; char: string }[] = [];
+
+    labels.forEach(label => {
+      const text = label.textContent || '';
+      label.textContent = '';
+      for (const char of text) {
+        steps.push({ label, char });
       }
     });
-  }, { threshold: 0.15 });
 
-  document.querySelectorAll('.tl-semester').forEach(sem => entranceObserver.observe(sem));
+    let step = 0;
+    const animationSpeed = 15; // ms per character
+    const initialDelay = 200; // ms before starting the animation
+    const tick = () => {
+      if (step < steps.length) {
+        steps[step].label.textContent += steps[step].char;
+        step++;
+        setTimeout(tick, animationSpeed);
+      }
+    };
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(tick, initialDelay)));
 
-  // ── Typewriter effect (once on page load) ──
-  const labels = document.querySelectorAll('.tl-label');
-  const steps: { label: Element; char: string }[] = [];
+    // ── Line segment draw-in (re-triggerable) ──
+    const segObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        entry.target.classList.toggle('seg-visible', entry.isIntersecting);
+      });
+    }, { threshold: 0.1 });
 
-  labels.forEach(label => {
-    const text = label.textContent || '';
-    label.textContent = '';
-    for (const char of text) {
-      steps.push({ label, char });
-    }
-  });
+    document.querySelectorAll('.tl-semester').forEach(sem => segObserver.observe(sem));
+  }
 
-  let step = 0;
-  const animationSpeed = 15; // ms per character
-  const initialDelay = 200; // ms before starting the animation
-  const tick = () => {
-    if (step < steps.length) {
-      steps[step].label.textContent += steps[step].char;
-      step++;
-      setTimeout(tick, animationSpeed);
-    }
-  };
-  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(tick, initialDelay)));
-
-  // ── Line segment draw-in (re-triggerable) ──
-  const segObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      entry.target.classList.toggle('seg-visible', entry.isIntersecting);
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.tl-semester').forEach(sem => segObserver.observe(sem));
+  document.addEventListener('astro:page-load', initClasses);
 </script>
