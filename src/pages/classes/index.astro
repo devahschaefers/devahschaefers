@@ -68,9 +68,16 @@ const activeOrder = getSemesterOrder(activeId);
   // don't re-execute on client-side navigations, so without astro:page-load
   // the freshly-swapped .tl-course elements never get the IntersectionObserver
   // attached and stay at opacity: 0 until a hard refresh.
+  let entranceObserver: IntersectionObserver | undefined;
+  let segObserver: IntersectionObserver | undefined;
+
   function initClasses() {
+    // Tear down observers from the previous page so they don't pile up
+    // observing detached nodes across repeat visits.
+    teardownClasses();
+
     // ── Staggered entrance (re-triggerable) ──
-    const entranceObserver = new IntersectionObserver((entries) => {
+    entranceObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const courses = entry.target.querySelectorAll('.tl-course');
         if (entry.isIntersecting) {
@@ -83,7 +90,7 @@ const activeOrder = getSemesterOrder(activeId);
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.tl-semester').forEach(sem => entranceObserver.observe(sem));
+    document.querySelectorAll('.tl-semester').forEach(sem => entranceObserver!.observe(sem));
 
     // ── Typewriter effect (once on page load) ──
     const labels = document.querySelectorAll('.tl-label');
@@ -110,14 +117,22 @@ const activeOrder = getSemesterOrder(activeId);
     requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(tick, initialDelay)));
 
     // ── Line segment draw-in (re-triggerable) ──
-    const segObserver = new IntersectionObserver((entries) => {
+    segObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         entry.target.classList.toggle('seg-visible', entry.isIntersecting);
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.tl-semester').forEach(sem => segObserver.observe(sem));
+    document.querySelectorAll('.tl-semester').forEach(sem => segObserver!.observe(sem));
+  }
+
+  function teardownClasses() {
+    entranceObserver?.disconnect();
+    segObserver?.disconnect();
+    entranceObserver = undefined;
+    segObserver = undefined;
   }
 
   document.addEventListener('astro:page-load', initClasses);
+  document.addEventListener('astro:before-swap', teardownClasses);
 </script>

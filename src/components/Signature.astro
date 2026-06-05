@@ -15,7 +15,14 @@
 </div>
 
 <script>
-  (() => {
+  // Re-run on every view-transition swap, not just first load: a module script
+  // won't re-execute on client-side navigations, so without this the swapped-in
+  // signature never gets its observer and stays hidden until a hard refresh.
+  let io: IntersectionObserver | undefined;
+
+  function initSignature() {
+    io?.disconnect();
+
     const wrap = document.querySelector<HTMLElement>('[data-signature]');
     if (!wrap) return;
 
@@ -28,12 +35,12 @@
     // Trigger the draw-in the first time the signature enters the viewport.
     // On short pages it's already visible on load, so the observer fires
     // immediately and animates with its CSS delay.
-    const io = new IntersectionObserver(
+    io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             wrap.classList.add('signature--playing');
-            io.disconnect();
+            io?.disconnect();
             break;
           }
         }
@@ -41,5 +48,8 @@
       { threshold: 0.4 }
     );
     io.observe(wrap);
-  })();
+  }
+
+  document.addEventListener('astro:page-load', initSignature);
+  document.addEventListener('astro:before-swap', () => io?.disconnect());
 </script>
