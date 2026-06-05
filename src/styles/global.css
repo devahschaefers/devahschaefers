@@ -393,6 +393,11 @@ textarea {
   line-height: 1.5;
 }
 
+.work-row-title--transition {
+  display: inline-block;
+  max-width: 100%;
+}
+
 .work-row-context,
 .work-row-description {
   white-space: normal;

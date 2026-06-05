@@ -22,6 +22,7 @@ export async function getStaticPaths() {
 
 const { cat, post } = Astro.props;
 const { Content } = await render(post);
+const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
 ---
 
 <Layout title={`Devah Schaefers — ${post.data.title}`} description={post.data.blurb} current="experience">
@@ -31,15 +32,61 @@ const { Content } = await render(post);
         ← Back to {cat.label}
       </a>
 
-      <div class="flex flex-wrap items-center gap-2 mb-3">
-        <span class="text-xs text-text-muted uppercase tracking-wide">{cat.label}</span>
-        {post.data.context && <span class="text-xs text-text-muted">{post.data.context}</span>}
-        {post.data.draft && (
-          <span class="text-xs text-text-muted border border-border rounded-full px-2.5 py-0.5">Draft</span>
-        )}
-      </div>
+      {experience ? (
+        <div
+          class="inline-flex max-w-full flex-wrap items-center gap-x-2 gap-y-1 mb-3 text-xs text-text-muted"
+        >
+          <span
+            transition:name={`work-category-label-${cat.id}`}
+            class="work-row-title--transition"
+          >
+            {cat.label}
+          </span>
+          <span
+            transition:name={`work-experience-role-${cat.id}-${post.id}`}
+            class="work-row-title--transition"
+          >
+            {experience.role}
+          </span>
+          <span>@</span>
+          <span
+            transition:name={`work-experience-company-${cat.id}-${post.id}`}
+            class="work-row-title--transition"
+          >
+            {experience.company}
+          </span>
+          <span>·</span>
+          <span
+            transition:name={`work-experience-dates-${cat.id}-${post.id}`}
+            class="work-row-title--transition"
+          >
+            {experience.dates}
+          </span>
+          {post.data.draft && (
+            <span class="border border-border rounded-full px-2.5 py-0.5">Draft</span>
+          )}
+        </div>
+      ) : (
+        <div class="flex flex-wrap items-center gap-2 mb-3">
+          <span
+            transition:name={`work-category-label-${cat.id}`}
+            class="text-xs text-text-muted work-row-title--transition"
+          >
+            {cat.label}
+          </span>
+          {post.data.context && <span class="text-xs text-text-muted">{post.data.context}</span>}
+          {post.data.draft && (
+            <span class="text-xs text-text-muted border border-border rounded-full px-2.5 py-0.5">Draft</span>
+          )}
+        </div>
+      )}
 
-      <h1 class="section-heading mb-3!">{post.data.title}</h1>
+      <h1
+        transition:name={`work-post-title-${cat.id}-${post.id}`}
+        class="section-heading inline-block max-w-full mb-3!"
+      >
+        {post.data.title}
+      </h1>
       <p class="text-text-secondary text-sm leading-relaxed">{post.data.blurb}</p>
     </div>
 

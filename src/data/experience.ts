@@ -55,12 +55,6 @@ export const categories: Category[] = [
     ],
     projects: [
       {
-        title: 'NeuroTech EEG Gait Decoder',
-        description:
-          'PyTorch pipeline predicting gait angle from 16-channel EEG for BCI-driven exoskeleton control. CNN-LSTM architecture reaching 5° RMSE on supervised regression.',
-        postSlug: 'neurotech-eeg',
-      },
-      {
         title: 'Disaster Response NLP',
         description:
           'Sentiment analysis on ~45K disaster tweets across 14 events using RoBERTa and VADER. Batch processing cut inference time roughly in half.',

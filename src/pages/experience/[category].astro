@@ -29,12 +29,19 @@ const postBySlug = new Map(posts.map((post) => [post.id, post]));
       ← Back to experience
     </a>
 
-    <div
-      transition:name={`work-category-${cat.id}`}
-      class="inline-flex w-fit max-w-full flex-wrap items-baseline gap-x-3 gap-y-1 mb-8"
-    >
-      <h2 class="section-heading mb-0!">{cat.label}</h2>
-      <p class="text-text-secondary text-sm">{cat.tagline}</p>
+    <div class="inline-flex w-fit max-w-full flex-wrap items-baseline gap-x-3 gap-y-1 mb-8">
+      <h2
+        transition:name={`work-category-label-${cat.id}`}
+        class="section-heading inline-block mb-0!"
+      >
+        {cat.label}
+      </h2>
+      <p
+        transition:name={`work-category-tagline-${cat.id}`}
+        class="text-text-secondary text-sm inline-block"
+      >
+        {cat.tagline}
+      </p>
     </div>
 
     <div>
@@ -44,8 +51,26 @@ const postBySlug = new Map(posts.map((post) => [post.id, post]));
           class:list={['work-row', exp.postSlug && 'work-row--linked']}
         >
           <span class="work-row-title">
-            {exp.role}
-            <span class="work-row-context"> @ {exp.company} · {exp.dates}</span>
+            <span
+              transition:name={exp.postSlug ? `work-experience-role-${cat.id}-${exp.postSlug}` : undefined}
+              class="work-row-title--transition"
+            >
+              {exp.role}
+            </span>
+            <span class="work-row-context"> @ </span>
+            <span
+              transition:name={exp.postSlug ? `work-experience-company-${cat.id}-${exp.postSlug}` : undefined}
+              class="work-row-context work-row-title--transition"
+            >
+              {exp.company}
+            </span>
+            <span class="work-row-context"> · </span>
+            <span
+              transition:name={exp.postSlug ? `work-experience-dates-${cat.id}-${exp.postSlug}` : undefined}
+              class="work-row-context work-row-title--transition"
+            >
+              {exp.dates}
+            </span>
             <span class="work-row-description">{exp.summary}</span>
           </span>
         </a>
@@ -61,7 +86,10 @@ const postBySlug = new Map(posts.map((post) => [post.id, post]));
               href={project.postSlug ? `/experience/${cat.id}/${project.postSlug}` : undefined}
               class:list={['work-row', project.postSlug && 'work-row--linked']}
             >
-              <span class="work-row-title">
+              <span
+                transition:name={project.postSlug ? `work-post-title-${cat.id}-${project.postSlug}` : undefined}
+                class="work-row-title work-row-title--transition"
+              >
                 {project.title}
                 {postBySlug.get(project.postSlug)?.data.draft && <span class="work-row-context"> · Draft</span>}
               </span>
