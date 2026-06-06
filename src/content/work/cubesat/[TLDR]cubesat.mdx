@@ -1,0 +1,17 @@
+---
+title: CubeSat Image Data Stream
+blurb: End-to-end satellite image pipeline with compression, error correction, and encryption.
+categories: [swe]
+context: CubeSat · Software Engineer · Aug 2021 — Sep 2024
+order: 2
+---
+
+## TLDR
+
+I engineered an end-to-end satellite image data stream for lossy laser and RF payload links.
+
+The pipeline combined compression, error correction, and encryption so image chunks could survive interrupted or corrupted transfers without wasting scarce bandwidth.
+
+<Metric value="~40%" label="effective throughput gain" />
+
+I also integrated low-level USB/UART drivers on Linux using FTD2XX and Xilinx tooling for custom baud rates and robust streaming.

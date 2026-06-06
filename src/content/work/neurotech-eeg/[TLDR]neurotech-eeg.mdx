@@ -1,0 +1,17 @@
+---
+title: NeuroTech EEG Gait Decoder
+blurb: Decoding non-invasive EEG into gait phase, heel-strike events, and lower-limb motion signals for BCI-driven mobility systems.
+categories: [ml, agents]
+context: NeuroTech @ Berkeley · Jan 2026 — Present
+order: 1
+---
+
+## TLDR
+
+I worked on decoding gait information from noisy, non-invasive EEG for future BCI-driven mobility systems.
+
+The final approach moved away from pure joint-angle regression and toward a multitask temporal convolutional network that predicts heel-strike events, gait phase, and smoothed ankle angle from 1-second EEG windows.
+
+<Metric value="0.90" label="heel-strike AUC" />
+
+The main lesson: EEG gait decoding depends as much on dataset choice, preprocessing, target definition, and evaluation splits as it does on architecture.

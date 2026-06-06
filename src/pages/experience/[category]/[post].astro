@@ -3,34 +3,61 @@ import Layout from '../../../layouts/Layout.astro';
 import Contact from '../../../components/Contact.astro';
 import Metric from '../../../components/Metric.astro';
 import { categories } from '../../../data/experience';
+import { getWorkPostSlug, groupWorkPosts } from '../../../data/workContent';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const workPosts = await getCollection('work');
+  const { posts: workPosts, tldrBySlug } = groupWorkPosts(await getCollection('work'));
 
   return workPosts.flatMap((post) =>
     post.data.categories.map((category) => {
       const cat = categories.find((item) => item.id === category);
+      const postSlug = getWorkPostSlug(post);
 
       return {
-        params: { category, post: post.id },
-        props: { cat, post },
+        params: { category, post: postSlug },
+        props: { cat, post, postSlug, tldrPost: tldrBySlug.get(postSlug) },
       };
     }),
   );
 }
 
-const { cat, post } = Astro.props;
+const { cat, post, postSlug, tldrPost } = Astro.props;
 const { Content } = await render(post);
-const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
+const renderedTldr = tldrPost ? await render(tldrPost) : null;
+const TldrContent = renderedTldr?.Content;
+const experience = cat.experiences.find((entry) => entry.postSlug === postSlug);
 ---
 
 <Layout title={`Devah Schaefers — ${post.data.title}`} description={post.data.blurb} current="experience">
-  <article class="pb-10">
+  <article class="pb-10" data-work-reader data-work-mode="full">
     <div class="mb-8">
-      <a href={`/experience/${cat.id}`} class="link-internal mb-6">
-        ← Back to {cat.label}
-      </a>
+      <div class="mb-6 flex items-center justify-between gap-4">
+        <a href={`/experience/${cat.id}`} class="link-internal">
+          ← Back to {cat.label}
+        </a>
+
+        {TldrContent && (
+          <div class="tldr-toggle" role="group" aria-label="Reading mode">
+            <button
+              type="button"
+              class="tldr-toggle__button is-active"
+              data-work-mode-button="full"
+              aria-pressed="true"
+            >
+              Full
+            </button>
+            <button
+              type="button"
+              class="tldr-toggle__button"
+              data-work-mode-button="tldr"
+              aria-pressed="false"
+            >
+              TLDR
+            </button>
+          </div>
+        )}
+      </div>
 
       <div class="flex flex-col items-start gap-1 mb-3">
         <div class="inline-flex items-baseline text-sm text-text-muted">
@@ -45,14 +72,14 @@ const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
 
         {experience ? (
           <div
-            transition:name={`work-experience-line-${cat.id}-${post.id}`}
+            transition:name={`work-experience-line-${cat.id}-${postSlug}`}
             class="work-row-title--transition text-sm text-text-muted"
           >
             {experience.role} @ {experience.company} · {experience.dates}
           </div>
         ) : (
           <h1
-            transition:name={`work-post-title-${cat.id}-${post.id}`}
+            transition:name={`work-post-title-${cat.id}-${postSlug}`}
             class="section-heading inline-block max-w-full mb-0!"
           >
             {post.data.title}
@@ -72,9 +99,15 @@ const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
       <p class="text-text-secondary text-sm leading-relaxed">{post.data.blurb}</p>
     </div>
 
-    <div class="work-post">
+    <div class="work-post work-copy" data-work-copy="full">
       <Content components={{ Metric }} />
     </div>
+
+    {TldrContent && (
+      <div class="work-post work-copy work-copy--tldr" data-work-copy="tldr" hidden aria-hidden="true">
+        <TldrContent components={{ Metric }} />
+      </div>
+    )}
 
     <div class="mt-10 pt-6 border-t border-border flex flex-wrap gap-3">
       {post.data.categories
@@ -82,7 +115,7 @@ const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
         .map((category) => categories.find((item) => item.id === category))
         .filter(Boolean)
         .map((category) => (
-          <a href={`/experience/${category.id}/${post.id}`} class="link-internal">
+          <a href={`/experience/${category.id}/${postSlug}`} class="link-internal">
             Also in {category.label} →
           </a>
         ))}
@@ -90,4 +123,66 @@ const experience = cat.experiences.find((entry) => entry.postSlug === post.id);
   </article>
 
   <Contact />
+
+  <script>
+    const setupWorkModeToggles = () => {
+      document.querySelectorAll('[data-work-reader]').forEach((root) => {
+        if (!(root instanceof HTMLElement) || root.dataset.workToggleReady === 'true') return;
+
+        const buttons = Array.from(root.querySelectorAll('[data-work-mode-button]'));
+        const copies = Array.from(root.querySelectorAll('[data-work-copy]'));
+        root.dataset.workToggleReady = 'true';
+
+        const setMode = (mode) => {
+          const nextMode = mode === 'tldr' ? 'tldr' : 'full';
+          root.dataset.workMode = nextMode;
+
+          buttons.forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            const isActive = button.dataset.workModeButton === nextMode;
+            button.classList.toggle('is-active', isActive);
+            button.setAttribute('aria-pressed', String(isActive));
+          });
+
+          copies.forEach((copy) => {
+            if (!(copy instanceof HTMLElement)) return;
+            const isActive = copy.dataset.workCopy === nextMode;
+            copy.hidden = !isActive;
+            copy.setAttribute('aria-hidden', String(!isActive));
+          });
+        };
+
+        let savedMode = 'full';
+
+        try {
+          savedMode = window.localStorage.getItem('work-reading-mode') ?? 'full';
+        } catch {
+          savedMode = 'full';
+        }
+
+        setMode(savedMode);
+
+        buttons.forEach((button) => {
+          button.addEventListener('click', () => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            const mode = button.dataset.workModeButton ?? 'full';
+            setMode(mode);
+
+            try {
+              window.localStorage.setItem('work-reading-mode', mode);
+            } catch {
+              // Ignore storage failures; the switch still works for this page view.
+            }
+          });
+        });
+      });
+    };
+
+    setupWorkModeToggles();
+
+    if (document.documentElement.dataset.workToggleBound !== 'true') {
+      document.documentElement.dataset.workToggleBound = 'true';
+      document.addEventListener('astro:page-load', setupWorkModeToggles);
+    }
+  </script>
 </Layout>

@@ -1,0 +1,17 @@
+---
+title: Structured Document Editing Agent
+blurb: An LLM agent that edits structured documents via tool calls and an intermediate representation.
+categories: [agents]
+context: Project
+order: 2
+---
+
+## TLDR
+
+I built an LLM document-editing agent that makes targeted tool-call edits over an intermediate representation instead of regenerating the whole document.
+
+That made multi-step edits safer: tool constraints limit what the model can change, and post-edit checks verify that the structure stayed valid.
+
+<Metric value="60%" label="less manual editing time" />
+
+The result was faster editing without the usual structured-output drift.

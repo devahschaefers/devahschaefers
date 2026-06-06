@@ -6,15 +6,15 @@ context: NeuroTech @ Berkeley · Jan 2026 — Present
 order: 1
 ---
 
-This was one of the projects I was most excited for coming into NeuroTech. When I was applying to colleges, I was specifically looking for schools doing active research in brain-computer interfaces and neuroprosthetics, so getting to work on a gait-decoding project felt very close to the reason I wanted to be here in the first place.
+This was one of the projects I was most excited for coming into it. In fact, when I was applying to colleges, I was specifically looking for schools doing active research in brain-computer interfaces and neuroprosthetics, so getting to work on a gait-decoding project felt like coming full circle.
 
-The goal sounds almost like science fiction: read someone's brain activity and infer what part of the walking cycle they are in. In the long run, systems like this could help improve prosthetics, exoskeletons, and rehabilitation tools for people with spinal cord injuries or motor impairments.
+The itself goal sounds almost like science fiction: read someone's brain activity and infer what where their leg is in 3D space. The benefits are obvious: improved prosthetics, exoskeletons, and rehabilitation tools.
 
 But the actual research problem is much more concrete: given noisy, non-invasive EEG recordings, can we decode useful gait information quickly and reliably enough for a downstream assistive controller?
 
 ## EEG Data Is Not Fun
 
-EEG is a hostile input for machine learning. The signal is tiny, noisy, and buried under eye blinks, muscle artifacts, electrical interference, and subject-to-subject variation. Even recordings from the same person can shift between sessions.
+EEG is an ML Engineer's worst nightmare. The signal is tiny, noisy, and buried under eye blinks, muscle artifacts, electrical interference, and there is extreme subject-to-subject variation. Even recordings from the same person can shift between sessions.
 
 At first, we framed the project as direct continuous regression: take EEG windows and predict the exact lower-limb joint angle. That is the cleanest version of the problem, but it turned out to be much harder than it sounds. Under realistic splits, direct angle regression often overfit or collapsed toward weak average predictions.
 

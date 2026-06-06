@@ -1,0 +1,17 @@
+---
+title: AI File Organizer
+blurb: A Rust tool that organizes messy directory trees with a two-stage LLM pipeline.
+categories: [swe, agents]
+context: Project
+order: 3
+---
+
+## TLDR
+
+A Rust TUI that organizes messy directory trees with an LLM-backed planning flow. It splits the work into an **Explorer** that summarizes the filesystem and an **Organizer** that proposes semantic groups and file moves.
+
+The important engineering choice was safety: every move goes through a **virtual staging layer** first, so the user reviews the plan before anything touches disk.
+
+<Metric value="~18x" label="faster than manual cleanup" />
+
+Built for large, inconsistent folders where extension-based sorting is not enough.

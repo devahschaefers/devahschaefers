@@ -2,10 +2,11 @@
 import Layout from '../../layouts/Layout.astro';
 import Contact from '../../components/Contact.astro';
 import { categories } from '../../data/experience';
+import { getWorkPostSlug, groupWorkPosts } from '../../data/workContent';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-  const workPosts = await getCollection('work');
+  const { posts: workPosts } = groupWorkPosts(await getCollection('work'));
 
   return categories.map((cat) => ({
     params: { category: cat.id },
@@ -19,7 +20,7 @@ export async function getStaticPaths() {
 }
 
 const { cat, posts } = Astro.props;
-const postBySlug = new Map(posts.map((post) => [post.id, post]));
+const postBySlug = new Map(posts.map((post) => [getWorkPostSlug(post), post]));
 ---
 
 <Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience">

@@ -1,0 +1,17 @@
+---
+title: Disinformation Detection System
+blurb: A text classifier flagging disinformation at 91% accuracy / 87% F1.
+categories: [ml, data]
+context: Project
+order: 4
+---
+
+## TLDR
+
+I built an interpretable disinformation classifier from a scraped and cleaned dataset of **1,000+ text samples**.
+
+The model used Logistic Regression with GloVe embeddings and Bag-of-Words features, then improved through confusion-matrix driven iteration.
+
+<Metric value="91% / 87%" label="accuracy / F1-score" />
+
+The preprocessing pipeline cut experiment iteration time by about 40%.
