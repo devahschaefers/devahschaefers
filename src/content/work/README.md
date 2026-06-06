@@ -14,7 +14,6 @@ its frontmatter includes both categories.
 | `title` | string | post title |
 | `blurb` | string | one-liner for the category list |
 | `categories` | string[] | any of `ml`, `swe`, `agents`, `data` — a post can appear under several |
-| `stat` | string? | optional internal/highlight metric, e.g. `5° RMSE` |
 | `context` | string? | optional org/date line, e.g. `NeuroTech @ Berkeley · Jan 2026 — Present` |
 | `order` | number | sort order within a category (lower first) |
 | `draft` | boolean? | `true` = copy is still a placeholder (only `raycast-calendar` today) |
