@@ -29,7 +29,7 @@ export const categories: Category[] = [
     tagline: 'Machine learning research, model design, and applied AI',
     experiences: [
       {
-        role: 'Machine Learning Engineer',
+        role: 'ML Engineer',
         company: 'NeuroTech @ Berkeley',
         dates: 'Jan 2026 — Present',
         summary: 'EEG gait decoder',
@@ -132,7 +132,7 @@ export const categories: Category[] = [
         postSlug: 'chess-rag',
       },
       {
-        role: 'Machine Learning Engineer',
+        role: 'ML Engineer',
         company: 'NeuroTech @ Berkeley',
         dates: 'Jan 2026 — Present',
         summary: 'Realtime BCI pipeline',

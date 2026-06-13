@@ -32,7 +32,7 @@ const { cat, posts } = Astro.props;
     <div class="inline-flex w-fit max-w-full flex-wrap items-baseline gap-x-3 gap-y-1 mb-8">
       <h2
         transition:name={`work-category-label-${cat.id}`}
-        class="section-heading inline-block mb-0!"
+        class="section-heading text-lg inline-block mb-0!"
       >
         {cat.label}
       </h2>
@@ -45,14 +45,14 @@ const { cat, posts } = Astro.props;
     </div>
 
     {cat.experiences.length > 0 && (
-      <h3 class="text-xs font-medium text-text-muted tracking-wide uppercase mb-4 text-center">Roles</h3>
+      <h3 class="text-[0.9rem] font-medium text-text-muted tracking-wide uppercase mb-4 text-center">Roles</h3>
     )}
 
     <div>
       {cat.experiences.map((exp) => (
         <a
           href={exp.postSlug ? `/experience/${cat.id}/${exp.postSlug}` : undefined}
-          class:list={['work-row', exp.postSlug && 'work-row--linked']}
+          class:list={['work-row', 'group', 'relative', exp.postSlug && 'work-row--linked']}
         >
           <span class="work-row-title">
             <span
@@ -62,15 +62,19 @@ const { cat, posts } = Astro.props;
               {exp.role}
               <span class="work-row-context"> @ {exp.company} · {exp.dates}</span>
             </span>
-            <span class="work-row-description">{exp.summary}</span>
           </span>
+          {exp.summary && (
+            <span class="work-row-context pointer-events-none hidden whitespace-nowrap lg:absolute lg:right-full lg:top-1/2 lg:block lg:w-max lg:translate-x-12 lg:-translate-y-1/2 lg:pr-4 lg:text-right lg:opacity-0 lg:transition-all lg:duration-300 lg:ease-out lg:group-hover:translate-x-0 lg:group-hover:opacity-100">
+              {exp.summary}
+            </span>
+          )}
         </a>
       ))}
     </div>
 
     {cat.projects.length > 0 && (
-      <div class="mt-12">
-        <h3 class="text-xs font-medium text-text-muted tracking-wide uppercase mb-4 text-center">Projects</h3>
+      <div class="mt-8">
+        <h3 class="text-[0.9rem] font-medium text-text-muted tracking-wide uppercase mb-4 text-center">Projects</h3>
         <div>
           {cat.projects.map((project) => (
             <a
