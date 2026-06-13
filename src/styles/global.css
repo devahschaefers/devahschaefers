@@ -379,6 +379,10 @@ textarea {
 }
 
 .work-row--linked {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
   border-radius: 8px;
   padding-inline: 0.5rem;
   margin-inline: -0.5rem;
@@ -386,9 +390,32 @@ textarea {
               transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* Resting "this is a link" cue — faint trailing arrow, echoing the "ML →" nav */
+.work-row--linked::after {
+  content: "→";
+  flex: none;
+  color: var(--color-text-muted);
+  opacity: 0.45;
+  transition: color 0.15s ease,
+              opacity 0.15s ease,
+              transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 .work-row--linked:hover {
   transform: scale(1.02);
   text-decoration: none;
+}
+
+.work-row--linked:hover::after {
+  color: var(--color-pop);
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-row--linked:hover::after {
+    transform: none;
+  }
 }
 
 /* Brighten the whole row toward white, echoing .link-internal */
@@ -417,6 +444,11 @@ textarea {
   font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.5;
+}
+
+/* Let the title shrink/wrap beside the trailing arrow instead of overflowing */
+.work-row--linked > .work-row-title {
+  min-width: 0;
 }
 
 .work-row-title--transition {
