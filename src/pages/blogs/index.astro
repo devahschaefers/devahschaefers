@@ -28,7 +28,7 @@ const posts = workPosts
       {posts.map((post) => {
         const slug = getWorkPostSlug(post);
         return (
-          <a href={`/blogs/${slug}`} class="work-row work-row--linked work-row--blog">
+          <a href={`/blogs/${slug}`} class="work-row work-row--linked">
             <span class="work-row-title">
               <span
                 transition:name={`blog-post-title-${slug}`}
@@ -39,7 +39,6 @@ const posts = workPosts
                   <span class="work-row-context"> · {post.data.context}</span>
                 )}
               </span>
-              <span class="work-row-description">{post.data.blurb}</span>
             </span>
           </a>
         );

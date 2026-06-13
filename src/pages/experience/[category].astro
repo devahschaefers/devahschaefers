@@ -44,6 +44,10 @@ const { cat, posts } = Astro.props;
       </p>
     </div>
 
+    {cat.experiences.length > 0 && (
+      <h3 class="text-xs font-medium text-text-muted tracking-wide uppercase mb-4 text-center">Roles</h3>
+    )}
+
     <div>
       {cat.experiences.map((exp) => (
         <a
@@ -66,7 +70,7 @@ const { cat, posts } = Astro.props;
 
     {cat.projects.length > 0 && (
       <div class="mt-12">
-        <h3 class="text-xs font-medium text-text-muted tracking-wide uppercase mb-4">Projects</h3>
+        <h3 class="text-xs font-medium text-text-muted tracking-wide uppercase mb-4 text-center">Projects</h3>
         <div>
           {cat.projects.map((project) => (
             <a
