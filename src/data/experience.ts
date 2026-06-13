@@ -146,10 +146,10 @@ export const categories: Category[] = [
     ],
     projects: [
       {
-        title: 'Structured Document Editing Agent',
+        title: 'Resume Editing Agent',
         description:
-          'LLM-powered agent for structured document editing via tool calls. Uses an intermediate representation for safe, consistent multi-step edits — reducing manual editing time by 60%.',
-        postSlug: 'structured-doc-agent',
+          'An agent that tailors resumes per job and treats formatting as a hard constraint, verifying the rendered PDF with pdftotext to keep bullets clean and the resume to one page — speeding up my application process by roughly 10x.',
+        postSlug: 'resume-editing-agent',
       },
       {
         title: 'AI File Organizer',

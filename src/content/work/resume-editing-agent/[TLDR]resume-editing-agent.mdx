@@ -1,0 +1,16 @@
+---
+title: Resume Editing Agent
+blurb: An agent that tailors resumes per job and treats formatting as a hard, machine-checked constraint.
+categories: [agents, swe]
+context: Project
+order: 2
+published: true
+---
+
+## TLDR
+
+- Built an agent that tailors resumes to each job description, branching from base resumes (SWE, ML, Data, Agentic Systems) and attaching others for cross-over roles.
+
+- Added a deterministic verifier that reads the compiled PDF back with `pdfinfo` and `pdftotext -bbox-layout` to enforce one page, single-line bullets, and bullets that fill at least 75% of the line — no orphaned words, no shrinking the font.
+
+- Closed the loop: the agent makes targeted edits, the verifier flags layout violations at their exact source line, and it revises until everything passes. Sped up my application process by roughly 10x.

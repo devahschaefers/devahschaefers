@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Contact from '../../components/Contact.astro';
+import { getWorkPostSlug, groupWorkPosts } from '../../data/workContent';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const { posts: workPosts } = groupWorkPosts(await getCollection('work'));
+
+  return workPosts
+    .filter((post) => post.data.published)
+    .map((post) => ({
+      params: { post: getWorkPostSlug(post) },
+      props: { post, slug: getWorkPostSlug(post) },
+    }));
+}
+
+const { post, slug } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`Devah Schaefers — ${post.data.title}`} description={post.data.blurb} current="blogs">
+  <article class="pb-10">
+    <div class="mb-8">
+      <a href="/blogs" class="link-internal mb-6">
+        ← Back to blogs
+      </a>
+
+      <div class="flex flex-col items-start gap-1 mt-6 mb-3">
+        {post.data.context && (
+          <div class="text-sm text-text-muted">{post.data.context}</div>
+        )}
+        <h1
+          transition:name={`blog-post-title-${slug}`}
+          class="section-heading inline-block max-w-full mb-0!"
+        >
+          {post.data.title}
+        </h1>
+      </div>
+    </div>
+
+    <div class="work-post work-copy">
+      <Content />
+    </div>
+  </article>
+
+  <Contact />
+</Layout>

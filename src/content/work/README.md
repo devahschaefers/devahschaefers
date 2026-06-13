@@ -20,8 +20,8 @@ its frontmatter includes both categories.
 ## Posts
 
 - ml: `neurotech-eeg`, `chip-power-gnn`, `disaster-nlp`, `disinfo-detection`
-- swe: `open-project-platform`, `cubesat`, `ai-file-organizer`, `raycast-calendar`
-- agents: `chess-rag`, `structured-doc-agent`, `ai-file-organizer`, `neurotech-eeg`
+- swe: `open-project-platform`, `cubesat`, `ai-file-organizer`, `raycast-calendar`, `resume-editing-agent`
+- agents: `chess-rag`, `resume-editing-agent`, `ai-file-organizer`, `neurotech-eeg`
 - data: `chip-power-gnn`, `disaster-nlp`, `disinfo-detection`, `classroom-scraper`
 
 (Several posts intentionally appear under multiple categories.)

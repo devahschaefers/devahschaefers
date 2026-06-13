@@ -9,6 +9,7 @@ const work = defineCollection({
     categories: z.array(z.enum(['ml', 'swe', 'agents', 'data'])),
     context: z.string().optional(),
     order: z.number(),
+    published: z.boolean().default(false),
   }),
 });
 

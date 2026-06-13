@@ -1,0 +1,94 @@
+---
+title: Resume Editing Agent
+blurb: An agent that tailors resumes per job and treats formatting as a hard, machine-checked constraint.
+categories: [agents, swe]
+context: Project
+order: 2
+published: true
+---
+
+Tailoring a resume to every job is tedious, and the tools that promise to automate it
+get the one thing wrong that matters most on a one-page resume — how it actually looks.
+I built an agent that tailors resumes per job *and* treats formatting as a hard
+constraint, verified deterministically against the rendered PDF rather than left to the
+model's imagination.
+
+## The problem
+
+Three things make this harder than "rewrite my resume for this job."
+
+First, every posting is different. Each one has its own description, its own required
+skills, and might be best served by a different starting point — a machine-learning
+resume for one role, a software-engineering one for the next, data for another.
+
+Second, building each job-specific resume by hand is slow. The base resumes overlap
+heavily, so most of the work is reconciling that overlap: figuring out what carries
+over, what to drop, and how to make sure everything the job description actually asks
+for lands somewhere on the page.
+
+Third — and this is the part existing platforms get wrong — they almost entirely ignore
+formatting. Bullets spill over the line by a word or two, leaving ugly gaps of empty
+white space. And their only fix for a resume running onto a second page is to delete
+bullets and shrink the font until it's unreadable. I wanted something that fixes the
+content *and* the layout, instead of trading one for the other.
+
+## Formatting is the hard part
+
+The key insight is that the agent isn't done when the *text* reads well. It's done when
+the *rendered page* is right — one page, no orphaned words, no half-empty lines, nothing
+shrunk to fit. That means layout can't be a vibe the model eyeballs. It has to be
+measured.
+
+## A deterministic verifier
+
+So the core of the system is a deterministic verifier that runs against the compiled
+output. Resumes are written in LaTeX or Typst and compiled to PDF, and then the verifier
+reads the PDF back with off-the-shelf tools — `pdfinfo` for page geometry and
+`pdftotext -bbox-layout` to recover the bounding box of every word and line as it
+actually rendered.
+
+From that geometry it enforces a few hard rules:
+
+- **Page count** — the resume must be exactly one page.
+- **Bullet line count** — each bullet must render as a specific number of lines (right
+  now, exactly one), so nothing wraps unexpectedly.
+- **Bullet width** — each bullet must fill at least 75% of the available line width. This
+  is the check that kills the spilled-by-one-word problem directly: a bullet that wraps
+  to a second line but only fills a sliver of it gets flagged instead of shipping as
+  dead white space.
+
+There's no LLM judging the layout — the checks are pass/fail, so the agent gets an
+unambiguous signal to revise against. And when the resume does overflow, the verifier
+doesn't just say "too long." It maps each problem back to the exact source line that
+caused it and ranks which bullets are the best candidates to tighten to recover the
+space, so the fix is targeted rather than a blind trim.
+
+## Closing the loop
+
+That verifier wraps around the editing agent. The model proposes targeted edits over the
+structured document rather than regenerating the whole thing — every change is deliberate
+and the document never drifts into an invalid state between steps. After each round, the
+verifier compiles the result and checks it. Layout violations come back with their exact
+source locations, the agent revises, and the loop repeats until every rule passes. The
+content gets tailored to the job and the page stays clean, at the same time.
+
+## The workspace
+
+Around the agent is a local-first workspace built on a set of base resumes — SWE, ML,
+Data, Agentic Systems, and so on. From any base you can **branch** a job-specific variant
+for a particular posting, and then **attach** other bases or company-specific resumes as
+extra context. If a role is mostly ML but the description leans heavily on software
+engineering, you branch off the ML resume and attach the SWE one — telling the agent,
+"pull this in from my experience too." It can also draft **cover letters** tied to a
+specific job description, with all of that experience already in context. History is
+git-backed, so every variant is saved and recoverable.
+
+## What's next
+
+The verifier's rules are deliberately built to be configurable. The plan is to make the
+bullet line count adjustable (one, two, or three lines), the target page length
+configurable, and to allow custom prompts for tuning a given resume in a specific
+direction.
+
+The payoff has been concrete: it sped up my application process by roughly 10x, and the
+formatting comes out right the first time instead of needing cleanup.

@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Contact from '../../components/Contact.astro';
+import { getWorkPostSlug, groupWorkPosts } from '../../data/workContent';
+import { getCollection } from 'astro:content';
+
+const { posts: workPosts } = groupWorkPosts(await getCollection('work'));
+
+const posts = workPosts
+  .filter((post) => post.data.published)
+  .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+---
+
+<Layout
+  title="Devah Schaefers — Blogs"
+  description="Long-form write-ups cross-posted from my work — the full story behind each project."
+  current="blogs"
+>
+  <section class="pb-10">
+    <div class="mb-8">
+      <h2 class="section-heading section-heading--accent">Blogs</h2>
+      <p class="text-text-secondary text-sm">
+        [WIP] The full write-ups behind my work, and other thoughts.
+      </p>
+    </div>
+
+    <div>
+      {posts.map((post) => {
+        const slug = getWorkPostSlug(post);
+        return (
+          <a href={`/blogs/${slug}`} class="work-row work-row--linked work-row--blog">
+            <span class="work-row-title">
+              <span
+                transition:name={`blog-post-title-${slug}`}
+                class="work-row-title--transition"
+              >
+                {post.data.title}
+                {post.data.context && (
+                  <span class="work-row-context"> · {post.data.context}</span>
+                )}
+              </span>
+              <span class="work-row-description">{post.data.blurb}</span>
+            </span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <Contact />
+</Layout>
