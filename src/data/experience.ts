@@ -86,6 +86,30 @@ export const categories: Category[] = [
         postSlug: 'open-project-platform',
       },
       {
+        role: 'Lead Developer',
+        company: 'Open Project @ Berkeley',
+        dates: 'Jan 2025 — May 2025',
+        summary: 'Chess coaching RAG',
+        bullets: [
+          'Built an LLM-powered RAG system for chess coaching — improved agent performance by 20%',
+          'Extracted tactical and strategic features from board positions and retrieved similar historical positions and concept templates',
+          'Developed an offline evaluation pipeline over 2M+ positions to test multiple LLMs with and without generated hints',
+        ],
+        postSlug: 'chess-rag',
+      },
+      {
+        role: 'Software Engineer',
+        company: 'Open Project @ Berkeley',
+        dates: 'Aug 2024 — Jan 2025',
+        summary: 'Study-space scraper',
+        bullets: [
+          'Built an async web scraper with 10,000+ automated HTTP requests per run, collecting 100K+ data points',
+          'Reduced end-to-end collection time by ~100x and structured 600+ classroom schedules into JSON availability models',
+          'Cleaned and normalized 500K+ user-submitted ingredient entries, increasing recognized inputs from <20% to >95%',
+        ],
+        postSlug: 'classroom-scraper',
+      },
+      {
         role: 'Software Engineer',
         company: 'CubeSat',
         dates: 'Aug 2021 — Sep 2024',
@@ -131,18 +155,6 @@ export const categories: Category[] = [
         ],
         postSlug: 'chess-rag',
       },
-      {
-        role: 'ML Engineer',
-        company: 'NeuroTech @ Berkeley',
-        dates: 'Jan 2026 — Present',
-        summary: 'Realtime BCI pipeline',
-        bullets: [
-          'Built an end-to-end BCI pipeline translating 16-channel EEG signals into real-time gait angle predictions for exoskeleton control',
-          'Designed the preprocessing pipeline with artifact removal, bandpass filtering, and sliding window alignment for streaming inference',
-          'Achieved 5° RMSE enabling responsive, closed-loop control between brain signals and exoskeleton actuation',
-        ],
-        postSlug: 'neurotech-eeg',
-      },
     ],
     projects: [
       {
@@ -165,7 +177,7 @@ export const categories: Category[] = [
     tagline: 'Data pipelines, scraping, ETL, and large-scale data systems',
     experiences: [
       {
-        role: 'Data Engineer',
+        role: 'Software Engineer',
         company: 'Open Project @ Berkeley',
         dates: 'Aug 2024 — Jan 2025',
         summary: 'Study-space scraper',
