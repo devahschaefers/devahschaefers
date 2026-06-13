@@ -300,7 +300,8 @@ textarea {
 
 /* ── External Links ───────────────────────────────── */
 
-.link-external {
+.link-external,
+.work-post a {
   color: var(--color-link);
   text-decoration: none;
   border-radius: 3px;
@@ -309,7 +310,15 @@ textarea {
               background-color 0.15s ease;
 }
 
-.link-external:hover {
+.work-post a {
+  background-image: linear-gradient(var(--color-pop), var(--color-pop));
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  background-position: 0 100%;
+}
+
+.link-external:hover,
+.work-post a:hover {
   color: var(--color-pop);
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 6'><path d='M0 3 Q3.5 0 7 3 T14 3' stroke='%23667ad7' stroke-width='1.4' fill='none' stroke-linecap='round'/></svg>");
   background-repeat: repeat-x;
@@ -318,7 +327,8 @@ textarea {
   animation: squiggle-run 0.9s linear infinite;
 }
 
-.link-external:hover span {
+.link-external:hover span,
+.work-post a:hover span {
   color: var(--color-pop);
   transition: color 0.15s ease;
 }
@@ -329,7 +339,8 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .link-external:hover { animation: none; }
+  .link-external:hover,
+  .work-post a:hover { animation: none; }
 }
 
 /* Firefox's View Transition support is newer and currently rough for text morphs. */
@@ -558,6 +569,19 @@ textarea {
 .tldr-toggle__button:hover {
   color: var(--color-text);
   transform: scale(1.02);
+}
+
+.tldr-toggle__button:disabled,
+.tldr-toggle__button.is-disabled {
+  color: color-mix(in srgb, var(--color-text-muted) 55%, transparent);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.tldr-toggle__button:disabled:hover,
+.tldr-toggle__button.is-disabled:hover {
+  color: color-mix(in srgb, var(--color-text-muted) 55%, transparent);
+  transform: none;
 }
 
 .tldr-toggle__button.is-active {

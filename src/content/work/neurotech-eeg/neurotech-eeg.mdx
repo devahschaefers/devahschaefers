@@ -6,68 +6,106 @@ context: NeuroTech @ Berkeley · Jan 2026 — Present
 order: 1
 ---
 
-This was one of the projects I was most excited for coming into it. In fact, when I was applying to colleges, I was specifically looking for schools doing active research in brain-computer interfaces and neuroprosthetics, so getting to work on a gait-decoding project felt like coming full circle.
+This was one of the projects I was most excited for coming into it. When I was applying to colleges, I was specifically looking for schools doing active research in brain-computer interfaces and neuroprosthetics, so getting to work on a gait-decoding project felt like coming full circle.
 
-The itself goal sounds almost like science fiction: read someone's brain activity and infer what where their leg is in 3D space. The benefits are obvious: improved prosthetics, exoskeletons, and rehabilitation tools.
+The goal itself sounds almost like science fiction: read someone's brain activity and infer how their leg is moving. The payoff is obvious — better prosthetics, exoskeletons, and rehabilitation tools that respond to *intent* rather than residual muscle signals.
 
-But the actual research problem is much more concrete: given noisy, non-invasive EEG recordings, can we decode useful gait information quickly and reliably enough for a downstream assistive controller?
+The catch is that most brain-computer interface work that actually decodes movement well relies on invasive, intracranial electrodes. That works in a lab, but it is hard to deploy. So the concrete research question we set out to answer was narrower and harder: given noisy, **non-invasive** EEG recordings, can we decode gait information quickly and reliably enough to be useful to a downstream assistive controller?
 
 ## EEG Data Is Not Fun
 
-EEG is an ML Engineer's worst nightmare. The signal is tiny, noisy, and buried under eye blinks, muscle artifacts, electrical interference, and there is extreme subject-to-subject variation. Even recordings from the same person can shift between sessions.
-
-At first, we framed the project as direct continuous regression: take EEG windows and predict the exact lower-limb joint angle. That is the cleanest version of the problem, but it turned out to be much harder than it sounds. Under realistic splits, direct angle regression often overfit or collapsed toward weak average predictions.
-
-The more useful framing became: what gait information is actually decodable from EEG? Instead of only predicting a raw angle, we also trained models to detect heel-strike events and classify gait phase. Those signals are more stable, more interpretable, and still useful for controlling assistive robotics.
-
-## The Dataset Problem
-
-One of the first big issues we ran into was that our initial dataset was too small to tell us much about generalization. It was useful for getting the pipeline working: loading EEG, cutting it into windows, training CNN and LSTM baselines, and checking whether the model could predict anything at all.
-
-But for a BCI gait decoder, doing well on one or two people is not enough. EEG varies heavily across subjects, electrode placement, sessions, and recording conditions. With such limited subject diversity, a model can look promising while mostly learning person-specific quirks rather than a general relationship between neural activity and gait.
-
-So we switched to a larger and more diverse mobile brain/body imaging dataset: 8 subjects, 3 treadmill-walking trials per subject, 60 EEG channels, and synchronized lower-limb joint angles. That changed the project from “can we fit this dataset?” to a much more realistic question: what gait information actually generalizes across people and trials?
+EEG is an ML engineer's worst nightmare. The signal is tiny, noisy, and buried under eye blinks, muscle artifacts, and electrical interference. On top of that there is extreme subject-to-subject variation — and even recordings from the *same* person drift between sessions.
 
 ## Cleaning Up The Signal
 
-Most of the work happened before the model.
+Before any modeling, we built the standard EEG preprocessing pipeline:
 
-We had to turn raw subject-trial recordings into aligned time series where EEG channels and joint-angle targets shared the same timestamps. From there, the preprocessing pipeline detected walking segments, filtered the EEG into useful frequency ranges, normalized channels so no electrode dominated, and cut the stream into overlapping windows.
+- **Band-pass filtering** to keep the frequency ranges that carry movement-related activity
+- **Notch filtering** to kill electrical line noise
+- **Normalization** across channels
+- **Walking detection** to keep only the windows where the subject was actually walking
+- **Windowing** into fixed 1-second segments
 
-That windowing step mattered a lot. A real BCI does not get to look at an entire trial after the fact; it receives a stream and has to keep making predictions from the most recent slice of neural activity. By training on overlapping windows, the dataset started to look more like the live inference problem.
+We also generated labels from the motion capture. Heel-strikes were approximated from peaks in the smoothed ankle trajectory, and gait phase came from splitting each stride into bins.
 
-We also generated more useful labels from the motion data. Heel strikes were approximated from peaks in the smoothed ankle trajectory, and gait phase was created by splitting each stride cycle into phase bins. This gave the model structure beyond just “predict this exact angle.”
+## Getting A Baseline
+
+At first we framed the project the cleanest way possible: direct continuous regression. Take an EEG window, predict the exact lower-limb joint angle. It is the most natural way to state the problem, and as we found out, also the most brittle.
+
+We started where almost every neuro project starts: a simple CNN-LSTM. The CNN pulls spatial features off the electrode array, the LSTM models how they evolve over time. It is the workhorse baseline for this kind of task, so it was the fastest way to find out whether there was any signal at all.
+
+The results were not good. The model was almost exclusively predicting the **mean angle** outputting roughly the average trajectory regardless of the input.
+
+This was a specific and telling failure. When a regressor collapses to the mean, it has decided the cheapest way to lower its loss is to hedge toward the average rather than track the real signal. In other words, it found nothing learnable in the EEG and gave up tracking the leg. We had a lot of experimenting ahead of us.
+
+## The Dataset Problem
+
+The first thing we noticed was the data. Our initial dataset had only 2 subjects and a couple of sessions each. That was enough to get the *pipeline* working but nowhere near enough to say anything about generalization. Performance sometimes didn't hold up even within the same subject across sessions.
+
+So we went looking for something bigger. We settled on a public [mobile brain–body imaging dataset](https://www.nature.com/articles/sdata201874#Sec9): **8 subjects**, multiple treadmill-walking trials each, **64-channel EEG**, and synchronized lower-limb joint angles. Far more diverse, and far more data to actually learn from.
 
 ## What We Tried
 
-We started with straightforward baselines: CNNs over EEG windows, then CNN-LSTM models where convolutional layers extracted features and recurrent layers modeled temporal structure. These were useful for proving out the pipeline, but direct angle prediction was unstable.
+We split up and each took a different approach, then came back to compare results.
 
-We also tried a self-supervised autoencoder. The idea was to train an encoder to compress EEG windows before using that representation for prediction. It looked promising on easier splits, but under stricter subject-based evaluation it did not generalize well.
+One team tried a **self-supervised autoencoder** feeding a CNN-BiLSTM — compress EEG windows into a clean latent without labels, then predict from that representation.
 
-A 1D ResNet was another experiment. It had enough capacity to fit the training data, but validation performance suggested it was overfitting instead of learning robust gait-related EEG structure.
+Another team tried a **1D ResNet**. It had the capacity to fit the training data easily, but its validation loss showed it was overfitting rather than learning robust gait-related EEG structure.
 
-The biggest shift was realizing that this should not be treated as pure regression. Non-invasive EEG is probably better suited to decoding gait events and phase than recovering an exact joint trajectory sample by sample. That changed the architecture and the evaluation.
+The last team implemented a very specific CNN architecture from [this paper](https://arxiv.org/abs/1611.08024) — older, but well-established for EEG, and we didn't want to rule it out without testing it.
+
+| Model | Train Loss (MSE) | Val Loss |
+|---|---|---|
+| Raw CNN-LSTM | 1.006 | 0.985 |
+| 1D ResNet | 0.173 | 1.125 |
+| Autoencoder + CNN-BiLSTM | 0.186 | 0.961 |
+
+Across every approach, the same pattern held: we could fit the training data, but exact angle regression didn't generalize very well. That pushed us to the realization that reshaped the whole project.
+
+## A few realizations
+
+We were still trying to predict ankle angle, but angle could not be the only supervision signal. If the model only saw continuous angle loss, it tended to learn a weak average trajectory instead of a useful gait representation.
+
+The better framing was multi-task: predict gait timing signals alongside the angle. Heel-strike and gait phase are more stable labels, and asking the model to predict them helped shape the shared representation that the angle regressor depended on.
+
+The other realization was about how we fed gait phase to the model. Phase is circular: the end of one stride is the start of the next, so representing it as a plain class number creates an artificial jump between the last phase and the first. Converting phase into sine and cosine features instead gives the model a smooth, continuous sense of where the subject is in the walking cycle. This turned out to be one of the changes that helped angle prediction the most.
+
+As we will see this set of changes worked really well together.
 
 ## The Final Model
 
-The final architecture was a multitask temporal convolutional network.
+The final design is a **multi-task EEG gait-decoding model** trained separately for each subject. For each subject, we split the data temporally into an 80% training segment and a 20% validation segment, and left a 5-second gap between them to reduce temporal leakage.
 
-The model takes a 1-second EEG window and passes it through dilated residual temporal convolution blocks. The TCN learns temporal patterns at multiple time scales, which is useful because gait is rhythmic and EEG responses are spread over time.
+The input is a 1-second EEG window from the 64 EEG channels. Each EEG window gets labels from the middle time point of the window: heel-strike label, gait-phase label, smoothed joint angle, and timestamp.
 
-From the shared EEG representation, the model predicts three related targets:
+The core model is a **Temporal Convolutional Network**. The TCN processes the EEG window and creates a shared latent representation. From that representation, the model branches into multiple heads and returns:
 
-- whether the current window is near a heel-strike event
-- which phase of the gait cycle the subject is in
-- the smoothed ankle angle as a continuous regression target
+- `heel_logit`: binary heel-strike output, converted to probability with sigmoid
+- `phase_logit`: 4-class gait-phase prediction
+- `angle_pred`: predicted joint angle
 
-The heel-strike and phase tasks made the learning problem much better grounded. Instead of forcing the model to recover a noisy exact angle from EEG alone, we gave it intermediate gait structure that better matched what non-invasive EEG could realistically decode.
+The angle branch uses the shared TCN latent vector plus the **cyclic (sine/cosine) encoding of gait phase** from above, fed into an LSTM.
+
+Heel-strike plays a quieter role. The predicted heel-strike probability is **not** fed into the angle branch. It helps indirectly by shaping the shared TCN representation during training. In plain language: heel-strike prediction teaches the model where it is in the walking rhythm, and the angle predictor can reuse that timing-aware representation.
+
+### Training It In Stages
+
+Training happens in three stages:
+
+1. **TCN classification.** Train the TCN on heel-strike detection and gait-phase classification. Heel-strike is emphasized because strikes are rare: `heel_weight = 2.0`, and the binary heel-strike loss uses a positive-class weight of `5.0`.
+2. **Angle regression.** Freeze the TCN/classification parts and train the LSTM angle branch to predict joint angle from the learned representation and cyclic phase encoding.
+3. **Full fine-tuning.** Unfreeze everything and fine-tune end to end with all three losses: heel-strike, phase, and angle.
+
+This means heel-strike influences the shared encoder during the first stage and again during final fine-tuning, even though heel-strike probability is never handed directly to the angle regressor.
 
 ## Where It Landed
 
-<Metric value="0.90" label="heel-strike AUC" />
+<Metric value="0.92" label="mean heel-strike AUC" />
 
-The strongest final result was heel-strike detection. The TCN reached about **0.90 AUC**, compared with a logistic-regression baseline around **0.57 AUC**.
+The strongest result was heel-strike detection. Across most subjects (6 of 8) the TCN reached a **mean AUC of 0.924** — versus a logistic-regression baseline around **0.57**.
 
-For gait phase, the model reached roughly **67% accuracy** on a 4-class phase prediction task, where chance performance is 25%. Continuous ankle-angle regression was still harder, but the multitask model produced positive angle-prediction performance on most subjects, with ankle-angle R² around **0.63** after excluding one clear outlier subject.
+For 4-class gait phase, the model hit **72.8% mean accuracy** on those subjects, where chance is 25%. Continuous ankle-angle regression stayed the hardest task, but the staged LSTM finally produced meaningful predictions: a **mean R² of 0.735** across 5 of 8 subjects.
 
-The main lesson was that EEG gait decoding is not just a model architecture problem. The dataset, preprocessing, target definition, and evaluation split matter just as much. Directly predicting exact joint angles from non-invasive EEG is brittle, but decoding gait events and phase is much more reliable, and those signals can still be useful for future BCI-driven mobility systems.
+The spread across that "6 of 8" and "5 of 8" is the honest headline. One subject's heel-strike AUC collapsed to near zero, and a couple of others lagged the rest. That inter-subject variability — not the average — is the real frontier here, and lines up with what the literature reports: non-invasive decoders are still fragile across people.
+
+The main lesson was that EEG gait decoding is not just a model-architecture problem. The dataset, the preprocessing, how you *define* the target, and how you split for evaluation matter just as much. Direct angle prediction from non-invasive EEG was brittle on its own, but predicting gait events and phase alongside angle helped the model learn a representation strong enough to make the angle head useful.

@@ -8,10 +8,10 @@ order: 1
 
 ## TLDR
 
-I worked on decoding gait information from noisy, non-invasive EEG for future BCI-driven mobility systems.
+- Built a non-invasive EEG gait-decoding pipeline for BCI-driven mobility systems, moving from angle-only regression toward multi-task gait understanding.
 
-The final approach moved away from pure joint-angle regression and toward a multitask temporal convolutional network that predicts heel-strike events, gait phase, and smoothed ankle angle from 1-second EEG windows.
+- Preprocessed noisy EEG with artifact removal, bandpass filtering, per-channel normalization, and overlapping 1-second windows aligned for gait prediction.
 
-<Metric value="0.90" label="heel-strike AUC" />
+<Metric value="0.92" label="mean heel-strike AUC" />
 
-The main lesson: EEG gait decoding depends as much on dataset choice, preprocessing, target definition, and evaluation splits as it does on architecture.
+- Trained a TCN over 64-channel windows to predict `heel_logit`, `phase_logit`, and `angle_pred`, using cyclic phase features and staged training to strengthen ankle-angle prediction.

@@ -23,14 +23,24 @@ export async function getStaticPaths() {
 }
 
 const { cat, post, postSlug, tldrPost } = Astro.props;
-const { Content } = await render(post);
 const renderedTldr = tldrPost ? await render(tldrPost) : null;
 const TldrContent = renderedTldr?.Content;
 const experience = cat.experiences.find((entry) => entry.postSlug === postSlug);
+const canReadFull =
+  experience?.role === 'Machine Learning Engineer' && experience.company === 'NeuroTech @ Berkeley';
+const shouldRenderFull = canReadFull || !TldrContent;
+const renderedFull = shouldRenderFull ? await render(post) : null;
+const Content = renderedFull?.Content;
+const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
 ---
 
 <Layout title={`Devah Schaefers — ${post.data.title}`} description={post.data.blurb} current="experience">
-  <article class="pb-10" data-work-reader data-work-mode="full">
+  <article
+    class="pb-10"
+    data-work-reader
+    data-work-mode={initialWorkMode}
+    data-work-full-available={String(canReadFull)}
+  >
     <div class="mb-8">
       <div class="mb-6 flex items-center justify-between gap-4">
         <a href={`/experience/${cat.id}`} class="link-internal">
@@ -41,17 +51,19 @@ const experience = cat.experiences.find((entry) => entry.postSlug === postSlug);
           <div class="tldr-toggle" role="group" aria-label="Reading mode">
             <button
               type="button"
-              class="tldr-toggle__button is-active"
+              class:list={['tldr-toggle__button', { 'is-active': initialWorkMode === 'full', 'is-disabled': !canReadFull }]}
               data-work-mode-button="full"
-              aria-pressed="true"
+              aria-pressed={String(initialWorkMode === 'full')}
+              aria-disabled={String(!canReadFull)}
+              disabled={!canReadFull}
             >
               Full
             </button>
             <button
               type="button"
-              class="tldr-toggle__button"
+              class:list={['tldr-toggle__button', { 'is-active': initialWorkMode === 'tldr' }]}
               data-work-mode-button="tldr"
-              aria-pressed="false"
+              aria-pressed={String(initialWorkMode === 'tldr')}
             >
               TLDR
             </button>
@@ -99,12 +111,24 @@ const experience = cat.experiences.find((entry) => entry.postSlug === postSlug);
       <p class="text-text-secondary text-sm leading-relaxed">{post.data.blurb}</p>
     </div>
 
-    <div class="work-post work-copy" data-work-copy="full">
-      <Content components={{ Metric }} />
-    </div>
+    {Content && (
+      <div
+        class="work-post work-copy"
+        data-work-copy="full"
+        hidden={initialWorkMode !== 'full'}
+        aria-hidden={String(initialWorkMode !== 'full')}
+      >
+        <Content components={{ Metric }} />
+      </div>
+    )}
 
     {TldrContent && (
-      <div class="work-post work-copy work-copy--tldr" data-work-copy="tldr" hidden aria-hidden="true">
+      <div
+        class="work-post work-copy work-copy--tldr"
+        data-work-copy="tldr"
+        hidden={initialWorkMode !== 'tldr'}
+        aria-hidden={String(initialWorkMode !== 'tldr')}
+      >
         <TldrContent components={{ Metric }} />
       </div>
     )}
@@ -133,31 +157,34 @@ const experience = cat.experiences.find((entry) => entry.postSlug === postSlug);
         const copies = Array.from(root.querySelectorAll('[data-work-copy]'));
         root.dataset.workToggleReady = 'true';
 
+        const fullAvailable = root.dataset.workFullAvailable === 'true';
+
         const setMode = (mode) => {
           const nextMode = mode === 'tldr' ? 'tldr' : 'full';
-          root.dataset.workMode = nextMode;
+          const availableMode = nextMode === 'full' && !fullAvailable ? 'tldr' : nextMode;
+          root.dataset.workMode = availableMode;
 
           buttons.forEach((button) => {
             if (!(button instanceof HTMLButtonElement)) return;
-            const isActive = button.dataset.workModeButton === nextMode;
+            const isActive = button.dataset.workModeButton === availableMode;
             button.classList.toggle('is-active', isActive);
             button.setAttribute('aria-pressed', String(isActive));
           });
 
           copies.forEach((copy) => {
             if (!(copy instanceof HTMLElement)) return;
-            const isActive = copy.dataset.workCopy === nextMode;
+            const isActive = copy.dataset.workCopy === availableMode;
             copy.hidden = !isActive;
             copy.setAttribute('aria-hidden', String(!isActive));
           });
         };
 
-        let savedMode = 'full';
+        let savedMode = fullAvailable ? 'full' : 'tldr';
 
         try {
-          savedMode = window.localStorage.getItem('work-reading-mode') ?? 'full';
+          savedMode = fullAvailable ? (window.localStorage.getItem('work-reading-mode') ?? 'full') : 'tldr';
         } catch {
-          savedMode = 'full';
+          savedMode = fullAvailable ? 'full' : 'tldr';
         }
 
         setMode(savedMode);
@@ -165,6 +192,7 @@ const experience = cat.experiences.find((entry) => entry.postSlug === postSlug);
         buttons.forEach((button) => {
           button.addEventListener('click', () => {
             if (!(button instanceof HTMLButtonElement)) return;
+            if (button.disabled) return;
             const mode = button.dataset.workModeButton ?? 'full';
             setMode(mode);
 

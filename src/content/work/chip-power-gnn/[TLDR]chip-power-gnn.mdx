@@ -8,8 +8,10 @@ order: 2
 
 ## TLDR
 
-I worked on predicting chip power consumption from netlist structure before fabrication, turning raw netlists into graph data suitable for machine learning.
+- Transformed raw chip netlists into PyTorch Geometric graph representations for power prediction across ~50-100 designs.
 
-The pipeline used PyTorch Geometric, graph features, and model benchmarks across linear regression, random forests, gradient boosting, and GNNs, evaluated on **MAE, RMSE, and MAPE**.
+- Built graph featurization pipelines with structural features and attention layers, then benchmarked linear regression, random forests, gradient boosting, and GNNs.
 
-I also used SHAP analysis so the model could explain which structural features were driving the power estimates.
+- Evaluated models on **MAE, RMSE, and MAPE**, while also benchmarking inference speed and scalability across design complexity.
+
+- Used SHAP analysis to identify which netlist features were driving power estimates.

@@ -8,10 +8,10 @@ order: 1
 
 ## TLDR
 
-An LLM chess coach that uses retrieval to ground move explanations in similar historical positions and concept templates instead of relying on raw model guesses.
+- Built an LLM-powered RAG chess coach that grounds move explanations in similar historical positions and concept templates.
 
-I extracted tactical and strategic features from board states, retrieved relevant context, and built an offline evaluation pipeline over **2M+ positions** to measure whether the hints actually helped.
+- Extracted tactical and strategic features from board states, then retrieved relevant context instead of relying on raw model guesses.
 
 <Metric value="+20%" label="agent performance on the eval set" />
 
-The main win was making coaching quality measurable, not just subjectively nicer.
+- Developed an offline evaluation pipeline over **2M+ positions** to test multiple LLMs with and without generated hints.

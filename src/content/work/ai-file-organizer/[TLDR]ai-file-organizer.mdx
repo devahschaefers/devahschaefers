@@ -8,10 +8,10 @@ order: 3
 
 ## TLDR
 
-A Rust TUI that organizes messy directory trees with an LLM-backed planning flow. It splits the work into an **Explorer** that summarizes the filesystem and an **Organizer** that proposes semantic groups and file moves.
+- Built a Rust TUI for organizing large, inconsistent directory trees with asynchronous model calls and an interactive review workflow.
 
-The important engineering choice was safety: every move goes through a **virtual staging layer** first, so the user reviews the plan before anything touches disk.
+- Designed a two-stage **Explorer** / **Organizer** pipeline that uses recursive traversal, semantic summaries, and model-guided planning to propose file groups and moves.
 
 <Metric value="~18x" label="faster than manual cleanup" />
 
-Built for large, inconsistent folders where extension-based sorting is not enough.
+- Added a **virtual staging layer** so every proposed move can be reviewed before anything touches disk.

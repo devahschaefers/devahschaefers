@@ -8,10 +8,10 @@ order: 2
 
 ## TLDR
 
-I engineered an end-to-end satellite image data stream for lossy laser and RF payload links.
+- Engineered the satellite's end-to-end image data stream for lossy laser and RF payload links.
 
-The pipeline combined compression, error correction, and encryption so image chunks could survive interrupted or corrupted transfers without wasting scarce bandwidth.
+- Implemented encoding and decoding pipelines with compression, error correction, and encryption so chunks could survive interrupted or corrupted transfers.
 
 <Metric value="~40%" label="effective throughput gain" />
 
-I also integrated low-level USB/UART drivers on Linux using FTD2XX and Xilinx tooling for custom baud rates and robust streaming.
+- Integrated low-level USB/UART drivers on Linux using FTD2XX and Xilinx tooling for custom baud rates and robust streaming.

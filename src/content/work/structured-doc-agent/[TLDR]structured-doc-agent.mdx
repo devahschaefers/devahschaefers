@@ -8,10 +8,10 @@ order: 2
 
 ## TLDR
 
-I built an LLM document-editing agent that makes targeted tool-call edits over an intermediate representation instead of regenerating the whole document.
+- Built an LLM document-editing agent that makes targeted tool-call edits over an intermediate representation instead of regenerating whole documents.
 
-That made multi-step edits safer: tool constraints limit what the model can change, and post-edit checks verify that the structure stayed valid.
+- Constrained model actions through edit tools so multi-step changes stay local to the intended document regions.
 
 <Metric value="60%" label="less manual editing time" />
 
-The result was faster editing without the usual structured-output drift.
+- Added post-edit validation to preserve structure and avoid the usual structured-output drift.
