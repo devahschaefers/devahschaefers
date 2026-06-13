@@ -18,11 +18,6 @@ its frontmatter includes both categories.
 | `order` | number | sort order within a category (lower first) |
 | `draft` | boolean? | `true` = copy is still a placeholder (only `raycast-calendar` today) |
 
-## Component reference
-
-The bodies use one custom MDX component, `<Metric value="..." label="..." />`, for a
-standout metric callout. The post route passes that component into MDX rendering.
-
 ## Posts
 
 - ml: `neurotech-eeg`, `chip-power-gnn`, `disaster-nlp`, `disinfo-detection`

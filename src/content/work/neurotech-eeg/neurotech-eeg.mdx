@@ -100,8 +100,6 @@ This means heel-strike influences the shared encoder during the first stage and 
 
 ## Where It Landed
 
-<Metric value="0.92" label="mean heel-strike AUC" />
-
 The strongest result was heel-strike detection. Across most subjects (6 of 8) the TCN reached a **mean AUC of 0.924** — versus a logistic-regression baseline around **0.57**.
 
 For 4-class gait phase, the model hit **72.8% mean accuracy** on those subjects, where chance is 25%. Continuous ankle-angle regression stayed the hardest task, but the staged LSTM finally produced meaningful predictions: a **mean R² of 0.735** across 5 of 8 subjects.

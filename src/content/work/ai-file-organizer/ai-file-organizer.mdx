@@ -33,7 +33,5 @@ before anything touches disk, surfaced through an interactive TUI workflow so yo
 approve the plan rather than pray. Speed came from asynchronous model calls, which kept
 the pipeline from stalling on I/O while waiting on the model.
 
-<Metric value="~18x" label="faster than manual cleanup" />
-
 The result was roughly 18x faster cleanup than doing it by hand, on directory trees
 with thousands of files — with a safety net the whole way through.

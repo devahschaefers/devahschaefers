@@ -516,28 +516,6 @@ textarea {
   font-size: 0.85em;
 }
 
-.metric-callout {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.4rem 0.75rem;
-  margin: 1.5rem 0;
-  padding: 0.85rem 1rem;
-  border-left: 2px solid var(--color-pop);
-  background: color-mix(in oklch, var(--color-pop) 6%, var(--color-surface));
-}
-
-.metric-callout strong {
-  color: var(--color-pop);
-  font-size: 1.15rem;
-  line-height: 1.2;
-}
-
-.metric-callout span {
-  color: var(--color-text-secondary);
-  font-size: 0.82rem;
-}
-
 /* ── Work Post Reading Mode ────────────────────────── */
 
 .tldr-toggle {

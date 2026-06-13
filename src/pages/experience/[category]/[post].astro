@@ -1,7 +1,6 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import Contact from '../../../components/Contact.astro';
-import Metric from '../../../components/Metric.astro';
 import { categories } from '../../../data/experience';
 import { getWorkPostSlug, groupWorkPosts } from '../../../data/workContent';
 import { getCollection, render } from 'astro:content';
@@ -118,7 +117,7 @@ const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
         hidden={initialWorkMode !== 'full'}
         aria-hidden={String(initialWorkMode !== 'full')}
       >
-        <Content components={{ Metric }} />
+        <Content />
       </div>
     )}
 
@@ -129,7 +128,7 @@ const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
         hidden={initialWorkMode !== 'tldr'}
         aria-hidden={String(initialWorkMode !== 'tldr')}
       >
-        <TldrContent components={{ Metric }} />
+        <TldrContent />
       </div>
     )}
 

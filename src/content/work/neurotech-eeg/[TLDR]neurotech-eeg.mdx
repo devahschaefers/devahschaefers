@@ -12,6 +12,4 @@ order: 1
 
 - Preprocessed noisy EEG with artifact removal, bandpass filtering, per-channel normalization, and overlapping 1-second windows aligned for gait prediction.
 
-<Metric value="0.92" label="mean heel-strike AUC" />
-
 - Trained a TCN over 64-channel windows to predict `heel_logit`, `phase_logit`, and `angle_pred`, using cyclic phase features and staged training to strengthen ankle-angle prediction.
