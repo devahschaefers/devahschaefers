@@ -96,10 +96,6 @@ const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
             {post.data.title}
           </h1>
         )}
-
-        {post.data.draft && (
-          <span class="text-xs text-text-muted border border-border rounded-full px-2.5 py-0.5">Draft</span>
-        )}
       </div>
 
       {experience && (

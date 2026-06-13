@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Contact from '../../components/Contact.astro';
 import { categories } from '../../data/experience';
-import { getWorkPostSlug, groupWorkPosts } from '../../data/workContent';
+import { groupWorkPosts } from '../../data/workContent';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -20,7 +20,6 @@ export async function getStaticPaths() {
 }
 
 const { cat, posts } = Astro.props;
-const postBySlug = new Map(posts.map((post) => [getWorkPostSlug(post), post]));
 ---
 
 <Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience">
@@ -79,7 +78,6 @@ const postBySlug = new Map(posts.map((post) => [getWorkPostSlug(post), post]));
                 class="work-row-title work-row-title--transition"
               >
                 {project.title}
-                {postBySlug.get(project.postSlug)?.data.draft && <span class="work-row-context"> · Draft</span>}
               </span>
             </a>
           ))}
