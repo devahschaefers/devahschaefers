@@ -35,13 +35,13 @@ const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
 
 <Layout title={`Devah Schaefers — ${post.data.title}`} description={post.data.blurb} current="experience">
   <article
-    class="pb-10"
+    class="work-page"
     data-work-reader
     data-work-mode={initialWorkMode}
     data-work-full-available={String(canReadFull)}
   >
-    <div class="mb-8">
-      <div class="mb-6 flex items-center justify-between gap-4">
+    <header class="work-page-header">
+      <div class="work-page-topline">
         <a href={`/experience/${cat.id}`} class="link-internal">
           ← Back to {cat.label}
         </a>
@@ -70,8 +70,8 @@ const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
         )}
       </div>
 
-      <div class="flex flex-col items-start gap-1 mb-3">
-        <div class="inline-flex items-baseline text-sm text-text-muted">
+      <div class="flex flex-col items-start gap-1">
+        <div class="work-page-kicker">
           <span
             transition:name={`work-category-label-${cat.id}`}
             class="work-row-title--transition"
@@ -84,7 +84,7 @@ const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
         {experience ? (
           <div
             transition:name={`work-experience-line-${cat.id}-${postSlug}`}
-            class="work-row-title--transition text-sm text-text-muted"
+            class="work-row-title--transition work-page-meta"
           >
             {experience.role} @ {experience.company} · {experience.dates}
           </div>
@@ -99,11 +99,11 @@ const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
       </div>
 
       {experience && (
-        <h1 class="section-heading inline-block max-w-full mb-3!">
+        <h1 class="section-heading work-page-title inline-block max-w-full mb-0!">
           {post.data.title}
         </h1>
       )}
-    </div>
+    </header>
 
     {Content && (
       <div
@@ -127,7 +127,7 @@ const initialWorkMode = canReadFull || !TldrContent ? 'full' : 'tldr';
       </div>
     )}
 
-    <div class="mt-10 pt-6 border-t border-border flex flex-wrap gap-3">
+    <div class="work-page-related">
       {post.data.categories
         .filter((category) => category !== cat.id)
         .map((category) => categories.find((item) => item.id === category))

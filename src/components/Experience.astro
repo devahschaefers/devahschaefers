@@ -2,26 +2,28 @@
 import { categories } from '../data/experience';
 ---
 
-<section class="pb-10" id="experience">
+<section class="pb-10 w-full" id="experience">
   <h2 class="section-heading section-heading--accent">Work</h2>
 
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2 w-fit max-w-full">
     {categories.map((cat) => (
       <a
         href={`/experience/${cat.id}`}
-        class="link-internal text-[15px] leading-relaxed rounded px-1.5 py-1 -mx-1.5 inline-flex w-fit items-baseline gap-3"
+        class="link-internal link-internal--arrow text-[15px] leading-relaxed rounded px-1.5 py-1 -mx-1.5"
       >
-        <span
-          transition:name={`work-category-label-${cat.id}`}
-          class="font-medium link-internal-label work-row-title--transition"
-        >
-          {cat.label}
-        </span>
-        <span
-          transition:name={`work-category-tagline-${cat.id}`}
-          class="text-text-muted text-sm work-row-title--transition"
-        >
-          — {cat.tagline}
+        <span class="link-internal--arrow-text">
+          <span
+            transition:name={`work-category-label-${cat.id}`}
+            class="font-medium link-internal-label work-row-title--transition"
+          >
+            {cat.label}
+          </span>
+          <span
+            transition:name={`work-category-tagline-${cat.id}`}
+            class="text-text-muted text-sm work-row-title--transition min-w-0"
+          >
+            — {cat.tagline}
+          </span>
         </span>
       </a>
     ))}

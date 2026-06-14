@@ -30,7 +30,7 @@
 }
 
 html {
-  zoom: 1.5;
+  zoom: 1.7;
   scroll-behavior: smooth;
   color-scheme: dark only;
 }
@@ -228,8 +228,8 @@ textarea {
 .nav-link {
   position: relative;
   display: inline-block;
-  padding: 4px 10px;
-  border-radius: 8px;
+  padding: 3px 10px 5px;
+  border-radius: 6px;
   text-decoration: none;
   font-family: var(--font-heading);
   font-weight: 500;
@@ -296,6 +296,56 @@ textarea {
 .link-internal:hover span {
   color: var(--color-text);
   transition: color 0.15s ease;
+}
+
+/* Full-width row so the trailing arrow can sit in a shared right-hand column,
+   matching the work-row links on the category page. */
+.link-internal--arrow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  /* Gap trailing the longest description; w-fit sizes the row to its content so
+     this gap is exactly what trails the longest line, and shorter rows stretch
+     to match — keeping every arrow in a straight column. */
+  gap: 1.5rem;
+}
+
+/* Label + tagline group: keep them as one continuous run of text that shrinks
+   and wraps as a unit beside the arrow, rather than the tagline dropping onto
+   its own line below the label. */
+.link-internal--arrow-text {
+  min-width: 0;
+}
+
+/* Flow label + tagline as continuous inline text so a long tagline wraps
+   word-by-word after the label, instead of the inline-block box dropping
+   onto its own line below it. */
+.link-internal--arrow-text > span {
+  display: inline;
+  max-width: none;
+}
+
+/* Trailing "this is a link" arrow, echoing the work-row and "ML →" nav cue */
+.link-internal--arrow::after {
+  content: "→";
+  flex: none;
+  color: var(--color-text-muted);
+  opacity: 0.45;
+  transition: color 0.15s ease,
+              opacity 0.15s ease,
+              transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.link-internal--arrow:hover::after {
+  color: var(--color-pop);
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-internal--arrow:hover::after {
+    transform: none;
+  }
 }
 
 /* ── External Links ───────────────────────────────── */
@@ -369,11 +419,80 @@ textarea {
   margin-bottom: 0.75rem;
 }
 
+/* ── Work Page Rhythm ─────────────────────────────── */
+
+.work-page {
+  padding-bottom: 1.75rem;
+}
+
+.work-page-header {
+  margin-bottom: 1.625rem;
+}
+
+.work-page-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.work-page-title-group {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.work-page-kicker {
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.work-page-meta {
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.work-page-title {
+  margin-top: 0.55rem;
+}
+
+.work-section + .work-section {
+  margin-top: 1.875rem;
+}
+
+.work-section-label {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.work-page-related {
+  margin-top: 1.875rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem 1rem;
+}
+
 /* ── Work Rows ─────────────────────────────────────── */
 
 .work-row {
   display: block;
-  padding: 0.65rem 0;
+  padding: 0.55rem 0;
   color: inherit;
   text-decoration: none;
 }
@@ -443,7 +562,7 @@ textarea {
   color: var(--color-text);
   font-size: 0.9rem;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 /* Let the title shrink/wrap beside the trailing arrow instead of overflowing */
@@ -470,7 +589,7 @@ textarea {
 
 .work-row-description {
   display: block;
-  margin-top: 0.12rem;
+  margin-top: 0.1rem;
 }
 
 /* ── Work Post Typography ──────────────────────────── */
@@ -478,7 +597,7 @@ textarea {
 .work-post {
   color: var(--color-text-secondary);
   font-size: 0.92rem;
-  line-height: 1.85;
+  line-height: 1.68;
 }
 
 .work-copy {
@@ -501,7 +620,7 @@ textarea {
 }
 
 .work-post > * + * {
-  margin-top: 1.1rem;
+  margin-top: 1rem;
 }
 
 .work-post h2,
@@ -509,8 +628,12 @@ textarea {
   color: var(--color-text);
   font: inherit;
   font-weight: 600;
-  line-height: 1.4;
-  margin-top: 2rem;
+  line-height: 1.35;
+  margin-top: 1.65rem;
+}
+
+.work-post > :first-child {
+  margin-top: 0;
 }
 
 .work-post h2 {
@@ -544,7 +667,7 @@ textarea {
 }
 
 .work-post li + li {
-  margin-top: 0.35rem;
+  margin-top: 0.45rem;
 }
 
 .work-post code {
@@ -591,7 +714,7 @@ textarea {
   display: inline-flex;
   flex: none;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.625rem;
   white-space: nowrap;
 }
 
@@ -599,7 +722,7 @@ textarea {
   appearance: none;
   border: 0;
   border-radius: 6px;
-  padding: 2px 6px;
+  padding: 2px 5px;
   background: transparent;
   color: var(--color-text-muted);
   cursor: pointer;

@@ -24,12 +24,12 @@ const { cat, posts } = Astro.props;
 
 <Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience">
 
-  <section class="pb-10">
-    <a href="/experience" class="link-internal mb-3">
+  <section class="work-page">
+    <a href="/experience" class="link-internal">
       ← Back to experience
     </a>
 
-    <div class="inline-flex w-fit max-w-full flex-wrap items-baseline gap-x-3 gap-y-1 mb-8">
+    <header class="work-page-header work-page-title-group">
       <h2
         transition:name={`work-category-label-${cat.id}`}
         class="section-heading text-lg inline-block mb-0!"
@@ -38,43 +38,44 @@ const { cat, posts } = Astro.props;
       </h2>
       <p
         transition:name={`work-category-tagline-${cat.id}`}
-        class="text-text-secondary text-sm inline-block"
+        class="text-text-secondary text-sm leading-snug inline-block"
       >
         {cat.tagline}
       </p>
-    </div>
+    </header>
 
     {cat.experiences.length > 0 && (
-      <h3 class="text-[0.9rem] font-medium text-text-muted tracking-wide uppercase mb-4 text-center">Roles</h3>
+      <section class="work-section">
+        <h3 class="work-section-label">Roles</h3>
+        <div>
+          {cat.experiences.map((exp) => (
+            <a
+              href={exp.postSlug ? `/experience/${cat.id}/${exp.postSlug}` : undefined}
+              class:list={['work-row', 'group', 'relative', exp.postSlug && 'work-row--linked']}
+            >
+              <span class="work-row-title">
+                <span
+                  transition:name={exp.postSlug ? `work-experience-line-${cat.id}-${exp.postSlug}` : undefined}
+                  class="work-row-title--transition"
+                >
+                  {exp.role}
+                  <span class="work-row-context"> @ {exp.company} · {exp.dates}</span>
+                </span>
+              </span>
+              {exp.summary && (
+                <span class="work-row-context pointer-events-none hidden whitespace-nowrap lg:absolute lg:right-full lg:top-1/2 lg:block lg:w-max lg:translate-x-12 lg:-translate-y-1/2 lg:pr-4 lg:text-right lg:opacity-0 lg:transition-all lg:duration-300 lg:ease-out lg:group-hover:translate-x-0 lg:group-hover:opacity-100">
+                  {exp.summary}
+                </span>
+              )}
+            </a>
+          ))}
+        </div>
+      </section>
     )}
 
-    <div>
-      {cat.experiences.map((exp) => (
-        <a
-          href={exp.postSlug ? `/experience/${cat.id}/${exp.postSlug}` : undefined}
-          class:list={['work-row', 'group', 'relative', exp.postSlug && 'work-row--linked']}
-        >
-          <span class="work-row-title">
-            <span
-              transition:name={exp.postSlug ? `work-experience-line-${cat.id}-${exp.postSlug}` : undefined}
-              class="work-row-title--transition"
-            >
-              {exp.role}
-              <span class="work-row-context"> @ {exp.company} · {exp.dates}</span>
-            </span>
-          </span>
-          {exp.summary && (
-            <span class="work-row-context pointer-events-none hidden whitespace-nowrap lg:absolute lg:right-full lg:top-1/2 lg:block lg:w-max lg:translate-x-12 lg:-translate-y-1/2 lg:pr-4 lg:text-right lg:opacity-0 lg:transition-all lg:duration-300 lg:ease-out lg:group-hover:translate-x-0 lg:group-hover:opacity-100">
-              {exp.summary}
-            </span>
-          )}
-        </a>
-      ))}
-    </div>
-
     {cat.projects.length > 0 && (
-      <div class="mt-8">
-        <h3 class="text-[0.9rem] font-medium text-text-muted tracking-wide uppercase mb-4 text-center">Projects</h3>
+      <section class="work-section">
+        <h3 class="work-section-label">Projects</h3>
         <div>
           {cat.projects.map((project) => (
             <a
@@ -90,10 +91,10 @@ const { cat, posts } = Astro.props;
             </a>
           ))}
         </div>
-      </div>
+      </section>
     )}
 
-    <div class="mt-8 pt-6 border-t border-border flex flex-wrap gap-3">
+    <div class="work-page-related">
       {categories.filter((c) => c.id !== cat.id).map((c) => (
         <a href={`/experience/${c.id}`} class="link-internal">
           {c.label} →
