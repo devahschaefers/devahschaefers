@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 const { cat, posts } = Astro.props;
 ---
 
-<Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience">
+<Layout title={`Devah Schaefers — ${cat.label} Experience`} description={cat.tagline} current="experience" centered>
 
   <section class="work-page">
     <a href="/experience" class="link-internal">
@@ -44,6 +44,7 @@ const { cat, posts } = Astro.props;
       </p>
     </header>
 
+    <div class="work-page-center">
     {cat.experiences.length > 0 && (
       <section class="work-section">
         <h3 class="work-section-label">Roles</h3>
@@ -93,6 +94,8 @@ const { cat, posts } = Astro.props;
         </div>
       </section>
     )}
+
+    </div>
 
     <div class="work-page-related">
       {categories.filter((c) => c.id !== cat.id).map((c) => (

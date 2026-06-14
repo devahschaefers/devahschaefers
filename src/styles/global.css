@@ -423,7 +423,18 @@ textarea {
 /* ── Work Page Rhythm ─────────────────────────────── */
 
 .work-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding-bottom: 1.75rem;
+}
+
+/* Roles / Projects center in the space under the pinned header */
+.work-page-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .work-page-header {
