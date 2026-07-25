@@ -26,7 +26,7 @@ const activeOrder = getSemesterOrder(activeId);
 
 <Layout title="Devah Schaefers — Classes" current="classes">
   <section>
-    <h2 class="section-heading section-heading--accent">Classes</h2>
+    <h1 class="section-heading section-heading--accent">Classes</h1>
 
     <div class="timeline">
       {semesters.map((sem) => {
@@ -36,7 +36,7 @@ const activeOrder = getSemesterOrder(activeId);
         return (
           <div class:list={["tl-semester", { "tl-semester--future": isFuture, "tl-semester--highschool": sem.id === 'highschool' }]}>
             <div class:list={["tl-dot", { "tl-dot--active": isActive, "tl-dot--future": isFuture }]} />
-            <h3 class="tl-label">{sem.label}</h3>
+            <h2 class="tl-label">{sem.label}</h2>
 
             <div class="tl-courses">
               {sem.courses.map((course) => (
@@ -76,17 +76,15 @@ const activeOrder = getSemesterOrder(activeId);
     // observing detached nodes across repeat visits.
     teardownClasses();
 
-    // ── Staggered entrance (re-triggerable) ──
+    // ── Staggered entrance (once per page visit) ──
     entranceObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
         const courses = entry.target.querySelectorAll('.tl-course');
-        if (entry.isIntersecting) {
-          courses.forEach((course, i) => {
-            setTimeout(() => course.classList.add('visible'), i * 100);
-          });
-        } else {
-          courses.forEach(course => course.classList.remove('visible'));
-        }
+        courses.forEach((course, i) => {
+          setTimeout(() => course.classList.add('visible'), i * 100);
+        });
+        entranceObserver?.unobserve(entry.target);
       });
     }, { threshold: 0.15 });
 
@@ -116,10 +114,12 @@ const activeOrder = getSemesterOrder(activeId);
     };
     requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(tick, initialDelay)));
 
-    // ── Line segment draw-in (re-triggerable) ──
+    // ── Line segment draw-in (once per page visit) ──
     segObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        entry.target.classList.toggle('seg-visible', entry.isIntersecting);
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('seg-visible');
+        segObserver?.unobserve(entry.target);
       });
     }, { threshold: 0.1 });
 
