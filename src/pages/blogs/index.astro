@@ -35,10 +35,18 @@ const posts = workPosts
                 class="work-row-title--transition"
               >
                 {post.data.title}
-                {post.data.context && (
-                  <span class="work-row-context"> · {post.data.context}</span>
-                )}
               </span>
+              {post.data.context && (
+                <span class="work-row-context">
+                  {' · '}
+                  <span
+                    transition:name={`blog-post-context-${slug}`}
+                    class="work-row-title--transition"
+                  >
+                    {post.data.context}
+                  </span>
+                </span>
+              )}
             </span>
           </a>
         );
