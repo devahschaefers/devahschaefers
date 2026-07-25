@@ -2,6 +2,10 @@ import type { CollectionEntry } from 'astro:content';
 
 export type WorkPost = CollectionEntry<'work'>;
 
+/** Posts whose full write-up is unlocked on the experience pages (Full/TLDR toggle).
+    Keep in sync with `published` in each post's frontmatter, which controls /blogs. */
+export const FULL_POSTS = new Set(['neurotech-eeg', 'resume-editing-agent']);
+
 const TLDR_PREFIX = '[TLDR]';
 const SANITIZED_TLDR_PREFIX = 'tldr';
 

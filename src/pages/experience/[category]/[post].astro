@@ -2,7 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import Contact from '../../../components/Contact.astro';
 import { categories } from '../../../data/experience';
-import { getWorkPostSlug, groupWorkPosts } from '../../../data/workContent';
+import { FULL_POSTS, getWorkPostSlug, groupWorkPosts } from '../../../data/workContent';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -25,8 +25,7 @@ const { cat, post, postSlug, tldrPost } = Astro.props;
 const renderedTldr = tldrPost ? await render(tldrPost) : null;
 const TldrContent = renderedTldr?.Content;
 const experience = cat.experiences.find((entry) => entry.postSlug === postSlug);
-const canReadFull =
-  experience?.role === 'ML Engineer' && experience.company === 'NeuroTech @ Berkeley';
+const canReadFull = FULL_POSTS.has(postSlug);
 const shouldRenderFull = canReadFull || !TldrContent;
 const renderedFull = shouldRenderFull ? await render(post) : null;
 const Content = renderedFull?.Content;
