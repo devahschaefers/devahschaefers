@@ -26,7 +26,7 @@ const renderedTldr = tldrPost ? await render(tldrPost) : null;
 const TldrContent = renderedTldr?.Content;
 const experience = cat.experiences.find((entry) => entry.postSlug === postSlug);
 const canReadFull =
-  experience?.role === 'Machine Learning Engineer' && experience.company === 'NeuroTech @ Berkeley';
+  experience?.role === 'ML Engineer' && experience.company === 'NeuroTech @ Berkeley';
 const shouldRenderFull = canReadFull || !TldrContent;
 const renderedFull = shouldRenderFull ? await render(post) : null;
 const Content = renderedFull?.Content;
