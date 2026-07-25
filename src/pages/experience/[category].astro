@@ -26,16 +26,16 @@ const { cat, posts } = Astro.props;
 
   <section class="work-page">
     <a href="/experience" class="link-internal">
-      ← Back to experience
+      ← Back to work
     </a>
 
     <header class="work-page-header work-page-title-group">
-      <h2
+      <h1
         transition:name={`work-category-label-${cat.id}`}
         class="section-heading text-lg inline-block mb-0!"
       >
         {cat.label}
-      </h2>
+      </h1>
       <p
         transition:name={`work-category-tagline-${cat.id}`}
         class="text-text-secondary text-sm leading-snug inline-block"
@@ -47,7 +47,7 @@ const { cat, posts } = Astro.props;
     <div class="work-page-center">
     {cat.experiences.length > 0 && (
       <section class="work-section">
-        <h3 class="work-section-label">Roles</h3>
+        <h2 class="work-section-label">Roles</h2>
         <div>
           {cat.experiences.map((exp) => (
             <a
@@ -76,7 +76,7 @@ const { cat, posts } = Astro.props;
 
     {cat.projects.length > 0 && (
       <section class="work-section">
-        <h3 class="work-section-label">Projects</h3>
+        <h2 class="work-section-label">Projects</h2>
         <div>
           {cat.projects.map((project) => (
             <a
