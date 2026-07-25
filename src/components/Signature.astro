@@ -53,3 +53,84 @@
   document.addEventListener('astro:page-load', initSignature);
   document.addEventListener('astro:before-swap', () => io?.disconnect());
 </script>
+
+<style>
+  /* Left-to-right clip-path reveal with a small accent-colored pen dot
+     tracking the edge. The animation only runs when the wrap gets a
+     `.signature--playing` class (applied by IntersectionObserver when the
+     element scrolls into view). `.signature--drawn` snaps it to the finished
+     state without animation (used for prefers-reduced-motion). */
+
+  .signature-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0 1rem;
+    color: var(--color-text-secondary);
+    user-select: none;
+  }
+
+  .signature {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: 0;
+    transform: rotate(-3deg);
+    transform-origin: left center;
+  }
+
+  .signature-ink {
+    display: inline-block;
+    /* Start fully clipped from the right — nothing shows until the
+       `.signature--playing` class gets added, which runs the reveal. */
+    clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+  }
+
+  .signature-pen {
+    position: absolute;
+    left: 0;
+    top: 55%;
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    background: var(--color-pop);
+    box-shadow: 0 0 10px color-mix(in oklch, var(--color-pop) 70%, transparent);
+    transform: translate(-2px, -50%);
+    opacity: 0;
+    pointer-events: none;
+    will-change: left, opacity;
+  }
+
+  .signature--playing .signature-ink {
+    animation: signature-draw 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards;
+  }
+
+  .signature--playing .signature-pen {
+    animation: signature-pen 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0.15s forwards;
+  }
+
+  .signature--drawn .signature-ink {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  @keyframes signature-draw {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+  }
+
+  @keyframes signature-pen {
+    0%   { left: 0;    opacity: 0; }
+    8%   { opacity: 1; }
+    92%  { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signature-ink { animation: none !important; clip-path: inset(0 0% 0 0); }
+    .signature-pen { display: none; }
+  }
+</style>

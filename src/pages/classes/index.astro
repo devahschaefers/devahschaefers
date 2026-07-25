@@ -136,3 +136,201 @@ const activeOrder = getSemesterOrder(activeId);
   document.addEventListener('astro:page-load', initClasses);
   document.addEventListener('astro:before-swap', teardownClasses);
 </script>
+
+<style>
+  .timeline {
+    position: relative;
+    padding-left: 1.75rem;
+  }
+
+  .tl-semester {
+    position: relative;
+    padding-bottom: 2.25rem;
+    z-index: 1;
+  }
+
+  .tl-semester:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Line segment per semester */
+  .tl-semester:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: calc(-1.75rem + 4px);
+    top: 14px;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-border);
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .tl-semester.seg-visible:not(:last-child)::before {
+    transform: scaleY(1);
+  }
+
+  /* Future: dashed line segment */
+  .tl-semester--future:not(:last-child)::before {
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--color-text-muted) 0,
+      var(--color-text-muted) 3px,
+      transparent 3px,
+      transparent 7px
+    );
+  }
+
+  /* Dot */
+  .tl-dot {
+    position: absolute;
+    left: -1.75rem;
+    top: 5px;
+    width: 9px;
+    height: 9px;
+    border-radius: 9999px;
+    background: var(--color-pop);
+    box-shadow: 0 0 0 3px var(--color-bg);
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  /* Dot hover ripple */
+  .tl-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    border: 2px solid var(--color-pop);
+    opacity: 0;
+    scale: 0.5;
+    pointer-events: none;
+  }
+
+  .tl-dot:hover::after {
+    animation: ripple 0.6s ease-out;
+  }
+
+  /* Active dot heartbeat */
+  .tl-dot--active {
+    animation: heartbeat 2s ease-in-out infinite;
+  }
+
+  /* Future dot: hollow */
+  .tl-dot--future {
+    background: transparent;
+    border: 1.5px solid var(--color-text-muted);
+    box-shadow: 0 0 0 3px var(--color-bg);
+  }
+
+  .tl-dot--future::after {
+    border-color: var(--color-text-muted);
+  }
+
+  .tl-label {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--color-text);
+    letter-spacing: 0;
+    margin-bottom: 0.6rem;
+    min-height: 1.2em;
+  }
+
+  .tl-semester--future .tl-label {
+    color: var(--color-text-muted);
+  }
+
+  .tl-courses {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  /* Staggered entrance */
+  .tl-course {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.5rem;
+    padding: 0.15rem 0;
+    line-height: 1.5;
+    opacity: 0;
+    translate: -12px 0;
+    transition: opacity 0.4s ease,
+                translate 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .tl-course.visible {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .tl-code {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .tl-title {
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    min-width: 0;
+  }
+
+  /* Future semester muted courses */
+  .tl-semester--future .tl-code {
+    color: color-mix(in oklch, var(--color-text-muted) 60%, transparent);
+  }
+
+  .tl-semester--future .tl-title {
+    color: color-mix(in oklch, var(--color-text-secondary) 50%, transparent);
+  }
+
+  /* High school: pre-Berkeley coursework, desaturated accent + italic body font */
+  .tl-semester--highschool .tl-dot {
+    background: oklch(from var(--color-accent) 0.7117 0.0587 h);
+  }
+
+  .tl-semester--highschool .tl-dot::after {
+    border-color: oklch(from var(--color-accent) 0.7117 0.0587 h);
+  }
+
+  .tl-semester--highschool .tl-label {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-weight: 500;
+    color: white;
+  }
+
+  .tl-semester--highschool .tl-code,
+  .tl-semester--highschool .tl-title {
+    font-style: italic;
+  }
+
+  /* @ tag linking to the institution where a course was taken */
+  .tl-at {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .tl-at:hover {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    background-color: transparent;
+  }
+
+  @keyframes ripple {
+    0% { scale: 0.5; opacity: 1; }
+    100% { scale: 3; opacity: 0; }
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { scale: 1; box-shadow: 0 0 0 3px var(--color-bg), 0 0 0 transparent; }
+    50% { scale: 1.1; box-shadow: 0 0 0 4px var(--color-bg), 0 0 16px 4px color-mix(in oklch, var(--color-pop) 60%, transparent); }
+  }
+</style>
