@@ -188,56 +188,6 @@
   margin-top: 0.1rem;
 }
 
-/* Role summary — tucked behind the row, slides out to the left on hover.
-   The wrapper is a clip box pinned to the row's left edge; the inner text
-   starts pushed fully right (off the clip) so it reads as emerging from
-   under the role text rather than starting half-visible. */
-.work-row-summary {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .work-row-summary {
-    position: absolute;
-    right: 100%;
-    top: 50%;
-    display: block;
-    width: max-content;
-    padding-right: 1rem;
-    overflow: hidden;
-    pointer-events: none;
-    text-align: right;
-    color: var(--color-text-muted);
-    font-size: 0.84rem;
-    font-weight: 400;
-    line-height: 1.45;
-    white-space: nowrap;
-    transform: translateY(-50%);
-  }
-
-  .work-row-summary-inner {
-    display: block;
-    transform: translateX(100%);
-    opacity: 0;
-    transition: transform 0.34s cubic-bezier(0.22, 1.1, 0.36, 1),
-                opacity 0.2s ease-out;
-  }
-
-  .work-row--linked:hover .work-row-summary-inner,
-  .work-row--linked:focus-visible .work-row-summary-inner {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* Reduced motion: fade in place, no vertical travel */
-@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
-  .work-row-summary-inner {
-    transform: none;
-    transition: opacity 0.2s ease-out;
-  }
-}
-
 /* ── Work Post Typography ──────────────────────────── */
 
 .work-post {

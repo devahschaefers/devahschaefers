@@ -52,7 +52,7 @@ const { cat, posts } = Astro.props;
           {cat.experiences.map((exp) => (
             <a
               href={exp.postSlug ? `/experience/${cat.id}/${exp.postSlug}` : undefined}
-              class:list={['work-row', 'group', 'relative', exp.postSlug && 'work-row--linked']}
+              class:list={['work-row', exp.postSlug && 'work-row--linked']}
             >
               <span class="work-row-title">
                 <span
@@ -63,11 +63,6 @@ const { cat, posts } = Astro.props;
                   <span class="work-row-context"> @ {exp.company} · {exp.dates}</span>
                 </span>
               </span>
-              {exp.summary && (
-                <span class="work-row-summary" aria-hidden="true">
-                  <span class="work-row-summary-inner">{exp.summary}</span>
-                </span>
-              )}
             </a>
           ))}
         </div>
